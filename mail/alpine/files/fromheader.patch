@@ -1,0 +1,159 @@
+diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
+*** alpine-2.20/alpine/send.c	2015-01-07 22:53:20.561657029 -0700
+--- alpine-2.20.fromheader/alpine/send.c	2015-01-07 23:15:58.563052655 -0700
+***************
+*** 912,918 ****
+     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, KS_NONE},
+    {"From    : ",  "From",        h_composer_from,       10, 0, NULL,
+     build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
+!    0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, KS_TOADDRBOOK},
+    {"Reply-To: ",  "Reply To",    h_composer_reply_to,   10, 0, NULL,
+     build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
+     0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, KS_TOADDRBOOK},
+--- 912,918 ----
+     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, KS_NONE},
+    {"From    : ",  "From",        h_composer_from,       10, 0, NULL,
+     build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
+!    0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, KS_TOADDRBOOK},
+    {"Reply-To: ",  "Reply To",    h_composer_reply_to,   10, 0, NULL,
+     build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
+     0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, KS_TOADDRBOOK},
+***************
+*** 2305,2310 ****
+--- 2305,2315 ----
+  			he->rich_header = 0;
+  		    }
+  		}
++ 		if (F_ON(F_ALLOW_CHANGING_FROM, ps_global) &&
++ 		   !ps_global->never_allow_changing_from){
++ 		  he->display_it  = 1;  /* show it */
++ 		  he->rich_header = 0;
++ 		}
+  
+  		he_from			= he;
+  		break;
+***************
+*** 3042,3048 ****
+  	if(outgoing->return_path)
+  	  mail_free_address(&outgoing->return_path);
+  
+! 	outgoing->return_path = rfc822_cpy_adr(outgoing->from);
+  
+  	/*
+  	 * Don't ever believe the sender that is there.
+--- 3047,3055 ----
+  	if(outgoing->return_path)
+  	  mail_free_address(&outgoing->return_path);
+  
+!         outgoing->return_path = F_ON(F_USE_DOMAIN_NAME,ps_global) 
+! 				? rfc822_cpy_adr(generate_from())
+! 				: rfc822_cpy_adr(outgoing->from);
+  
+  	/*
+  	 * Don't ever believe the sender that is there.
+diff -rc alpine-2.20/pith/conf.c alpine-2.20.fromheader/pith/conf.c
+*** alpine-2.20/pith/conf.c	2015-01-07 22:53:20.676657373 -0700
+--- alpine-2.20.fromheader/pith/conf.c	2015-01-07 23:15:58.564052657 -0700
+***************
+*** 2851,2856 ****
+--- 2851,2858 ----
+  	 F_NO_FCC_ATTACH, h_config_no_fcc_attach, PREF_SEND, 0},
+  	{"fcc-on-bounce", "Include Fcc When Bouncing Messages",
+  	 F_FCC_ON_BOUNCE, h_config_fcc_on_bounce, PREF_SEND, 0},
++ 	{"return-path-uses-domain-name", NULL,
++ 	 F_USE_DOMAIN_NAME, h_config_use_domain, PREF_SEND, 0},
+  	{"mark-fcc-seen", NULL,
+  	 F_MARK_FCC_SEEN, h_config_mark_fcc_seen, PREF_SEND, 0},
+  	{"fcc-only-without-confirm", "Send to Fcc Only Without Confirming",
+diff -rc alpine-2.20/pith/conftype.h alpine-2.20.fromheader/pith/conftype.h
+*** alpine-2.20/pith/conftype.h	2015-01-07 22:53:20.677657376 -0700
+--- alpine-2.20.fromheader/pith/conftype.h	2015-01-07 23:15:58.565052660 -0700
+***************
+*** 394,399 ****
+--- 394,400 ----
+  	F_AUTO_REPLY_TO,
+  	F_VERBOSE_POST,
+  	F_FCC_ON_BOUNCE,
++ 	F_USE_DOMAIN_NAME,
+  	F_SEND_WO_CONFIRM,
+  	F_USE_SENDER_NOT_X,
+  	F_BLANK_KEYMENU,
+diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.fromheader/pith/pine.hlp
+*** alpine-2.20/pith/pine.hlp	2015-01-07 22:53:20.683657394 -0700
+--- alpine-2.20.fromheader/pith/pine.hlp	2015-01-07 23:15:58.571052674 -0700
+***************
+*** 28416,28421 ****
+--- 28416,28437 ----
+  &lt;End of help on this topic&gt;
+  </BODY>
+  </HTML>
++ ====== h_config_use_domain =====
++ <HTML>
++ <HEAD>
++ <TITLE>FEATURE: <!--#echo var="FEAT_return-path-uses-domain-name"--> </TITLE>
++ </HEAD>
++ <BODY>
++ <H1>FEATURE: <!--#echo var="FEAT_return-path-uses-domain-name"--></H1>
++ 
++ If you enable this configuration option Pine will use your domain name and your
++ username in that domain name to construct your Return-Path header, if not Pine
++ will use the address that you have set in the From: field to construct it.
++ 
++ <P>
++ &lt;End of help on this topic&gt;
++ </BODY>
++ </HTML>
+  ====== h_config_use_sender_not_x =====
+  <HTML>
+  <HEAD>
+diff -rc alpine-2.20/pith/send.c alpine-2.20.fromheader/pith/send.c
+*** alpine-2.20/pith/send.c	2015-01-07 22:53:20.675657370 -0700
+--- alpine-2.20.fromheader/pith/send.c	2015-01-07 23:15:58.572052677 -0700
+***************
+*** 53,59 ****
+  /* name::type::canedit::writehdr::localcopy::rcptto */
+  PINEFIELD pf_template[] = {
+    {"X-Auth-Received",    FreeText,	0, 1, 1, 0},	/* N_AUTHRCVD */
+!   {"From",        Address,	0, 1, 1, 0},
+    {"Reply-To",    Address,	0, 1, 1, 0},
+    {TONAME,        Address,	1, 1, 1, 1},
+    {CCNAME,        Address,	1, 1, 1, 1},
+--- 53,59 ----
+  /* name::type::canedit::writehdr::localcopy::rcptto */
+  PINEFIELD pf_template[] = {
+    {"X-Auth-Received",    FreeText,	0, 1, 1, 0},	/* N_AUTHRCVD */
+!   {"From",        Address,	1, 1, 1, 0},
+    {"Reply-To",    Address,	0, 1, 1, 0},
+    {TONAME,        Address,	1, 1, 1, 1},
+    {CCNAME,        Address,	1, 1, 1, 1},
+***************
+*** 1232,1238 ****
+  	    *p = *(p+4);
+  
+          pf->type        = pf_template[i].type;
+! 	pf->canedit     = pf_template[i].canedit;
+  	pf->rcptto      = pf_template[i].rcptto;
+  	pf->writehdr    = pf_template[i].writehdr;
+  	pf->localcopy   = pf_template[i].localcopy;
+--- 1232,1238 ----
+  	    *p = *(p+4);
+  
+          pf->type        = pf_template[i].type;
+! 	pf->canedit     = (i == N_FROM) ? CAN_EDIT(ps_global) : pf_template[i].canedit;
+  	pf->rcptto      = pf_template[i].rcptto;
+  	pf->writehdr    = pf_template[i].writehdr;
+  	pf->localcopy   = pf_template[i].localcopy;
+diff -rc alpine-2.20/pith/send.h alpine-2.20.fromheader/pith/send.h
+*** alpine-2.20/pith/send.h	2015-01-07 22:53:20.679657382 -0700
+--- alpine-2.20.fromheader/pith/send.h	2015-01-07 23:15:58.572052677 -0700
+***************
+*** 159,164 ****
+--- 159,166 ----
+      unsigned  text_written:1;
+  };
+  
++ #define CAN_EDIT(x)	(!((x)->never_allow_changing_from) && \
++ 			F_ON(F_ALLOW_CHANGING_FROM, (x)))
+  
+  #define TONAME "To"
+  #define CCNAME "cc"

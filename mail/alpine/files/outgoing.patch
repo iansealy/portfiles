@@ -1,0 +1,1214 @@
+diff -rc alpine-2.20/alpine/alpine.c alpine-2.20.outgoing/alpine/alpine.c
+*** alpine-2.20/alpine/alpine.c	2015-01-07 22:53:20.559657023 -0700
+--- alpine-2.20.outgoing/alpine/alpine.c	2015-01-07 23:09:10.924680595 -0700
+***************
+*** 461,466 ****
+--- 461,471 ----
+  
+      convert_args_to_utf8(pine_state, &args);
+  
++     if (args.action == aaFolder && !args.data.folder &&
++ 		ps_global->send_immediately){
++ 	printf(_("No value for To: field specified\n"));
++ 	exit(-1);
++     }
+      if(args.action == aaFolder){
+  	pine_state->beginning_of_month = first_run_of_month();
+  	pine_state->beginning_of_year = first_run_of_year();
+***************
+*** 679,684 ****
+--- 684,690 ----
+          
+  
+      /*--- output side ---*/
++     if (!ps_global->send_immediately){
+      rv = config_screen(&(pine_state->ttyo));
+  #ifndef _WINDOWS	/* always succeeds under _WINDOWS */
+      if(rv){
+***************
+*** 719,730 ****
+      /* initialize titlebar in case we use it */
+      set_titlebar("", NULL, NULL, NULL, NULL, 0, FolderName, 0, 0, NULL);
+  
+-     /*
+-      * Prep storage object driver for PicoText 
+-      */
+-     so_register_external_driver(pine_pico_get, pine_pico_give, pine_pico_writec, pine_pico_readc, 
+- 				pine_pico_puts, pine_pico_seek, NULL, NULL);
+- 
+  #ifdef	DEBUG
+      if(ps_global->debug_imap > 4 || debug > 9){
+  	q_status_message(SM_ORDER | SM_DING, 5, 9,
+--- 725,730 ----
+***************
+*** 732,737 ****
+--- 732,748 ----
+  	flush_status_messages(0);
+      }
+  #endif
++     }
++     else{
++      fake_config_screen(&(pine_state->ttyo));
++      init_folders(pine_state);		/* digest folder spec's */
++     }
++ 
++     /*
++      * Prep storage object driver for PicoText 
++      */
++     so_register_external_driver(pine_pico_get, pine_pico_give, pine_pico_writec, pine_pico_readc, 
++ 				pine_pico_puts, pine_pico_seek, NULL, NULL);
+  
+      if(args.action == aaPrcCopy || args.action == aaAbookCopy){
+  	int   exit_val = -1;
+***************
+*** 907,912 ****
+--- 918,929 ----
+          int	    len, good_addr = 1;
+  	int	    exit_val = 0;
+  	BUILDER_ARG fcc;
++         ACTION_S  *role = NULL;
++ 
++         if (pine_state->in_init_seq && pine_state->send_immediately
++ 		&&  (char) *pine_state->initial_cmds++ == '#'
++ 		&&  ++pine_state->initial_cmds_offset)
++             role_select_screen(pine_state, &role, 1);
+  
+  	if(pine_state->in_init_seq){
+  	    pine_state->in_init_seq = pine_state->save_in_init_seq = 0;
+***************
+*** 945,951 ****
+  	  memset(&fcc, 0, sizeof(fcc));
+  
+  	if(good_addr){
+! 	    compose_mail(addr, fcc.tptr, NULL,
+  			 args.data.mail.attachlist, stdin_getc);
+  	}
+  	else{
+--- 962,968 ----
+  	  memset(&fcc, 0, sizeof(fcc));
+  
+  	if(good_addr){
+! 	    compose_mail(addr, fcc.tptr, role,
+  			 args.data.mail.attachlist, stdin_getc);
+  	}
+  	else{
+***************
+*** 979,984 ****
+--- 996,1002 ----
+              
+          pine_state->mail_stream    = NULL;
+          pine_state->mangled_screen = 1;
++         pine_state->subject        = NULL;
+  
+  	if(args.action == aaURL){
+  	    url_tool_t f;
+***************
+*** 1094,1099 ****
+--- 1112,1118 ----
+  	    }
+          }
+  
++        if (!pine_state->send_immediately)
+          fflush(stdout);
+  
+  #if !defined(_WINDOWS) && !defined(LEAVEOUTFIFO)
+***************
+*** 2982,2991 ****
+      if(i > 0){
+  	ps->initial_cmds = (int *)fs_get((i+1) * sizeof(int));
+  	ps->free_initial_cmds = ps->initial_cmds;
+  	for(j = 0; j < i; j++)
+! 	  ps->initial_cmds[j] = i_cmds[j];
+! 
+! 	ps->initial_cmds[i] = 0;
+  	ps->in_init_seq = ps->save_in_init_seq = 1;
+      }
+  }
+--- 3001,3015 ----
+      if(i > 0){
+  	ps->initial_cmds = (int *)fs_get((i+1) * sizeof(int));
+  	ps->free_initial_cmds = ps->initial_cmds;
++ 	ps->initial_cmds_backup = (int *)fs_get((i+1) * sizeof(int));
++ 	ps->free_initial_cmds_backup = ps->initial_cmds_backup;
+  	for(j = 0; j < i; j++)
+! 	  ps->initial_cmds[j] = ps->initial_cmds_backup[j] = i_cmds[j];
+! #define ctrl_x 24
+!       if (i > 1)
+! 	ps->send_immediately = i_cmds[i - 2] == ctrl_x
+! 			&& ((i_cmds[i - 1] == 'y') || (i_cmds[i-1] == 'Y'));
+! 	ps->initial_cmds[i] = ps->initial_cmds_backup[i] = 0;
+  	ps->in_init_seq = ps->save_in_init_seq = 1;
+      }
+  }
+diff -rc alpine-2.20/alpine/arg.c alpine-2.20.outgoing/alpine/arg.c
+*** alpine-2.20/alpine/arg.c	2015-01-07 22:53:20.583657095 -0700
+--- alpine-2.20.outgoing/alpine/arg.c	2015-01-07 23:09:10.924680595 -0700
+***************
+*** 510,515 ****
+--- 510,521 ----
+  		  do_version = 1;
+  		  goto Loop;
+  	      }
++               else if(strcmp(*av, "subject") == 0){
++                      if(--ac){
++                         pine_state->subject = cpystr(*++av);
++                         }
++                         goto Loop;
++               }
+  #ifdef	_WINDOWS
+  	      else if(strcmp(*av, "install") == 0){
+  		  pine_state->install_flag = 1;
+diff -rc alpine-2.20/alpine/busy.c alpine-2.20.outgoing/alpine/busy.c
+*** alpine-2.20/alpine/busy.c	2015-01-07 22:53:20.571657059 -0700
+--- alpine-2.20.outgoing/alpine/busy.c	2015-01-07 23:09:10.924680595 -0700
+***************
+*** 226,232 ****
+  
+  	    add_review_message(buf, -1);
+  	}
+! 	else{
+  	    q_status_message(SM_ORDER, 0, 1, progress);
+  
+  	    /*
+--- 226,232 ----
+  
+  	    add_review_message(buf, -1);
+  	}
+! 	else if (!ps_global->send_immediately){
+  	    q_status_message(SM_ORDER, 0, 1, progress);
+  
+  	    /*
+***************
+*** 238,245 ****
+  	     */
+  	    display_message('x');
+  	}
+! 	
+! 	fflush(stdout);
+      }
+  
+      /*
+--- 238,245 ----
+  	     */
+  	    display_message('x');
+  	}
+! 	if (!ps_global->send_immediately)   
+! 	  fflush(stdout);
+      }
+  
+      /*
+***************
+*** 287,293 ****
+      (*ap)->cf	 = done_busy_cue;
+      ap		 = &(*ap)->next;
+  
+!     start_after(a);		/* launch cue handler */
+  
+  #ifdef _WINDOWS
+      mswin_setcursor(MSWIN_CURSOR_BUSY);
+--- 287,294 ----
+      (*ap)->cf	 = done_busy_cue;
+      ap		 = &(*ap)->next;
+  
+!     if(!ps_global->send_immediately)
+!        start_after(a);		/* launch cue handler */
+  
+  #ifdef _WINDOWS
+      mswin_setcursor(MSWIN_CURSOR_BUSY);
+***************
+*** 436,441 ****
+--- 437,447 ----
+  {
+      int space_left, slots_used;
+  
++     if (ps_global->send_immediately){
++ 	mark_status_dirty();
++ 	return;
++     }
++ 
+      if(final_message && final_message_pri >= 0){
+  	char progress[MAX_SCREEN_COLS+1];
+  
+diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.outgoing/alpine/confscroll.c
+*** alpine-2.20/alpine/confscroll.c	2015-01-07 22:53:20.559657023 -0700
+--- alpine-2.20.outgoing/alpine/confscroll.c	2015-01-07 23:09:10.925680598 -0700
+***************
+*** 463,469 ****
+      char	  tmp[MAXPATH+1];
+      char         *utf8str;
+      UCS           ch = 'x';
+!     int		  cmd, i, j, done = 0, changes = 0;
+      int		  retval = 0;
+      int		  km_popped = 0, stay_in_col = 0;
+      struct	  key_menu  *km = NULL;
+--- 463,469 ----
+      char	  tmp[MAXPATH+1];
+      char         *utf8str;
+      UCS           ch = 'x';
+!     int		  cmd, i, j, k = 1, done = 0, changes = 0;
+      int		  retval = 0;
+      int		  km_popped = 0, stay_in_col = 0;
+      struct	  key_menu  *km = NULL;
+***************
+*** 512,517 ****
+--- 512,518 ----
+  	}
+  
+  	/*----------- Check for new mail -----------*/
++         if (!ps->send_immediately){
+          if(new_mail(0, NM_TIMING(ch), NM_STATUS_MSG | NM_DEFER_SORT) >= 0)
+            ps->mangled_header = 1;
+  
+***************
+*** 541,546 ****
+--- 542,548 ----
+  	    mark_status_unknown();
+  	}
+  
++ 	} /* send_immediately */
+  	if(ps->mangled_footer || km != screen->current->keymenu){
+  	    bitmap_t	 bitmap;
+  
+***************
+*** 612,617 ****
+--- 614,620 ----
+  	    }
+  	}
+  
++ 	if(!ps_global->send_immediately){
+  	MoveCursor(cursor_pos.row, cursor_pos.col);
+  #ifdef	MOUSE
+  	mouse_in_content(KEY_MOUSE, -1, -1, 0, 0);	/* prime the handler */
+***************
+*** 630,635 ****
+--- 633,646 ----
+  #ifdef	_WINDOWS
+  	mswin_setscrollcallback(NULL);
+  #endif
++         } /* send_immediately */
++                        
++         if (ps->send_immediately){
++ 	      ps_global->dont_use_init_cmds = 0;
++               process_config_input(&ch);
++               if (ch == '\030')   /* ^X, bye */
++                 goto end;
++         }           
+  
+  	cmd = menu_command(ch, km);
+  
+***************
+*** 1383,1389 ****
+  	    break;
+  	}
+      }
+! 
+      screen->current = first_confline(screen->current);
+      free_conflines(&screen->current);
+      return(retval);
+--- 1394,1400 ----
+  	    break;
+  	}
+      }
+! end:
+      screen->current = first_confline(screen->current);
+      free_conflines(&screen->current);
+      return(retval);
+diff -rc alpine-2.20/alpine/osdep/termin.gen.c alpine-2.20.outgoing/alpine/osdep/termin.gen.c
+*** alpine-2.20/alpine/osdep/termin.gen.c	2015-01-07 22:53:20.564657038 -0700
+--- alpine-2.20.outgoing/alpine/osdep/termin.gen.c	2015-01-07 23:09:10.926680601 -0700
+***************
+*** 67,72 ****
+--- 67,89 ----
+  int	pcpine_oe_cursor(int, long);
+  #endif
+  
++ void
++ fake_config_screen(tt)
++      struct ttyo **tt;
++ {
++     struct ttyo *ttyo;
++ 
++     ttyo = (struct ttyo *)fs_get(sizeof (struct ttyo));
++ 
++     ttyo->header_rows = 2;
++     ttyo->footer_rows = 3;
++     ttyo->screen_rows = 24;
++     ttyo->screen_cols = 80;
++ 
++     *tt = ttyo;
++ 
++ }
++ 
+  
+  /*
+   *     Generic tty input routines
+***************
+*** 307,313 ****
+  	       (escape_list && escape_list[0].ch != -1 && escape_list[0].label)
+  		 ? escape_list[0].label: ""));
+  
+!     if(!ps_global->ttyo)
+        return(pre_screen_config_opt_enter(utf8string, utf8string_size, utf8prompt,
+  					 escape_list, help, flags));
+  
+--- 324,330 ----
+  	       (escape_list && escape_list[0].ch != -1 && escape_list[0].label)
+  		 ? escape_list[0].label: ""));
+  
+!     if(!ps_global->ttyo || ps_global->send_immediately)
+        return(pre_screen_config_opt_enter(utf8string, utf8string_size, utf8prompt,
+  					 escape_list, help, flags));
+  
+***************
+*** 1154,1160 ****
+  		}
+  	    }
+  	}
+! 
+  	if(!*ps_global->initial_cmds && ps_global->free_initial_cmds){
+  	    fs_give((void **) &ps_global->free_initial_cmds);
+  	    ps_global->initial_cmds = NULL;
+--- 1171,1177 ----
+  		}
+  	    }
+  	}
+! 	ps_global->initial_cmds_offset++;
+  	if(!*ps_global->initial_cmds && ps_global->free_initial_cmds){
+  	    fs_give((void **) &ps_global->free_initial_cmds);
+  	    ps_global->initial_cmds = NULL;
+diff -rc alpine-2.20/alpine/osdep/termin.gen.h alpine-2.20.outgoing/alpine/osdep/termin.gen.h
+*** alpine-2.20/alpine/osdep/termin.gen.h	2015-01-07 22:53:20.563657035 -0700
+--- alpine-2.20.outgoing/alpine/osdep/termin.gen.h	2015-01-07 23:09:10.926680601 -0700
+***************
+*** 33,38 ****
+--- 33,39 ----
+  int	key_recorder(int);
+  int	key_playback(int);
+  int	recent_keystroke(int *, char *, size_t);
++ void	fake_config_screen(struct ttyo **);
+  int	init_tty_driver(struct pine *);
+  void	end_tty_driver(struct pine *);
+  int	PineRaw(int);
+diff -rc alpine-2.20/alpine/osdep/termin.unx.c alpine-2.20.outgoing/alpine/osdep/termin.unx.c
+*** alpine-2.20/alpine/osdep/termin.unx.c	2015-01-07 22:53:20.564657038 -0700
+--- alpine-2.20.outgoing/alpine/osdep/termin.unx.c	2015-01-07 23:09:10.926680601 -0700
+***************
+*** 111,116 ****
+--- 111,118 ----
+  int
+  init_tty_driver(struct pine *ps)
+  {
++    if(ps->send_immediately)
++      return 0;
+  #ifdef	MOUSE
+      if(F_ON(F_ENABLE_MOUSE, ps_global))
+        init_mouse();
+***************
+*** 683,688 ****
+--- 685,693 ----
+  void
+  init_keyboard(int use_fkeys)
+  {
++     if (ps_global->send_immediately)
++ 	return;
++ 
+      if(use_fkeys && (!strucmp(term_name,"vt102")
+  		     || !strucmp(term_name,"vt100")))
+        printf("\033\133\071\071\150");
+***************
+*** 700,705 ****
+--- 705,713 ----
+  void
+  end_keyboard(int use_fkeys)
+  {
++     if(ps_global->send_immediately)
++ 	return;
++ 
+      if(use_fkeys && (!strcmp(term_name, "vt102")
+  		     || !strcmp(term_name, "vt100"))){
+  	printf("\033\133\071\071\154");
+diff -rc alpine-2.20/alpine/osdep/termout.unx.c alpine-2.20.outgoing/alpine/osdep/termout.unx.c
+*** alpine-2.20/alpine/osdep/termout.unx.c	2015-01-07 22:53:20.562657032 -0700
+--- alpine-2.20.outgoing/alpine/osdep/termout.unx.c	2015-01-07 23:09:10.926680601 -0700
+***************
+*** 206,211 ****
+--- 206,214 ----
+  void
+  init_screen(void)
+  {
++     if(ps_global->send_immediately)
++ 	return;
++ 
+      if(_termcap_init)			/* init using termcap's rule */
+        tputs(_termcap_init, 1, outchar);
+  
+***************
+*** 313,318 ****
+--- 316,324 ----
+  {
+      int footer_rows_was_one = 0;
+  
++     if(ps_global->send_immediately)
++       return;
++ 
+      if(!panicking()){
+  
+  	dprint((9, "end_screen called\n"));
+***************
+*** 367,373 ****
+      _line = 0;	/* clear leaves us at top... */
+      _col  = 0;
+  
+!     if(ps_global->in_init_seq)
+        return;
+  
+      mark_status_unknown();
+--- 373,379 ----
+      _line = 0;	/* clear leaves us at top... */
+      _col  = 0;
+  
+!     if(ps_global->in_init_seq || ps_global->send_immediately)
+        return;
+  
+      mark_status_unknown();
+diff -rc alpine-2.20/alpine/radio.c alpine-2.20.outgoing/alpine/radio.c
+*** alpine-2.20/alpine/radio.c	2015-01-07 22:53:20.560657026 -0700
+--- alpine-2.20.outgoing/alpine/radio.c	2015-01-07 23:09:10.926680601 -0700
+***************
+*** 122,128 ****
+      int	  rv, width;
+      size_t len;
+  
+!     if(!ps_global->ttyo)
+        return(pre_screen_config_want_to(question, dflt, on_ctrl_C));
+  #ifdef _WINDOWS
+      if (mswin_usedialog ()) {
+--- 122,128 ----
+      int	  rv, width;
+      size_t len;
+  
+!     if(!ps_global->ttyo || ps_global->send_immediately)
+        return(pre_screen_config_want_to(question, dflt, on_ctrl_C));
+  #ifdef _WINDOWS
+      if (mswin_usedialog ()) {
+diff -rc alpine-2.20/alpine/reply.c alpine-2.20.outgoing/alpine/reply.c
+*** alpine-2.20/alpine/reply.c	2015-01-07 22:53:20.568657050 -0700
+--- alpine-2.20.outgoing/alpine/reply.c	2015-01-07 23:09:10.927680605 -0700
+***************
+*** 876,882 ****
+  
+  	prompt[sizeof(prompt)-1] = '\0';
+  
+! 	cmd = radio_buttons(prompt, -FOOTER_ROWS(ps_global), ekey,
+  			    'y', 'x', help, RB_NORM);
+  
+  	switch(cmd){
+--- 876,883 ----
+  
+  	prompt[sizeof(prompt)-1] = '\0';
+  
+! 	cmd = ps_global->send_immediately ? 'n' :
+! 		radio_buttons(prompt, -FOOTER_ROWS(ps_global), ekey,
+  			    'y', 'x', help, RB_NORM);
+  
+  	switch(cmd){
+***************
+*** 2461,2466 ****
+--- 2462,2469 ----
+  {
+      int rv;
+      
++     if(ps_global->send_immediately)
++       return 0;
+      clear_cursor_pos();			/* can't know where cursor is */
+      mark_status_dirty();		/* don't count on cached text */
+      fix_windsize(ps_global);
+diff -rc alpine-2.20/alpine/roleconf.c alpine-2.20.outgoing/alpine/roleconf.c
+*** alpine-2.20/alpine/roleconf.c	2015-01-07 22:53:20.567657047 -0700
+--- alpine-2.20.outgoing/alpine/roleconf.c	2015-01-07 23:09:10.928680608 -0700
+***************
+*** 140,147 ****
+--- 140,152 ----
+  
+      if(!(nonempty_patterns(rflags, &pstate) &&
+           first_pattern(&pstate))){
++ 	if(!ps->send_immediately)
+  	q_status_message(SM_ORDER, 3, 3,
+  			 _("No roles available. Use Setup/Rules to add roles."));
++ 	else{
++ 	   printf( _("No roles available. Use Setup/Rules to add roles."));
++ 	   exit(-1);
++ 	}
+  	return(ret);
+      }
+  
+diff -rc alpine-2.20/alpine/send.c alpine-2.20.outgoing/alpine/send.c
+*** alpine-2.20/alpine/send.c	2015-01-07 22:53:20.561657029 -0700
+--- alpine-2.20.outgoing/alpine/send.c	2015-01-07 23:09:10.929680611 -0700
+***************
+*** 614,619 ****
+--- 614,620 ----
+          if(given_to)
+  	  rfc822_parse_adrlist(&outgoing->to, given_to, ps_global->maildomain);
+  
++         outgoing->subject = cpystr(ps_global->subject);
+          outgoing->message_id = generate_message_id();
+  
+  	/*
+***************
+*** 1782,1787 ****
+--- 1783,1791 ----
+      pbf = &pbuf1;
+      standard_picobuf_setup(pbf);
+  
++     pbf->auto_cmds = ps_global->initial_cmds_backup + 
++ 						ps_global->initial_cmds_offset;
++ 
+      /*
+       * Cancel any pending initial commands since pico uses a different
+       * input routine.  If we didn't cancel them, they would happen after
+***************
+*** 2983,2989 ****
+  #ifdef _WINDOWS
+  	mswin_setwindowmenu (MENU_DEFAULT);
+  #endif
+! 	fix_windsize(ps_global);
+  
+  	/*
+  	 * Only reinitialize signals if we didn't receive an interesting
+--- 2987,2998 ----
+  #ifdef _WINDOWS
+  	mswin_setwindowmenu (MENU_DEFAULT);
+  #endif
+! 	if (ps_global->send_immediately){  
+! 	   if(ps_global->free_initial_cmds_backup)
+! 	      fs_give((void **)&ps_global->free_initial_cmds_backup);
+! 	} 
+! 	else
+! 	   fix_windsize(ps_global);
+  
+  	/*
+  	 * Only reinitialize signals if we didn't receive an interesting
+***************
+*** 3719,3728 ****
+  	    if(sending_filter_requested
+  	       && !filter_message_text(sending_filter_requested, outgoing,
+  				       *body, &orig_so, &header)){
+! 		q_status_message1(SM_ORDER, 3, 3,
+  				 _("Problem filtering!  Nothing sent%s."),
+  				 fcc ? " or saved to fcc" : "");
+! 		continue;
+  	    }
+  
+              /*------ Actually post  -------*/
+--- 3728,3743 ----
+  	    if(sending_filter_requested
+  	       && !filter_message_text(sending_filter_requested, outgoing,
+  				       *body, &orig_so, &header)){
+! 		if (!ps_global->send_immediately){
+! 		     q_status_message1(SM_ORDER, 3, 3,
+  				 _("Problem filtering!  Nothing sent%s."),
+  				 fcc ? " or saved to fcc" : "");
+! 		     continue;
+! 		}
+! 		else{
+! 		   fprintf(stderr, _("Problem filtering! Nothing sent or saved to Fcc\n"));
+! 		   exit(-1);
+! 		}
+  	    }
+  
+              /*------ Actually post  -------*/
+***************
+*** 3966,3971 ****
+--- 3981,3988 ----
+              /*----- Mail Post FAILED, back to composer -----*/
+              if(result & (P_MAIL_LOSE | P_FCC_LOSE)){
+  		dprint((1, "Send failed, continuing\n"));
++ 		if (ps_global->send_immediately)
++ 		   exit(1);
+  
+  		if(result & P_FCC_LOSE){
+  		    /*
+***************
+*** 4000,4005 ****
+--- 4017,4023 ----
+  	    update_answered_flags(reply);
+  
+              /*----- Signed, sealed, delivered! ------*/
++          if (!ps_global->send_immediately)
+  	    q_status_message(SM_ORDER, 0, 3,
+  			     pine_send_status(result, fcc, tmp_20k_buf, SIZEOF_20KBUF, NULL));
+  
+***************
+*** 4466,4472 ****
+  	return(1);
+      }
+  
+!     if(F_ON(F_SEND_WO_CONFIRM, ps_global)){
+  	if(result)
+  	  *result = NULL;
+  
+--- 4484,4490 ----
+  	return(1);
+      }
+  
+!     if(!ps_global->send_immediately && F_ON(F_SEND_WO_CONFIRM, ps_global)){
+  	if(result)
+  	  *result = NULL;
+  
+***************
+*** 4646,4652 ****
+  
+      opts[i].ch = -1;
+  
+!     fix_windsize(ps_global);
+  
+      while(1){
+  	if(filters && filters->filter && (p = strindex(filters->filter, ' ')))
+--- 4664,4671 ----
+  
+      opts[i].ch = -1;
+  
+!     if (!ps_global->send_immediately)
+!        fix_windsize(ps_global);
+  
+      while(1){
+  	if(filters && filters->filter && (p = strindex(filters->filter, ' ')))
+***************
+*** 4828,4834 ****
+  	if(double_rad +
+  	   ((call_mailer_flags & CM_DSN_SHOW)
+  	       ? 4 : F_ON(F_DSN, ps_global) ? 1 : 0) > 11)
+! 	  rv = double_radio_buttons(tmp_20k_buf, -FOOTER_ROWS(ps_global), opts,
+  			   'y', 'z',
+  			   (F_ON(F_DSN, ps_global) && allow_flowed)
+  					          ? h_send_prompt_dsn_flowed :
+--- 4847,4854 ----
+  	if(double_rad +
+  	   ((call_mailer_flags & CM_DSN_SHOW)
+  	       ? 4 : F_ON(F_DSN, ps_global) ? 1 : 0) > 11)
+! 	  rv = ps_global->send_immediately ? 'y' :
+! 		double_radio_buttons(tmp_20k_buf, -FOOTER_ROWS(ps_global), opts,
+  			   'y', 'z',
+  			   (F_ON(F_DSN, ps_global) && allow_flowed)
+  					          ? h_send_prompt_dsn_flowed :
+***************
+*** 4837,4843 ****
+  						       h_send_prompt,
+  			   RB_NORM);
+  	else
+! 	  rv = radio_buttons(tmp_20k_buf, -FOOTER_ROWS(ps_global), opts,
+  			   'y', 'z',
+  			   (double_rad +
+  			    ((call_mailer_flags & CM_DSN_SHOW)
+--- 4857,4864 ----
+  						       h_send_prompt,
+  			   RB_NORM);
+  	else
+! 	  rv = ps_global->send_immediately ? 'y' :
+! 		radio_buttons(tmp_20k_buf, -FOOTER_ROWS(ps_global), opts,
+  			   'y', 'z',
+  			   (double_rad +
+  			    ((call_mailer_flags & CM_DSN_SHOW)
+***************
+*** 5300,5308 ****
+  	    if((tmp_so = so_get(PicoText, NULL, EDIT_ACCESS)) != NULL){
+  		gf_set_so_writec(&pc, tmp_so);
+  		ps_global->mangled_screen = 1;
+! 		suspend_busy_cue();
+! 		ClearScreen();
+! 		fflush(stdout);
+  		if(tmpf){
+  		    PIPE_S *fpipe;
+  
+--- 5321,5331 ----
+  	    if((tmp_so = so_get(PicoText, NULL, EDIT_ACCESS)) != NULL){
+  		gf_set_so_writec(&pc, tmp_so);
+  		ps_global->mangled_screen = 1;
+! 		if (!ps_global->send_immediately){
+! 		   suspend_busy_cue();
+! 		   ClearScreen();
+! 		   fflush(stdout);
+! 		}
+  		if(tmpf){
+  		    PIPE_S *fpipe;
+  
+***************
+*** 5414,5421 ****
+  		    set_mime_type_by_grope(b);
+  		}
+  
+! 		ClearScreen();
+! 		resume_busy_cue(0);
+  	    }
+  	    else
+  	      errstr = "Can't create space for filtered text.";
+--- 5437,5446 ----
+  		    set_mime_type_by_grope(b);
+  		}
+  
+! 		if (!ps_global->send_immediately){
+! 		   ClearScreen();
+! 		   resume_busy_cue(0);
+! 		}
+  	    }
+  	    else
+  	      errstr = "Can't create space for filtered text.";
+***************
+*** 5446,5455 ****
+  	if(tmp_so)
+  	  so_give(&tmp_so);
+  
+! 	q_status_message1(SM_ORDER | SM_DING, 3, 6, _("Problem filtering: %s"),
+  			  errstr);
+! 	dprint((1, "Filter FAILED: %s\n",
+  	       errstr ? errstr : "?"));
+      }
+  
+      return(errstr == NULL);
+--- 5471,5486 ----
+  	if(tmp_so)
+  	  so_give(&tmp_so);
+  
+! 	if (!ps_global->send_immediately){
+! 	     q_status_message1(SM_ORDER | SM_DING, 3, 6, _("Problem filtering: %s"),
+  			  errstr);
+! 	     dprint((1, "Filter FAILED: %s\n",
+  	       errstr ? errstr : "?"));
++ 	}
++ 	else{
++ 	   fprintf(stderr, _("Filter FAILED: %s\n"), errstr ? errstr : "?");
++ 	   exit(-1);
++ 	}
+      }
+  
+      return(errstr == NULL);
+diff -rc alpine-2.20/alpine/status.c alpine-2.20.outgoing/alpine/status.c
+*** alpine-2.20/alpine/status.c	2015-01-07 22:53:20.567657047 -0700
+--- alpine-2.20.outgoing/alpine/status.c	2015-01-07 23:09:10.930680615 -0700
+***************
+*** 111,116 ****
+--- 111,119 ----
+      char  *clean_msg;
+      size_t mlen;
+  
++     if (ps_global->send_immediately)
++ 	return;
++ 
+      status_message_lock();
+  
+      /*
+***************
+*** 605,610 ****
+--- 608,616 ----
+      SMQ_T *q, *copy_of_q;
+      int ding;
+  
++     if(ps_global->send_immediately)
++       return;
++ 
+  start_over:
+      status_message_lock();
+  
+diff -rc alpine-2.20/pico/composer.c alpine-2.20.outgoing/pico/composer.c
+*** alpine-2.20/pico/composer.c	2015-01-07 22:53:20.665657340 -0700
+--- alpine-2.20.outgoing/pico/composer.c	2015-01-07 23:09:10.930680615 -0700
+***************
+*** 1872,1877 ****
+--- 1872,1879 ----
+      }
+  
+      UpdateHeader(0);
++     if(sendnow)
++ 	return(status !=0);
+      PaintHeader(COMPOSER_TOP_LINE, status != 0);
+      PaintBody(1);
+      return(status != 0);
+***************
+*** 3362,3367 ****
+--- 3364,3372 ----
+  {
+      UCS    *bufp, *buf;
+  
++     if (sendnow)
++ 	return;
++ 
+      if(ComposerTopLine - 1 >= BOTTOM())		/* silently forget it */
+        return;
+  
+***************
+*** 3418,3423 ****
+--- 3423,3431 ----
+      UCS *end;
+      int  i;
+  
++     if (sendnow)
++       return(TRUE);
++ 
+      buf = utf8_to_ucs4_cpystr(headents[entry].prompt);	/* fresh prompt paint */
+      if(!buf)
+        return(-1);
+***************
+*** 4373,4378 ****
+--- 4381,4389 ----
+  void
+  ShowPrompt(void)
+  {
++     if (sendnow)
++ 	return;
++ 
+      if(headents[ods.cur_e].key_label){
+  	menu_header[TO_KEY].name  = "^T";
+  	menu_header[TO_KEY].label = headents[ods.cur_e].key_label;
+diff -rc alpine-2.20/pico/display.c alpine-2.20.outgoing/pico/display.c
+*** alpine-2.20/pico/display.c	2015-01-07 22:53:20.664657337 -0700
+--- alpine-2.20.outgoing/pico/display.c	2015-01-07 23:09:10.931680618 -0700
+***************
+*** 387,392 ****
+--- 387,395 ----
+      int     scroll = 0;
+      CELL	     c;
+  
++     if (sendnow)
++ 	return;
++ 
+  #if	TYPEAH
+      if (typahead())
+  	return;
+***************
+*** 916,922 ****
+      int   nbflag;		/* non-blanks to the right flag? */
+      int   cleartoeol = 0;
+  
+!     if(row < 0 || row > term.t_nrow)
+        return;
+  
+      /* set up pointers to virtual and physical lines */
+--- 919,925 ----
+      int   nbflag;		/* non-blanks to the right flag? */
+      int   cleartoeol = 0;
+  
+!     if(row < 0 || row > term.t_nrow || sendnow)
+        return;
+  
+      /* set up pointers to virtual and physical lines */
+***************
+*** 1285,1291 ****
+  void
+  mlerase(void)
+  {
+!     if (term.t_nrow < term.t_mrow)
+        return;
+  
+      movecursor(term.t_nrow - term.t_mrow, 0);
+--- 1288,1294 ----
+  void
+  mlerase(void)
+  {
+!     if (term.t_nrow < term.t_mrow || sendnow)
+        return;
+  
+      movecursor(term.t_nrow - term.t_mrow, 0);
+***************
+*** 1963,1969 ****
+  
+      mlerase();
+  
+!     if(!(message && *message) || term.t_nrow < 2)	
+        return;    /* nothing to write or no space to write, bag it */
+  
+      bufp = message;
+--- 1966,1972 ----
+  
+      mlerase();
+  
+!     if(!(message && *message) || term.t_nrow < 2 || sendnow)	
+        return;    /* nothing to write or no space to write, bag it */
+  
+      bufp = message;
+***************
+*** 2152,2159 ****
+      }
+  
+      ret = ttcol;
+!     while(ttcol < term.t_ncol)
+!       pputc(' ', 0);
+  
+      movecursor(term.t_nrow - term.t_mrow, ret);
+  
+--- 2155,2163 ----
+      }
+  
+      ret = ttcol;
+!     if(sendnow == 0)
+!       while(ttcol < term.t_ncol)
+!         pputc(' ', 0);
+  
+      movecursor(term.t_nrow - term.t_mrow, ret);
+  
+***************
+*** 2632,2637 ****
+--- 2636,2643 ----
+  {
+      int ind, width, printable_ascii = 0;
+  
++     if(sendnow)
++ 	return;
+      /*
+       * This is necessary but not sufficient to allow us to draw. Note that
+       * ttrow runs from 0 to t_nrow (so total number of rows is t_nrow+1)
+***************
+*** 2686,2691 ****
+--- 2692,2699 ----
+  pputs(UCS *s,				/* string to write */
+        int a)				/* and its attribute */
+  {
++     if(sendnow)
++ 	return;
+      while (*s != '\0')
+        pputc(*s++, a);
+  }
+***************
+*** 2696,2701 ****
+--- 2704,2711 ----
+  {
+      UCS *ucsstr = NULL;
+  
++     if(sendnow)
++ 	return;
+      if(s && *s){
+  	ucsstr = utf8_to_ucs4_cpystr(s);
+  	if(ucsstr){
+***************
+*** 2996,3001 ****
+--- 3006,3014 ----
+      char  nbuf[NLINE];
+  #endif
+  
++     if(sendnow)
++ 	return;
++ 
+  #ifdef _WINDOWS
+      pico_config_menu_items (keymenu);
+  #endif
+diff -rc alpine-2.20/pico/edef.h alpine-2.20.outgoing/pico/edef.h
+*** alpine-2.20/pico/edef.h	2015-01-07 22:53:20.659657322 -0700
+--- alpine-2.20.outgoing/pico/edef.h	2015-01-07 23:11:52.370224154 -0700
+***************
+*** 32,37 ****
+--- 32,38 ----
+  
+  /* initialized global definitions */
+  
++ int	sendnow = 0;			/* should we send now           */
+  int	direction = 0;			/* direction of writing		*/
+  int     fillcol = 72;                   /* Current fill column          */
+  int     userfillcol = -1;               /* Fillcol set from cmd line    */
+***************
+*** 85,90 ****
+--- 86,92 ----
+  
+  /* initialized global external declarations */
+  
++ extern  int	sendnow;		/* should we send now           */
+  extern  int	direction;
+  extern  int     fillcol;                /* Fill column                  */
+  extern  int     userfillcol;            /* Fillcol set from cmd line    */
+diff -rc alpine-2.20/pico/osdep/getkey.c alpine-2.20.outgoing/pico/osdep/getkey.c
+*** alpine-2.20/pico/osdep/getkey.c	2015-01-07 22:53:20.661657328 -0700
+--- alpine-2.20.outgoing/pico/osdep/getkey.c	2015-01-07 23:09:10.931680618 -0700
+***************
+*** 131,136 ****
+--- 131,146 ----
+  {
+      UCS ch, status, cc;
+  
++     if(sendnow){
++ 	ch = Pmaster && Pmaster->auto_cmds && *Pmaster->auto_cmds 
++ 		? *Pmaster->auto_cmds++ : NODATA;
++ 
++ 	if (ch >= 0x00 && ch <= 0x1F)
++ 	      ch = CTRL | (ch+'@');
++ 
++         return(ch);
++     }
++ 
+      if(!ReadyForKey(FUDGE-5))
+        return(NODATA);
+  
+diff -rc alpine-2.20/pico/osdep/terminal.c alpine-2.20.outgoing/pico/osdep/terminal.c
+*** alpine-2.20/pico/osdep/terminal.c	2015-01-07 22:53:20.663657334 -0700
+--- alpine-2.20.outgoing/pico/osdep/terminal.c	2015-01-07 23:09:10.932680621 -0700
+***************
+*** 26,31 ****
+--- 26,32 ----
+  #include "../keydefs.h"
+  #include "../pico.h"
+  #include "../mode.h"
++ #include "../edef.h"
+  
+  #include "raw.h"
+  #include "color.h"
+***************
+*** 478,483 ****
+--- 479,490 ----
+  {
+      int     row, col;
+  
++     if (sendnow){
++       term.t_nrow = 23;
++       term.t_ncol = 80;
++       return 0;
++     }
++ 
+      /*
+       * determine the terminal's communication speed and decide
+       * if we need to do optimization ...
+***************
+*** 1253,1258 ****
+--- 1260,1271 ----
+  {
+      int     row, col;
+  
++     if (sendnow){
++       term.t_nrow = 23;
++       term.t_ncol = 80;
++       return 0;
++     }
++ 
+      /*
+       * determine the terminal's communication speed and decide
+       * if we need to do optimization ...
+diff -rc alpine-2.20/pico/pico.c alpine-2.20.outgoing/pico/pico.c
+*** alpine-2.20/pico/pico.c	2015-01-07 22:53:20.664657337 -0700
+--- alpine-2.20.outgoing/pico/pico.c	2015-01-07 23:09:10.932680621 -0700
+***************
+*** 166,171 ****
+--- 166,180 ----
+      pico_all_done = 0;
+      km_popped     = 0;
+  
++     if (pm->auto_cmds){
++        int i;
++ #define CTRL_X 24
++       for (i = 0;  pm->auto_cmds[i]; i++);
++       if ((i > 1) && (pm->auto_cmds[i - 2] == CTRL_X) && 
++ 		((pm->auto_cmds[i - 1] == 'y') || (pm->auto_cmds[i-1] == 'Y')))
++       sendnow++;
++     }
++ 
+      if(!vtinit())			/* Init Displays.      */
+        return(COMP_CANCEL);
+  
+***************
+*** 744,749 ****
+--- 753,771 ----
+  	    return(FALSE);
+  	}
+  
++  	/* When we send a message using the command line we are going to
++  	   ignore if the user wants to spell check, we assume he already
++  	   did */
++  	if (sendnow){
++  	    ret = (*Pmaster->exittest)(Pmaster->headents,
++ 					redraw_pico_for_callback, 
++ 					Pmaster->allow_flowed_text,
++ 					&result);
++  	    if (!ret)
++  		pico_all_done = COMP_EXIT;
++  	    return(result ? FALSE : TRUE);
++  	}
++ 
+  #ifdef	SPELLER
+  	if(Pmaster->always_spell_check)
+  	  if(spell(0, 0) == -1)
+diff -rc alpine-2.20/pico/pico.h alpine-2.20.outgoing/pico/pico.h
+*** alpine-2.20/pico/pico.h	2015-01-07 22:53:20.659657322 -0700
+--- alpine-2.20.outgoing/pico/pico.h	2015-01-07 23:09:10.932680621 -0700
+***************
+*** 222,227 ****
+--- 222,228 ----
+      void  (*winch_cleanup)();		/* callback handling screen resize */
+      void  (*newthread)();		/* callback to create new thread   */
+      int    arm_winch_cleanup;		/* do the winch_cleanup if resized */
++     int   *auto_cmds;			/* Initial keystroke commands */
+      HELP_T search_help;
+      HELP_T ins_help;
+      HELP_T ins_m_help;
+diff -rc alpine-2.20/pith/send.c alpine-2.20.outgoing/pith/send.c
+*** alpine-2.20/pith/send.c	2015-01-07 22:53:20.675657370 -0700
+--- alpine-2.20.outgoing/pith/send.c	2015-01-07 23:09:10.933680625 -0700
+***************
+*** 2161,2166 ****
+--- 2161,2168 ----
+  	if(error_mess){
+  	    q_status_message(SM_ORDER | SM_DING, 4, 7, error_mess);
+  	    dprint((1, "call_mailer ERROR: %s\n", error_mess));
++ 	    if (ps_global->send_immediately)
++ 	      printf("%s\n",error_mess);
+  	}
+  
+  	return(-1);
+diff -rc alpine-2.20/pith/state.c alpine-2.20.outgoing/pith/state.c
+*** alpine-2.20/pith/state.c	2015-01-07 22:53:20.680657385 -0700
+--- alpine-2.20.outgoing/pith/state.c	2015-01-07 23:09:10.933680625 -0700
+***************
+*** 116,121 ****
+--- 116,124 ----
+      if(!(pps && (*pps)))
+        return;
+  
++     if((*pps)->subject != NULL)
++       fs_give((void **)&(*pps)->subject);
++ 
+      if((*pps)->hostname != NULL)
+        fs_give((void **)&(*pps)->hostname);
+  
+diff -rc alpine-2.20/pith/state.h alpine-2.20.outgoing/pith/state.h
+*** alpine-2.20/pith/state.h	2015-01-07 22:53:20.680657385 -0700
+--- alpine-2.20.outgoing/pith/state.h	2015-01-07 23:09:10.934680628 -0700
+***************
+*** 251,256 ****
+--- 251,259 ----
+  
+      int         *initial_cmds;         /* cmds to execute on startup */
+      int         *free_initial_cmds;    /* used to free when done */
++     int         *initial_cmds_backup;  /* keep a copy in case they are freed */
++     int         *free_initial_cmds_backup;  /* free the copy */
++     int		 initial_cmds_offset;	/* how many commands we have executed */
+  
+      char         c_client_error[300];  /* when nowhow_error is set and PARSE */
+  
+***************
+*** 307,312 ****
+--- 310,319 ----
+  
+      int		 nmw_width;
+  
++     char	*subject;
++     int		 send_immediately;
++     int		 failed_read;
++ 
+      int          hours_to_timeout;
+  
+      int          tcp_query_timeout;
+diff -rc alpine-2.20/pith/store.c alpine-2.20.outgoing/pith/store.c
+*** alpine-2.20/pith/store.c	2015-01-07 22:53:20.678657379 -0700
+--- alpine-2.20.outgoing/pith/store.c	2015-01-07 23:09:10.934680628 -0700
+***************
+*** 171,176 ****
+--- 171,184 ----
+  		if(source == TmpFileStar)
+  		  our_unlink(so->name);
+  
++ 		if (ps_global->send_immediately){
++ 		   ps_global->failed_read++;
++ 		   if(ps_global->failed_read == 5){
++ 		     printf("No configurationf file found. Where is your .pinerc file?\n");
++ 		     exit(1);
++ 		   }
++ 		}
++ 
+  		fs_give((void **)&so->name);
+  		fs_give((void **)&so); 		/* so freed & set to NULL */
+  	    }
