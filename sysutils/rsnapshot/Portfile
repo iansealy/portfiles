@@ -4,7 +4,6 @@ PortSystem 1.0
 
 name                rsnapshot
 version             1.4.1
-revision            1
 categories          sysutils net
 platforms           darwin
 maintainers         mww
@@ -22,11 +21,11 @@ checksums           sha1    d9f6d3266fbfec706f6d3dcbbc415978297b5023 \
                     rmd160  430289adc2680083e83810d1411b684622e074e5 \
                     sha256  fb4a1129a7d3805c41749fd0494debfe2ca2341eba0f8b50e4f54985efe448e8
 
-depends_lib         port:rsync port:p5-lchown bin:ssh:openssh
+depends_lib         port:rsync port:p5.22-lchown bin:ssh:openssh
 
 configure.args      --mandir=${prefix}/share/man \
                     --with-rsync=${prefix}/bin/rsync \
-                    --with-perl=${prefix}/bin/perl
+                    --with-perl=${prefix}/bin/perl5.22
 
 test.run            yes
 
