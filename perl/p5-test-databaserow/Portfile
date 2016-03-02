@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Test-DatabaseRow 2.04
-#perl5.setup         Test-DatabaseRow 2.04 ../by-authors/id/M/MA/MARKF
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
-#supported_archs     noarch
+supported_archs     noarch
 
-description         Test::DatabaseRow (no description available)
+description         Test::DatabaseRow - simple database tests
 
-long_description    ${description}
+long_description    This is a simple module for doing simple tests on a \
+                    database, primarily designed to test if a row exists with \
+                    the correct details in a table or not.
 
 checksums           rmd160 4a420f9f971aecb4dcffd19e3d835ad5ec2c1cc6 \
                     sha256 3bcacc2061bfa743ea9d5471ffb0ca6b858153be0527bdadce93f58e85981ddf
@@ -27,5 +26,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-dbi
 }
-
-
