@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         Test-DatabaseRow 2.04
+#perl5.setup         Test-DatabaseRow 2.04 ../by-authors/id/M/MA/MARKF
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Test::DatabaseRow (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 4a420f9f971aecb4dcffd19e3d835ad5ec2c1cc6 \
+                    sha256 3bcacc2061bfa743ea9d5471ffb0ca6b858153be0527bdadce93f58e85981ddf
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-dbi
+}
+
+
