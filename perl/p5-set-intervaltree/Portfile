@@ -4,23 +4,23 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Set-IntervalTree 0.10
-#perl5.setup         Set-IntervalTree 0.10 ../by-authors/id/B/BE/BENBOOTH
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Set::IntervalTree (no description available)
+description         Set::IntervalTree - Perform range-based lookups on sets of ranges
 
-long_description    ${description}
+long_description    Set::IntervalTree uses Interval Trees to store and \
+                    efficiently look up ranges using a range-based lookup.
 
 checksums           rmd160 16434960937f5145a4351bd05a5f8bfc43546062 \
                     sha256 e3bd9ccf0d074b5f879eef1ed88254983697bf83d02744fce62150ee46553ebc
 
-
+if {${perl5.major} != ""} {
+    configure.cc    ${configure.cxx}
+}
