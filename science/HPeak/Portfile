@@ -1,0 +1,32 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+
+name                HPeak
+version             2.1
+categories          science
+license             none
+maintainers         nomaintainer
+platforms           darwin
+
+description         HPeak - peak caller
+long_description    A HMM-based algorithm for defining read-enriched regions \
+                    from massive parallel sequencing data
+
+homepage            http://csg.sph.umich.edu/qin/HPeak/
+master_sites        http://csg.sph.umich.edu/qin/HPeak/
+distname            ${name}-${version}.LINUX
+worksrcdir          ${name}-${version}
+
+checksums           rmd160  b262df0c28b4b73837e1ad5faa1a8b2ebaa15bc2 \
+                    sha256  6e89fd70c469478cd83a55aaf2a427dfe4f0e81e5050855fdd2cafb4dd5e855d
+
+use_configure       no
+
+build.cmd           g++ -o chiphmmnew chiphmmnew.cpp
+build.target        ""
+
+destroot {
+    xinstall -W ${worksrcpath} chiphmmnew ${destroot}${prefix}/bin
+}
