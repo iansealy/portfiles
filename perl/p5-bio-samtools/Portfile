@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         Bio-SamTools 1.43
+#perl5.setup         Bio-SamTools 1.43 ../by-authors/id/L/LD/LDS
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Bio::DB::Sam (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 988538907662691c56bf1c0bb29421236a9910f1 \
+                    sha256 7085ee5e97ad75dbbebd8583072d67b2b06d29e7a9f9741c9ac58dabe300d3fd
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-bioperl
+}
+
+perl5.use_module_build
