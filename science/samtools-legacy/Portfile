@@ -3,14 +3,14 @@
 
 PortSystem              1.0
 
-name                    samtools
+name                    samtools-legacy
 version                 0.1.19
 categories              science
 platforms               darwin
-maintainers             gmail.com:haroldpimentel openmaintainer
+maintainers             nomaintainer
 license                 MIT
 
-description             Tools for alignments in the SAM format
+description             Tools for alignments in the SAM format (legacy port)
 
 long_description        SAM (Sequence Alignment/Map) Tools provide various \
                         utilities for manipulating alignments in the SAM \
@@ -19,6 +19,8 @@ long_description        SAM (Sequence Alignment/Map) Tools provide various \
 
 homepage                http://samtools.sourceforge.net/
 master_sites            sourceforge:project/samtools/samtools/${version}
+distname                samtools-${version}
+worksrcdir              samtools-${version}
 
 checksums               rmd160  4e74858d3762f785452d1c9507bd127de9791894 \
                         sha256  d080c9d356e5f0ad334007e4461cbcee3c4ca97b8a7a5a48c44883cf9dee63d4
@@ -32,16 +34,11 @@ use_configure           no
 configure.cflags-append -std=gnu89
 
 build.args              CC=${configure.cc} \
-                        CFLAGS="-g -Wall ${configure.cflags} ${configure.cc_archflags}"
+                        CFLAGS="-g -Wall ${configure.cflags} ${configure.cc_archflags} -fPIC"
 
 destroot {
-    xinstall -m 755 ${worksrcpath}/samtools ${destroot}${prefix}/bin
-    xinstall -m 644 ${worksrcpath}/libbam.a ${destroot}${prefix}/lib
-    xinstall -d ${destroot}${prefix}/include/bam
-    eval xinstall -m 644 [glob ${worksrcpath}/*.h] ${destroot}${prefix}/include/bam
-    
-    xinstall -d ${destroot}${prefix}/share/doc/${name}
-    xinstall -m 644 -W ${worksrcpath} \
-        AUTHORS COPYING NEWS \
-        ${destroot}${prefix}/share/doc/${name}
+    xinstall -d ${destroot}${prefix}/libexec/${name}-${version}/lib
+    xinstall -m 644 ${worksrcpath}/libbam.a ${destroot}${prefix}/libexec/${name}-${version}/lib
+    xinstall -d ${destroot}${prefix}/libexec/${name}-${version}/include
+    eval xinstall -m 644 [glob ${worksrcpath}/*.h] ${destroot}${prefix}/libexec/${name}-${version}/include
 }
