@@ -4,19 +4,14 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Bio-SamTools 1.43
-#perl5.setup         Bio-SamTools 1.43 ../by-authors/id/L/LD/LDS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
-#supported_archs     noarch
-
-description         Bio::DB::Sam (no description available)
+description         Perl interface to the SAMtools sequence alignment interface
 
 long_description    ${description}
 
@@ -25,7 +20,10 @@ checksums           rmd160 988538907662691c56bf1c0bb29421236a9910f1 \
 
 if {${perl5.major} != ""} {
     depends_lib-append \
+                    port:samtools-legacy \
                     port:p${perl5.major}-bioperl
+
+    configure.env  SAMTOOLS="${prefix}/libexec/samtools-legacy-0.1.19"
 }
 
 perl5.use_module_build
