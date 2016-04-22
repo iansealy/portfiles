@@ -1,0 +1,34 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         Software-License 0.103011
+#perl5.setup         Software-License 0.103011 ../by-authors/id/R/RJ/RJBS
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Software::License (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 901809acfbac35848b862f5a0e78e8d0d4f63716 \
+                    sha256 ba00f9269d6fd594df709416ee8878d69c533011829a23460d582bd07561be0d
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-try-tiny
+    depends_lib-append \
+                    port:p${perl5.major}-data-section \
+                    port:p${perl5.major}-text-template
+}
+
+
