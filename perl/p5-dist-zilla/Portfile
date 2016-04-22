@@ -1,0 +1,80 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         Dist-Zilla 5.045
+#perl5.setup         Dist-Zilla 5.045 ../by-authors/id/R/RJ/RJBS
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 8318b7da4629aa0ac67230a0de9f5ed8e6eebc29 \
+                    sha256 36561e9d3e4f87246c1403f727449f1e8ff21546a4e09206a9a796fb45591caf
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-cpan-meta-check \
+                    port:p${perl5.major}-software-license \
+                    port:p${perl5.major}-test-failwarnings \
+                    port:p${perl5.major}-test-fatal \
+                    port:p${perl5.major}-test-file-sharedir
+    depends_lib-append \
+                    port:p${perl5.major}-app-cmd \
+                    port:p${perl5.major}-class-load \
+                    port:p${perl5.major}-config-ini \
+                    port:p${perl5.major}-config-mvp \
+                    port:p${perl5.major}-config-mvp-reader-ini \
+                    port:p${perl5.major}-cpan-uploader \
+                    port:p${perl5.major}-data-section \
+                    port:p${perl5.major}-datetime \
+                    port:p${perl5.major}-file-copy-recursive \
+                    port:p${perl5.major}-file-find-rule \
+                    port:p${perl5.major}-file-homedir \
+                    port:p${perl5.major}-file-pushd \
+                    port:p${perl5.major}-file-sharedir \
+                    port:p${perl5.major}-file-sharedir-install \
+                    port:p${perl5.major}-json-maybexs \
+                    port:p${perl5.major}-log-dispatchouli \
+                    port:p${perl5.major}-mixin-linewise \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-moosex-lazyrequire \
+                    port:p${perl5.major}-moosex-role-parameterized \
+                    port:p${perl5.major}-moosex-setonce \
+                    port:p${perl5.major}-moosex-types \
+                    port:p${perl5.major}-moosex-types-path-class \
+                    port:p${perl5.major}-moosex-types-perl \
+                    port:p${perl5.major}-namespace-autoclean \
+                    port:p${perl5.major}-params-util \
+                    port:p${perl5.major}-path-class \
+                    port:p${perl5.major}-path-tiny \
+                    port:p${perl5.major}-perl-prereqscanner \
+                    port:p${perl5.major}-perl-version \
+                    port:p${perl5.major}-pod-eventual \
+                    port:p${perl5.major}-ppi \
+                    port:p${perl5.major}-software-license \
+                    port:p${perl5.major}-string-formatter \
+                    port:p${perl5.major}-string-rewriteprefix \
+                    port:p${perl5.major}-sub-exporter \
+                    port:p${perl5.major}-sub-exporter-formethods \
+                    port:p${perl5.major}-term-encoding \
+                    port:p${perl5.major}-termreadkey \
+                    port:p${perl5.major}-test-deep \
+                    port:p${perl5.major}-text-glob \
+                    port:p${perl5.major}-text-template \
+                    port:p${perl5.major}-try-tiny \
+                    port:p${perl5.major}-yaml-tiny
+}
+
+
