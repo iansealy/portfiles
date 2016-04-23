@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Config-MVP 2.200010
-#perl5.setup         Config-MVP 2.200010 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Config::MVP (no description available)
+description         Config::MVP - multivalue-property package-oriented configuration
 
-long_description    ${description}
+long_description    MVP is a mechanism for loading configuration (or other \
+                    information) for libraries.
 
 checksums           rmd160 3993eabc7bfaa9ef65f42783e0d91e8026aed7b6 \
                     sha256 bfb5870452a12ead4d3fd485045d1fa92b2a11741c3b93b61eb43f3dcbd6099b
@@ -37,5 +35,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-tie-ixhash \
                     port:p${perl5.major}-try-tiny
 }
-
-
