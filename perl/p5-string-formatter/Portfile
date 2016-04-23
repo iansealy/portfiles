@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         String-Formatter 0.102084
-#perl5.setup         String-Formatter 0.102084 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             GPL-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         String::Formatter (no description available)
+description         String::Formatter - build sprintf-like functions of your own
 
-long_description    ${description}
+long_description    String::Formatter is a tool for building sprintf-like \
+                    formatting routines.
 
 checksums           rmd160 ef2efe77aade258dd73d9a593dfe270fa408b14c \
                     sha256 83354112fd0c66df1e12e022df75efbf30ebdb43581c00897c86ec1c33a89c56
@@ -28,5 +26,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-params-util \
                     port:p${perl5.major}-sub-exporter
 }
-
-
