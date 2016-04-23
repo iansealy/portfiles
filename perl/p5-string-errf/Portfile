@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         String-Errf 0.007
-#perl5.setup         String-Errf 0.007 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         String::Errf (no description available)
+description         String::Errf - a simple sprintf-like dialect
 
-long_description    ${description}
+long_description    String::Errf provides errf, a simple string formatter \
+                    that works something like sprintf.
 
 checksums           rmd160 19e805d2c36e31f45ba97c7fdad6953e03bf625d \
                     sha256 d2491c753f2dce96aab98594ac7a770d1ae80dd744ad3567b03b73ac5baff6aa
@@ -32,5 +30,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-string-formatter \
                     port:p${perl5.major}-sub-exporter
 }
-
-
