@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Data-Section 0.200006
-#perl5.setup         Data-Section 0.200006 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Data::Section (no description available)
+description         Data::Section - read multiple hunks of data out of your DATA section
 
-long_description    ${description}
+long_description    Data::Section provides an easy way to access multiple \
+                    named chunks of line-oriented data in your module's DATA \
+                    section.
 
 checksums           rmd160 397c7e168d3684a724710789b1293a4689c89f5e \
                     sha256 348501f99dab0adbe6d32143f4e79c2cbb6558c84d183cffc4c1275cacd35b5f
@@ -30,5 +29,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-mro-compat \
                     port:p${perl5.major}-sub-exporter
 }
-
-
