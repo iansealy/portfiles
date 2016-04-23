@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         MooseX-OneArgNew 0.005
-#perl5.setup         MooseX-OneArgNew 0.005 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         MooseX::OneArgNew (no description available)
+description         MooseX::OneArgNew - teach ->new to accept single, non-hashref arguments
 
-long_description    ${description}
+long_description    MooseX::OneArgNew lets your constructor take a single \
+                    argument, which will be translated into the value for a \
+                    one-entry hashref.
 
 checksums           rmd160 b95aec7e76339de27a3ae2e16a5763ec9a252354 \
                     sha256 7e4fcf474ea6c4244f0885f1066729cfdc472fbd7190dd41b4b55bcd67c3103f
@@ -31,5 +30,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moosex-role-parameterized \
                     port:p${perl5.major}-namespace-autoclean
 }
-
-
