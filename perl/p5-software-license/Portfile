@@ -4,19 +4,16 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
-perl5.setup         Software-License 0.103011
-#perl5.setup         Software-License 0.103011 ../by-authors/id/R/RJ/RJBS
+perl5.branches      5.22
+perl5.setup         Software-License 0.103011 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Software::License (no description available)
+description         Software::License - packages that provide templated software licenses
 
 long_description    ${description}
 
@@ -30,5 +27,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-data-section \
                     port:p${perl5.major}-text-template
 }
-
-
