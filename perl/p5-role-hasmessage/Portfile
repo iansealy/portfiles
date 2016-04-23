@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
-perl5.setup         Role-HasMessage 0.006
-#perl5.setup         Role-HasMessage 0.006 ../by-authors/id/R/RJ/RJBS
+perl5.branches      5.22
+perl5.setup         Role-HasMessage 0.006 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Role::HasMessage (no description available)
+description         Role::HasMessage - a thing with a message method
 
-long_description    ${description}
+long_description    A class that includes Role::HasMessage is promising to \
+                    provide a message method that returns a string \
+                    summarizing the message or event represented by the \
+                    object.
 
 checksums           rmd160 a491950bbb0c443f23c658f65a28acd6346cac7b \
                     sha256 f6a6dbe0476ff95ee1ffbef825eb18d9b02b0618deba4686e7c63b99d576d4d3
@@ -33,5 +33,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-string-errf \
                     port:p${perl5.major}-try-tiny
 }
-
-
