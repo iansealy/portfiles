@@ -4,19 +4,16 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         CPAN-Uploader 0.103012
-#perl5.setup         CPAN-Uploader 0.103012 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         CPAN::Uploader (no description available)
+description         CPAN::Uploader - upload things to the CPAN
 
 long_description    ${description}
 
@@ -30,7 +27,7 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-http-message \
                     port:p${perl5.major}-libwww-perl \
                     port:p${perl5.major}-lwp-protocol-https \
-                    port:p${perl5.major}-termreadkey
+                    port:p${perl5.major}-term-readkey
 }
 
 
