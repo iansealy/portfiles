@@ -4,19 +4,16 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Sub-Exporter-GlobExporter 0.005
-#perl5.setup         Sub-Exporter-GlobExporter 0.005 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Sub::Exporter::GlobExporter (no description available)
+description         Sub::Exporter::GlobExporter - export shared globs with Sub::Exporter collectors
 
 long_description    ${description}
 
@@ -27,5 +24,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-sub-exporter
 }
-
-
