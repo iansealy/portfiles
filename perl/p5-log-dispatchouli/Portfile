@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Log-Dispatchouli 2.012
-#perl5.setup         Log-Dispatchouli 2.012 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Log::Dispatchouli (no description available)
+description         Log::Dispatchouli - a simple wrapper around Log::Dispatch
 
-long_description    ${description}
+long_description    Log::Dispatchouli is a thin layer above Log::Dispatch \
+                    and meant to make it dead simple to add logging to a \
+                    program without having to think much about categories, \
+                    facilities, levels, or things like that.
 
 checksums           rmd160 7e60c46b7ca22e2fa270888086cdd304559718d8 \
                     sha256 214eca0fe77f2dc74675f9aa542778d5d4618c5bf12283540ca1062fcb967fa0
@@ -36,5 +36,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-sub-exporter-globexporter \
                     port:p${perl5.major}-try-tiny
 }
-
-
