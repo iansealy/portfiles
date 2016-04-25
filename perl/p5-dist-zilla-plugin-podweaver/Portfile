@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Plugin-PodWeaver 4.008
-#perl5.setup         Dist-Zilla-Plugin-PodWeaver 4.008 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::PodWeaver (no description available)
+description         Dist::Zilla::Plugin::PodWeaver - weave your Pod together from configuration and Dist::Zilla
 
-long_description    ${description}
+long_description    PodWeaver is the bridge between Dist::Zilla and \
+                    Pod::Weaver. It rips apart your kinda-Pod and \
+                    reconstructs it as boring old real Pod.
 
 checksums           rmd160 756ab76ed870316ab639dd64969b2dabcec6688c \
                     sha256 1fd9e3833f2a12c4d0490f455e06f6819f3bf81b75238ea448e293a28d88c139
@@ -34,5 +33,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-pod-weaver \
                     port:p${perl5.major}-ppi
 }
-
-
