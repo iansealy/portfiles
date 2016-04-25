@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Plugin-Test-Compile 2.054
-#perl5.setup         Dist-Zilla-Plugin-Test-Compile 2.054 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::Compile (no description available)
+description         Dist::Zilla::Plugin::Test::Compile - Common tests to check syntax of your modules, only using core modules
 
-long_description    ${description}
+long_description    This is a Dist::Zilla plugin that runs at the gather \
+                    files stage, providing a test file (configurable, \
+                    defaulting to t/00-compile.t).
 
 checksums           rmd160 b42835c74d16ab940d53cf9d49779fdaba418227 \
                     sha256 363fc251785a36a0b2028fda3b38d71d30c7048b09145362bbfac13fc41eab7e
@@ -40,5 +39,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-sub-exporter-formethods
 }
-
-
