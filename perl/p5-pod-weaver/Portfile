@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Pod-Weaver 4.013
-#perl5.setup         Pod-Weaver 4.013 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Pod::Weaver (no description available)
+description         Pod::Weaver - weave together a Pod document from an outline
 
-long_description    ${description}
+long_description    Pod::Weaver is a system for building Pod documents from \
+                    templates.
 
 checksums           rmd160 b0b0c18a03b43c0eebae1e18163c155011b05615 \
                     sha256 5f12c5f11d313294520b0a1ab5c0775ef56e222d9181c8dac520cdc77af309e0
@@ -44,5 +42,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-string-formatter \
                     port:p${perl5.major}-string-rewriteprefix
 }
-
-
