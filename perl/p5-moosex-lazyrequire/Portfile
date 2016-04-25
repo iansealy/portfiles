@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         MooseX-LazyRequire 0.11
-#perl5.setup         MooseX-LazyRequire 0.11 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         MooseX::LazyRequire (no description available)
+description         MooseX::LazyRequire - Required attributes which fail only when trying to use them
 
-long_description    ${description}
+long_description    This module adds a lazy_required option to Moose \
+                    attribute declarations.
 
 checksums           rmd160 301b18e2b388077172f7cce4fe4d8aa31ad3b732 \
                     sha256 ef620c1e019daf9cf3f23a943d25a94c91e93ab312bcd63be2e9740ec0b94288
@@ -31,5 +29,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-namespace-autoclean
 }
-
-
