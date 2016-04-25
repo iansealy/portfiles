@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         Dist-Zilla-Plugin-PerlTidy 0.21
+#perl5.setup         Dist-Zilla-Plugin-PerlTidy 0.21 ../by-authors/id/F/FA/FAYLAND
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Plugin::PerlTidy (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 1740279ffca10c48a4eb8e90c1c7710f2273fda5 \
+                    sha256 362095d70d2bfd73d9fb8c814419a713e80590057e3e6f000d5e39858bedfdad
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-path-iterator-rule \
+                    port:p${perl5.major}-perl-tidy
+}
+
+
