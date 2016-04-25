@@ -4,23 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Term-Encoding 0.02
-#perl5.setup         Term-Encoding 0.02 ../by-authors/id/M/MI/MIYAGAWA
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Term::Encoding (no description available)
+description         Term::Encoding - Detect encoding of the current terminal
 
-long_description    ${description}
+long_description    Term::Encoding is a simple module to detect an encoding \
+                    the current terminal expects, in various ways.
 
 checksums           rmd160 833541b2b681cd4281d18d7eb08b6385d25401d7 \
                     sha256 f274e72346a0c0cfacfb53030ac1e38b57425512fc5bdc5cd9ef75ab0f26cfcc
-
-
