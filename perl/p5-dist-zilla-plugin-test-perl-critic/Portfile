@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         Dist-Zilla-Plugin-Test-Perl-Critic 3.000
+#perl5.setup         Dist-Zilla-Plugin-Test-Perl-Critic 3.000 ../by-authors/id/J/JQ/JQUELIN
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Plugin::Test::Perl::Critic (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 21cfb8370c8b28005587baf953a17a77440aa7d7 \
+                    sha256 96e7d2ec56d17ceb403ed752ee06c2fc93619b427bc2a555515906119476468a
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla
+    depends_lib-append \
+                    port:p${perl5.major}-data-section \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-namespace-autoclean \
+                    port:p${perl5.major}-test-perl-critic
+}
+
+perl5.use_module_build
