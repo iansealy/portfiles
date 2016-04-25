@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Perl-Version 1.013
-#perl5.setup         Perl-Version 1.013 ../by-authors/id/B/BD/BDFOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Perl::Version (no description available)
+description         Perl::Version - Parse and manipulate Perl version strings
 
-long_description    ${description}
+long_description    Perl::Version provides a simple interface for parsing, \
+                    manipulating and formatting Perl version strings.
 
 checksums           rmd160 5b5e601ed0ff5d3a1dbf1f03f2fe4973cfe5746c \
                     sha256 1887414d1c8689d864c840114101e043e99d7dd5b9cca69369a60e821e3ad0f7
@@ -27,5 +25,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-file-slurp-tiny
 }
-
-
