@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
-perl5.setup         Path-Iterator-Rule 1.012
-#perl5.setup         Path-Iterator-Rule 1.012 ../by-authors/id/D/DA/DAGOLDEN
+perl5.branches      5.22
+perl5.setup         Path-Iterator-Rule 1.012 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Path::Iterator::Rule (no description available)
+description         Path::Iterator::Rule - Iterative, recursive file finder
 
-long_description    ${description}
+long_description    This module iterates over files and directories to \
+                    identify ones matching a user-defined set of rules.
 
 checksums           rmd160 efc6907ce590472dc1e41457be467ec768d73748 \
                     sha256 a1bd883971ab0d2c290756173268d18910b26a4da7ff89045f643fbef956e6fc
@@ -34,5 +32,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-text-glob \
                     port:p${perl5.major}-try-tiny
 }
-
-
