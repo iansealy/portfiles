@@ -1,0 +1,35 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         MooseX-Types-Path-Class 0.08
+#perl5.setup         MooseX-Types-Path-Class 0.08 ../by-authors/id/E/ET/ETHER
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         MooseX::Types::Path::Class (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 838761c9b540f4ae2fe8ea05dcf48ee3df091433 \
+                    sha256 38c55c0723d2533b0b16b41eda78adbe71194f3b7588a3b3f7ec71b2768664b7
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-moose
+    depends_lib-append \
+                    port:p${perl5.major}-moosex-getopt \
+                    port:p${perl5.major}-moosex-types \
+                    port:p${perl5.major}-path-class
+}
+
+
