@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Pod-Elemental 0.103004
-#perl5.setup         Pod-Elemental 0.103004 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Pod::Elemental (no description available)
+description         Pod::Elemental - work with nestable Pod elements
 
-long_description    ${description}
+long_description    Pod::Elemental is a system for treating a Pod (plain \
+                    old documentation) documents as trees of elements.
 
 checksums           rmd160 40aa29bd9fdc21b6d0047c347295c38e1eba43a9 \
                     sha256 43625cde7241fb174ad9c7eb45387fba410dc141d7de2323855eeab3590072c9
@@ -39,5 +37,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-sub-exporter \
                     port:p${perl5.major}-sub-exporter-formethods
 }
-
-
