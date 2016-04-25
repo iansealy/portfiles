@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Perl-PrereqScanner 1.023
-#perl5.setup         Perl-PrereqScanner 1.023 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Perl::PrereqScanner (no description available)
+description         Perl::PrereqScanner - a tool to scan your Perl code for its prerequisites
 
-long_description    ${description}
+long_description    The scanner will extract loosely your distribution \
+                    prerequisites from your files.
 
 checksums           rmd160 667d84918caa52f71f015c4c714eb54105ebc4dc \
                     sha256 280a1c4710390865fb9f310a861a34720b28b4cbe50609c841af5cf2d3a2bced
@@ -37,5 +35,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-ppi \
                     port:p${perl5.major}-string-rewriteprefix
 }
-
-
