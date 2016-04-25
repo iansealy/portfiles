@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Test-Version 2.03
-#perl5.setup         Test-Version 2.03 ../by-authors/id/P/PL/PLICEASE
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Artistic-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Version (no description available)
+description         Test::Version - Check to see that version's in modules are sane
 
-long_description    ${description}
+long_description    This module's goal is to be a one stop shop for checking \
+                    to see that your versions across your dist are sane.
 
 checksums           rmd160 a9c2fdb1041158713e032649b878fa1d047ff5d0 \
                     sha256 7207b9de6f31270b51dda4e07542842b656bf79aa9c6389f052b2c85e389cb0a
@@ -29,5 +27,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-file-find-rule-perl
 }
-
-
