@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         MooseX-SetOnce 0.200002
-#perl5.setup         MooseX-SetOnce 0.200002 ../by-authors/id/R/RJ/RJBS
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         MooseX::SetOnce (no description available)
+description         MooseX::SetOnce - write-once, read-many attributes for Moose
 
-long_description    ${description}
+long_description    The 'SetOnce' attribute lets your class have attributes \
+                    that are not lazy and not set, but that cannot be \
+                    altered once set.
 
 checksums           rmd160 deb6cfaab51f713e07d8f6aaef2e1f15280ef95c \
                     sha256 cbed06b7fcd353f0d99bf80a87c1c0b581160697231b3ad9a608da231ba2b659
@@ -30,5 +29,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-moose
 }
-
-
