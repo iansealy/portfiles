@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Plugin-Test-Perl-Critic 3.000
-#perl5.setup         Dist-Zilla-Plugin-Test-Perl-Critic 3.000 ../by-authors/id/J/JQ/JQUELIN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::Perl::Critic (no description available)
+description         Dist::Zilla::Plugin::Test::Perl::Critic - Tests to check your code against best practices
 
-long_description    ${description}
+long_description    This will provide a t/author/critic.t file for use \
+                    during the "test" and "release" calls of dzil.
 
 checksums           rmd160 21cfb8370c8b28005587baf953a17a77440aa7d7 \
                     sha256 96e7d2ec56d17ceb403ed752ee06c2fc93619b427bc2a555515906119476468a
