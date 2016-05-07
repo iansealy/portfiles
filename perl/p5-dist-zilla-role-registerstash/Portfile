@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Role-RegisterStash 0.003
-#perl5.setup         Dist-Zilla-Role-RegisterStash 0.003 ../by-authors/id/R/RS/RSRCHBOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-2.1
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Role::RegisterStash (no description available)
+description         Dist::Zilla::Role::RegisterStash - A plugin that can register stashes
 
-long_description    ${description}
+long_description    Sometimes it's handy for a plugin to register a stash, \
+                    and there's no easy way to do that (without touching \
+                    \$self->zilla->_local_stashes or somesuch).
 
 checksums           rmd160 3ffcd5a706c82d53625eb3e74b372ee8d805c9d9 \
                     sha256 07384269702a67aec53206fa4620e8938ce45f2f25e6ad55c80ff49e04e047d1
@@ -36,5 +35,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-namespace-autoclean
 }
-
-
