@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         TAP-SimpleOutput 0.003
-#perl5.setup         TAP-SimpleOutput 0.003 ../by-authors/id/R/RS/RSRCHBOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-2.1
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         TAP::SimpleOutput (no description available)
+description         TAP::SimpleOutput - Simple closure-driven TAP generator
 
-long_description    ${description}
+long_description    We provide one function, counters(), that returns a \
+                    number of simple closures designed to help output TAP \
+                    easily and correctly, with a minimum of fuss.
 
 checksums           rmd160 ab125495b01c78399bebbf90ae830b90147c17e4 \
                     sha256 58b08d34007482a4f30e47620ef08b1110d7313f8fd998ef65036d22c0a39e22
@@ -29,5 +28,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-sub-exporter-progressive
 }
-
-
