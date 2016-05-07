@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Test-Moose-More 0.037
-#perl5.setup         Test-Moose-More 0.037 ../by-authors/id/R/RS/RSRCHBOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-2.1
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Moose::More (no description available)
+description         Test::Moose::More - More tools for testing Moose packages
 
-long_description    ${description}
+long_description    This package contains a number of additional tests that \
+                    can be employed against Moose classes/roles. It is \
+                    intended to replace Test::Moose in your tests, and \
+                    re-exports any tests that it has and we do not, yet.
 
 checksums           rmd160 3f8380393f2a82b5b87d4e376a9b39f966fce704 \
                     sha256 cb726bc7741729f45764c204d271a2d15a232e205a80661b8b7249e701d7bfc1
@@ -37,5 +37,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-sub-exporter-progressive \
                     port:p${perl5.major}-syntax-keyword-junction
 }
-
-
