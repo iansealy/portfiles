@@ -1,0 +1,34 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         autobox-Junctions 0.001
+#perl5.setup         autobox-Junctions 0.001 ../by-authors/id/R/RS/RSRCHBOY
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         autobox::Junctions (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 4a8f7883106694b9979341efc2d652ad4a025251 \
+                    sha256 da623158dfbecf9cc9668c7359265ff7f4839cbfc40aaea19a5bb6dd6daeeaf8
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-checkdeps
+    depends_lib-append \
+                    port:p${perl5.major}-autobox \
+                    port:p${perl5.major}-syntax-keyword-junction
+}
+
+
