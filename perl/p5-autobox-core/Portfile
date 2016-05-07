@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         autobox-Core 1.32
-#perl5.setup         autobox-Core 1.32 ../by-authors/id/X/XE/XENU
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         autobox::Core (no description available)
+description         autobox::Core - Provide core functions to autoboxed scalars, arrays and hashes.
 
-long_description    ${description}
+long_description    The autobox module promotes Perl's primitive types \
+                    (literals (strings and numbers), scalars, arrays and \
+                    hashes) into first-class objects. However, autobox does \
+                    not provide any methods for these new classes.
 
 checksums           rmd160 b71b7b2776d96679f7fde5fc14ce50fe4f5a97c5 \
                     sha256 ec7ed74fb4b6c8eac246ed4fade88864d3a3963fa12ad3a27785c57f4b8deec4
@@ -28,5 +28,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-autobox \
                     port:p${perl5.major}-want
 }
-
-
