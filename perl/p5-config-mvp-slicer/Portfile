@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Config-MVP-Slicer 0.302
-#perl5.setup         Config-MVP-Slicer 0.302 ../by-authors/id/R/RW/RWSTAUNER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Config::MVP::Slicer (no description available)
+description         Config::MVP::Slicer - Extract embedded plugin config from parent config
 
-long_description    ${description}
+long_description    This can be used to extract embedded configurations for \
+                    other plugins out of larger (parent) configurations.
 
 checksums           rmd160 652680b916c7e1c0853de684a8dc7597fcf2768b \
                     sha256 751338c97551809ab11b977820505cb59d14dccca61667f23365b1c1f1e45f9b
@@ -29,5 +27,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-moose
 }
-
-
