@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         autobox-Junctions 0.001
-#perl5.setup         autobox-Junctions 0.001 ../by-authors/id/R/RS/RSRCHBOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-2.1
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         autobox::Junctions (no description available)
+description         autobox::Junctions - Autoboxified junction-style operators
 
-long_description    ${description}
+long_description    This is a simple autoboxifying wrapper around \
+                    Syntax::Keyword::Junction, that provides array and array \
+                    references with the functions provided by that package \
+                    as methods for arrays: any, all, one, and none.
 
 checksums           rmd160 4a8f7883106694b9979341efc2d652ad4a025251 \
                     sha256 da623158dfbecf9cc9668c7359265ff7f4839cbfc40aaea19a5bb6dd6daeeaf8
@@ -30,5 +30,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-autobox \
                     port:p${perl5.major}-syntax-keyword-junction
 }
-
-
