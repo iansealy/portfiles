@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Test-CheckDeps 0.010
-#perl5.setup         Test-CheckDeps 0.010 ../by-authors/id/L/LE/LEONT
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::CheckDeps (no description available)
+description         Test::CheckDeps - Check for presence of dependencies
 
-long_description    ${description}
+long_description    This module adds a test that assures all dependencies \
+                    have been installed properly. If requested, it can bail \
+                    out all testing on error.
 
 checksums           rmd160 2da8474ff3d0dcf8e3e320e230727682d7e45a30 \
                     sha256 66fccca6c6f330e7ecc898bd6a51846e2145b3e02d78c4997ba6b7de23b551ee
@@ -27,5 +26,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-cpan-meta-check
 }
-
-
