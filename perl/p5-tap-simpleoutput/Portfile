@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.16 5.18 5.20 5.22
+perl5.setup         TAP-SimpleOutput 0.003
+#perl5.setup         TAP-SimpleOutput 0.003 ../by-authors/id/R/RS/RSRCHBOY
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         TAP::SimpleOutput (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 ab125495b01c78399bebbf90ae830b90147c17e4 \
+                    sha256 58b08d34007482a4f30e47620ef08b1110d7313f8fd998ef65036d22c0a39e22
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-checkdeps
+    depends_lib-append \
+                    port:p${perl5.major}-sub-exporter-progressive
+}
+
+
