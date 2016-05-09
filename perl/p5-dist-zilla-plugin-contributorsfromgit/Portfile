@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Plugin-ContributorsFromGit 0.017
-#perl5.setup         Dist-Zilla-Plugin-ContributorsFromGit 0.017 ../by-authors/id/R/RS/RSRCHBOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-2.1
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::ContributorsFromGit (no description available)
+description         Dist::Zilla::Plugin::ContributorsFromGit - Populate your 'CONTRIBUTORS' POD from the list of git authors
 
-long_description    ${description}
+long_description    This plugin makes it easy to acknowledge the \
+                    contributions of others by populating a %PodWeaver stash \
+                    with the unique list of all git commit authors reachable \
+                    from the current HEAD.
 
 checksums           rmd160 bdd8a1b04148edf57673fcdf37c5761806bce429 \
                     sha256 175f3c9f333a467d80be457b49045f453e84109fa1d79a6158fb5ccae41a5385
@@ -48,5 +48,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-class \
                     port:p${perl5.major}-yaml-tiny
 }
-
-
