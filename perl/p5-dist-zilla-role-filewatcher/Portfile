@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Role-FileWatcher 0.006
-#perl5.setup         Dist-Zilla-Role-FileWatcher 0.006 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Role::FileWatcher (no description available)
+description         Dist::Zilla::Role::FileWatcher - Receive notification when something changes a file's contents
 
-long_description    ${description}
+long_description    This is a role for Dist::Zilla plugins which gives you \
+                    a mechanism for detecting and acting on files changing \
+                    their content.
 
 checksums           rmd160 5a32e57537b80cee0f6da0d2aef7e9922fb481b2 \
                     sha256 fe3a44b9586daf1277fcbbbaf7216b02ce23efbbd694f0df11b7f75344be4e96
@@ -37,5 +36,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-namespace-autoclean \
                     port:p${perl5.major}-safe-isa
 }
-
-
