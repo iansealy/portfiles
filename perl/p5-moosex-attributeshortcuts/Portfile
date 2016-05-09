@@ -4,21 +4,19 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         MooseX-AttributeShortcuts 0.028
-#perl5.setup         MooseX-AttributeShortcuts 0.028 ../by-authors/id/R/RS/RSRCHBOY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-2.1
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         MooseX::AttributeShortcuts (no description available)
+description         MooseX::AttributeShortcuts - Shorthand for common attribute options
 
-long_description    ${description}
+long_description    This package causes an attribute trait to be applied to \
+                    all attributes defined to the using class.
 
 checksums           rmd160 98ed0f6628f4fbffd192a0a457ad4f6d6bdff02c \
                     sha256 ad1ae0affdca9bef42bce9fc0c352e415984953c53b88fde3a5b154994d20a64
@@ -43,5 +41,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-namespace-autoclean \
                     port:p${perl5.major}-package-deprecationmanager
 }
-
-
