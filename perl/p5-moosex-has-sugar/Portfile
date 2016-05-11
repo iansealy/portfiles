@@ -4,21 +4,21 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         MooseX-Has-Sugar 1.000004
-#perl5.setup         MooseX-Has-Sugar 1.000004 ../by-authors/id/K/KE/KENTNL
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         MooseX::Has::Sugar (no description available)
+description         MooseX::Has::Sugar - Sugar Syntax for moose 'has' fields
 
-long_description    ${description}
+long_description    Moose has syntax is generally fine, but sometimes one \
+                    gets bothered with the constant typing of string quotes \
+                    for things. The MooseX::Types module exists and in many \
+                    ways reduces the need for constant string creation.
 
 checksums           rmd160 7873a08c6991bd202285ca262e2fd2742471f66c \
                     sha256 f7574c9fbae0faabf0c1a7de0682267328157b0a206b1554a733c1750b8387c8
@@ -30,5 +30,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-sub-exporter-progressive
 }
-
-
