@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Plugin-CheckChangesHasContent 0.008
-#perl5.setup         Dist-Zilla-Plugin-CheckChangesHasContent 0.008 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::CheckChangesHasContent (no description available)
+description         Dist::Zilla::Plugin::CheckChangesHasContent - Ensure Changes has content before releasing
 
-long_description    ${description}
+long_description    This is a "before release" Dist::Zilla plugin that \
+                    ensures that your Changes file actually has some \
+                    content since the last release.
 
 checksums           rmd160 f339f326cf6800fb0e45ffb5a8ceb6dcbd626deb \
                     sha256 6a23ba1a868795b4562cb650db0173acaf0f2ba5d3d67ee06a122c080b7bb13d
@@ -37,5 +36,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-namespace-autoclean \
                     port:p${perl5.major}-sub-exporter-formethods
 }
-
-
