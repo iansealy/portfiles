@@ -4,21 +4,20 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.16 5.18 5.20 5.22
+perl5.branches      5.22
 perl5.setup         Dist-Zilla-Plugin-AutoMetaResources 1.21
-#perl5.setup         Dist-Zilla-Plugin-AutoMetaResources 1.21 ../by-authors/id/A/AJ/AJGB
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::AutoMetaResources (no description available)
+description         Dist::Zilla::Plugin::AutoMetaResources - Automagical MetaResources
 
-long_description    ${description}
+long_description    If you find repeating the dist name again in the \
+                    configuration really annoying, this plugin comes to the \
+                    rescue!
 
 checksums           rmd160 9f69ca8fb207bef8690e732fcf7d80d5048b03d8 \
                     sha256 ef6c49ba4f942ec403a17031eeeacfa1373e0891cdf52ed714973356dd62575e
@@ -31,5 +30,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-moose
 }
-
-
