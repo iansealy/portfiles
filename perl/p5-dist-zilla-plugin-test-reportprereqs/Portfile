@@ -6,19 +6,20 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Test-ReportPrereqs 0.024
-#perl5.setup         Dist-Zilla-Plugin-Test-ReportPrereqs 0.024 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::ReportPrereqs (no description available)
+description         Dist::Zilla::Plugin::Test::ReportPrereqs - Report on prerequisite versions during automated testing
 
-long_description    ${description}
+long_description    This Dist::Zilla plugin adds a t/00-report-prereqs.t \
+                    test file and an accompanying t/00-report-prereqs.dd \
+                    data file. It reports the version of all modules listed \
+                    in the distribution metadata prerequisites (including \
+                    'recommends', 'suggests', etc.).
 
 checksums           rmd160 fb2429d49e26a57bd587de98a2197d79215b8138 \
                     sha256 275287b8913cd82b3b43670d6f4f5a18d0f4f4ebefa15399d85b2b2a91bdc9fe
@@ -35,5 +36,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-sub-exporter-formethods
 }
-
-
