@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Git 2.036
-#perl5.setup         Dist-Zilla-Plugin-Git 2.036 ../by-authors/id/C/CJ/CJM
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::PluginBundle::Git (no description available)
+description         Dist::Zilla::PluginBundle::Git - all git plugins in one go
 
-long_description    ${description}
+long_description    This is a plugin bundle to load the most common Git \
+                    plugins.
 
 checksums           rmd160 7021374fcd3b4ab8dbe16797523c0eb72f5f41c6 \
                     sha256 ac08a085eb96104b8dfa081a96416f7862af262307c51bbb7a4295ba5829dd95
