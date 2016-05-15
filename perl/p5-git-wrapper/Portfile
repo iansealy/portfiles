@@ -1,0 +1,36 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Git-Wrapper 0.045
+#perl5.setup         Git-Wrapper 0.045 ../by-authors/id/G/GE/GENEHACK
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Git::Wrapper (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 330b3cae2a7f35103508dec158c5d1c40c00c8cc \
+                    sha256 deedf3fd8961b7a77ed5e4baa93ff82de107c541ce7fd3fd9970e15776685c2f
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-sort-versions \
+                    port:p${perl5.major}-test-deep \
+                    port:p${perl5.major}-test-exception
+    depends_lib-append \
+                    port:p${perl5.major}-file-chdir \
+                    port:p${perl5.major}-sort-versions
+}
+
+
