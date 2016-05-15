@@ -6,21 +6,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Devel-SimpleTrace 0.08
-#perl5.setup         Devel-SimpleTrace 0.08 ../by-authors/id/S/SA/SAPER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Devel::SimpleTrace (no description available)
+description         Devel::SimpleTrace - See where you code warns and dies using stack traces
 
-long_description    ${description}
+long_description    This module can be used to more easily spot the place \
+                    where a program or a module generates errors. Its use \
+                    is extremely simple, reduced to just useing it.
 
 checksums           rmd160 6ff0185952b1c1429261b2553e3b1ed42fcaff0c \
                     sha256 d318a85bb29ee3c770e6b888585692a6f1a0173faf001be995e97481212536bf
-
-
