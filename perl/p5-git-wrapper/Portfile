@@ -6,19 +6,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Git-Wrapper 0.045
-#perl5.setup         Git-Wrapper 0.045 ../by-authors/id/G/GE/GENEHACK
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Git::Wrapper (no description available)
+description         Git::Wrapper - Wrap git(7) command-line interface
 
-long_description    ${description}
+long_description    Git::Wrapper provides an API for git(7) that uses Perl \
+                    data structures for argument passing, instead of \
+                    CLI-style --options as Git does.
 
 checksums           rmd160 330b3cae2a7f35103508dec158c5d1c40c00c8cc \
                     sha256 deedf3fd8961b7a77ed5e4baa93ff82de107c541ce7fd3fd9970e15776685c2f
@@ -32,5 +31,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-file-chdir \
                     port:p${perl5.major}-sort-versions
 }
-
-
