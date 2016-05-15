@@ -5,20 +5,18 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Version-Next 1.000
-#perl5.setup         Version-Next 1.000 ../by-authors/id/D/DA/DAGOLDEN
+perl5.setup         Version-Next 1.000 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Version::Next (no description available)
+description         Version::Next - increment module version numbers simply and correctly
 
-long_description    ${description}
+long_description    This module provides a simple, correct way to increment \
+                    a Perl module version number.
 
 checksums           rmd160 0bcc8141b2a89146cabd6d94cc26a975b7cf71fc \
                     sha256 e2163cd4e3e805662c2ed6788fda35870fd804ecd949554c56454f50f8d1d1a1
@@ -29,5 +27,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-sub-exporter
 }
-
-
