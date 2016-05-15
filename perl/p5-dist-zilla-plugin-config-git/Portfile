@@ -6,19 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Config-Git 0.92
-#perl5.setup         Dist-Zilla-Plugin-Config-Git 0.92 ../by-authors/id/B/BB/BBYRD
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Artistic-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Config::Git (no description available)
+description         Dist::Zilla::Plugin::Config::Git - Plugin configuration containing settings for a Git repo
 
-long_description    ${description}
+long_description    This is a configuration plugin for Git repo/branch \
+                    information. A configuration plugin is sort of like a \
+                    Stash, but is better suited for intra-plugin data \
+                    sharing, using distro (not user) data.
 
 checksums           rmd160 5e72542f8c81a24763d4fc33e3bec0d8339ee873 \
                     sha256 502f35869dd0841cb985e707d025ec65d14dd4f389c624870026874f9bdf82a5
@@ -33,5 +33,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-namespace-clean \
                     port:p${perl5.major}-string-errf
 }
-
-
