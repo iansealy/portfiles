@@ -1,0 +1,57 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-PluginBundle-TestingMania 0.25
+#perl5.setup         Dist-Zilla-PluginBundle-TestingMania 0.25 ../by-authors/id/D/DO/DOHERTY
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::PluginBundle::TestingMania (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 4a1ead56c69af369c577bdd6161bba14b01902c9 \
+                    sha256 5e0bb2c00f140fd64dcbd12fa5d3c9e244b9356828af465198b6230469d4591c
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose-autobox \
+                    port:p${perl5.major}-path-tiny
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-dist-zilla-plugin-mojibaketests \
+                    port:p${perl5.major}-dist-zilla-plugin-test-compile \
+                    port:p${perl5.major}-dist-zilla-plugin-test-cpan-changes \
+                    port:p${perl5.major}-dist-zilla-plugin-test-cpan-meta-json \
+                    port:p${perl5.major}-dist-zilla-plugin-test-distmanifest \
+                    port:p${perl5.major}-dist-zilla-plugin-test-eol \
+                    port:p${perl5.major}-dist-zilla-plugin-test-kwalitee \
+                    port:p${perl5.major}-dist-zilla-plugin-test-minimumversion \
+                    port:p${perl5.major}-dist-zilla-plugin-test-notabs \
+                    port:p${perl5.major}-dist-zilla-plugin-test-perl-critic \
+                    port:p${perl5.major}-dist-zilla-plugin-test-pod-linkcheck \
+                    port:p${perl5.major}-dist-zilla-plugin-test-portability \
+                    port:p${perl5.major}-dist-zilla-plugin-test-synopsis \
+                    port:p${perl5.major}-dist-zilla-plugin-test-unusedvars \
+                    port:p${perl5.major}-dist-zilla-plugin-test-version \
+                    port:p${perl5.major}-list-moreutils \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-namespace-autoclean \
+                    port:p${perl5.major}-pod-coverage-trustpod \
+                    port:p${perl5.major}-test-cpan-meta \
+                    port:p${perl5.major}-test-perl-critic \
+                    port:p${perl5.major}-test-version
+}
+
+
