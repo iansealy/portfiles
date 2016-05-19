@@ -6,19 +6,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Array-Diff 0.07
-#perl5.setup         Array-Diff 0.07 ../by-authors/id/T/TY/TYPESTER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Array::Diff (no description available)
+description         Array::Diff - Find the differences between two arrays
 
-long_description    ${description}
+long_description    This module compares two arrays and returns the added or \
+                    deleted elements in two separate arrays. It's a simple \
+                    wrapper around Algorithm::Diff.
 
 checksums           rmd160 7d127b259814e97f34cc1d71810bef603795af21 \
                     sha256 78e7d3a3374c74e117b7198f8e6649367a2906561b8a485d3870f242fa8f8346
@@ -28,5 +27,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-algorithm-diff \
                     port:p${perl5.major}-class-accessor
 }
-
-
