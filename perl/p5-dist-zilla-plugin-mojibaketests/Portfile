@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-Plugin-MojibakeTests 0.8
+#perl5.setup         Dist-Zilla-Plugin-MojibakeTests 0.8 ../by-authors/id/S/SY/SYP
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Plugin::MojibakeTests (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 c55d50e125d87b3ed0e8330549945eaf42412c8f \
+                    sha256 f1fff547ea24a8f7a483406a72ed6c4058d746d9dae963725502ddba025ab380
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-test-mojibake
+}
+
+
