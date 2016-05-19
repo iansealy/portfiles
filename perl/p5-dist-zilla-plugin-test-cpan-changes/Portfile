@@ -6,17 +6,14 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Test-CPAN-Changes 0.009
-#perl5.setup         Dist-Zilla-Plugin-Test-CPAN-Changes 0.009 ../by-authors/id/D/DO/DOHERTY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::CPAN::Changes (no description available)
+description         Dist::Zilla::Plugin::Test::CPAN::Changes - release tests for your changelog
 
 long_description    ${description}
 
@@ -33,5 +30,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-moose
 }
-
-
