@@ -6,19 +6,16 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Test-EOL 0.18
-#perl5.setup         Dist-Zilla-Plugin-Test-EOL 0.18 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::EOL (no description available)
+description         Dist::Zilla::Plugin::Test::EOL - Author tests making sure correct line endings are used
 
-long_description    ${description}
+long_description    Generate an author Test::EOL.
 
 checksums           rmd160 c6c74b18fe1850ff3d62737303c4592c3274cd4c \
                     sha256 9df81ed587b122de16b6ca476bf4d8f064b45eb281a4d6259e84306df0cfc37d
@@ -38,5 +35,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-sub-exporter-formethods
 }
-
-
