@@ -1,0 +1,26 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Module-CPANfile 1.1002
+#perl5.setup         Module-CPANfile 1.1002 ../by-authors/id/M/MI/MIYAGAWA
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Module::CPANfile (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 4f3bf0853e4ceefd6f3016fa7780d506ff0ce8a1 \
+                    sha256 bf95c25b4c5c22ec045cff61557bc693bc062e4714615ebbbafe4070f4d53cfd
+
+
