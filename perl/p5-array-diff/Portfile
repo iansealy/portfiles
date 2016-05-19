@@ -1,0 +1,32 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Array-Diff 0.07
+#perl5.setup         Array-Diff 0.07 ../by-authors/id/T/TY/TYPESTER
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Array::Diff (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 7d127b259814e97f34cc1d71810bef603795af21 \
+                    sha256 78e7d3a3374c74e117b7198f8e6649367a2906561b8a485d3870f242fa8f8346
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-algorithm-diff \
+                    port:p${perl5.major}-class-accessor
+}
+
+
