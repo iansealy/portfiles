@@ -6,21 +6,22 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-Mojibake 1.1
-#perl5.setup         Test-Mojibake 1.1 ../by-authors/id/S/SY/SYP
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Mojibake (no description available)
+description         Test::Mojibake - check your source for encoding misbehavior
 
-long_description    ${description}
+long_description    Many modern text editors automatically save files using \
+                    UTF-8 codification, however, perl interpreter does not \
+                    expects it by default. Whereas this does not represent \
+                    a big deal on (most) backend-oriented programs, Web \
+                    framework (Catalyst, Mojolicious) based applications \
+                    will suffer of so-called Mojibake (lit. \"unintelligible \
+                    sequence of characters\").
 
 checksums           rmd160 1b12c489a4dd833125fb8515d8891034f14ace8d \
                     sha256 6324d5fe08d64276a1a9f8360894d199ef8130d28ca6b6c9b15657d1a232decb
-
-
