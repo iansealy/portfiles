@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Module-Manifest 1.08
-#perl5.setup         Module-Manifest 1.08 ../by-authors/id/A/AD/ADAMK
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Module::Manifest (no description available)
+description         Module::Manifest - Parse and examine a Perl distribution MANIFEST file
 
-long_description    ${description}
+long_description    Module::Manifest is a simple utility module created \
+                    originally for use in Module::Inspector.
 
 checksums           rmd160 d67d8f98c9db3ab4e32ee0bdcf7078adbdbedd8d \
                     sha256 722ed428afcbe5b5b441b0165cbafbd8534fa63d7856d4089e6e25ac21e6445d
@@ -30,5 +28,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-params-util
 }
-
-
