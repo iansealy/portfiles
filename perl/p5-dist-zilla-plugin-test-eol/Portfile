@@ -1,0 +1,42 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-Plugin-Test-EOL 0.18
+#perl5.setup         Dist-Zilla-Plugin-Test-EOL 0.18 ../by-authors/id/E/ET/ETHER
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Plugin::Test::EOL (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 c6c74b18fe1850ff3d62737303c4592c3274cd4c \
+                    sha256 9df81ed587b122de16b6ca476bf4d8f064b45eb281a4d6259e84306df0cfc37d
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-file-pushd \
+                    port:p${perl5.major}-test-deep \
+                    port:p${perl5.major}-test-eol \
+                    port:p${perl5.major}-test-warnings
+    depends_lib-append \
+                    port:p${perl5.major}-data-section \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-namespace-autoclean \
+                    port:p${perl5.major}-path-tiny \
+                    port:p${perl5.major}-sub-exporter-formethods
+}
+
+
