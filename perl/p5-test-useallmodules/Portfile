@@ -6,21 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-UseAllModules 0.17
-#perl5.setup         Test-UseAllModules 0.17 ../by-authors/id/I/IS/ISHIGAKI
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::UseAllModules (no description available)
+description         Test::UseAllModules - do use_ok() for all the MANIFESTed modules
 
-long_description    ${description}
+long_description    This module reads MANIFEST to find modules to be tested \
+                    and does use_ok() for each of them.
 
 checksums           rmd160 e4572cfc4740de7c6fd95c365dfd19c4ae2120a0 \
                     sha256 a71f2fe8b96ab8bfc2760aa1d3135ea049a5b20dcb105457b769a1195c7a2509
-
-
