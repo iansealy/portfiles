@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-DistManifest 1.014
-#perl5.setup         Test-DistManifest 1.014 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::DistManifest (no description available)
+description         Test::DistManifest - Author test that validates a package MANIFEST
 
-long_description    ${description}
+long_description    This module provides a simple method of testing that a \
+                    MANIFEST matches the distribution.
 
 checksums           rmd160 81c448539c20238fd9a976e38dda44de431d5f62 \
                     sha256 3d26c20df42628981cbfcfa5b1ca028c6ceadb344c1dcf97a25ad6a88b73d7c5
@@ -27,5 +25,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-module-manifest
 }
-
-
