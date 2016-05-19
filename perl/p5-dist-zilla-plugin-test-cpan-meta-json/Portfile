@@ -1,0 +1,36 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-Plugin-Test-CPAN-Meta-JSON 0.004
+#perl5.setup         Dist-Zilla-Plugin-Test-CPAN-Meta-JSON 0.004 ../by-authors/id/D/DO/DOHERTY
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Plugin::Test::CPAN::Meta::JSON (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 8e7eb82788939773e9597f5877eb4965abd8c1cf \
+                    sha256 0a573e1d5640374e6ee4d56d4fb94a3c67d4e75d52b3ddeae70cfa6450e1af22
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose-autobox
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-test-cpan-meta-json
+}
+
+
