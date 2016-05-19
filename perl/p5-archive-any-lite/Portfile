@@ -6,28 +6,27 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Archive-Any-Lite 0.11
-#perl5.setup         Archive-Any-Lite 0.11 ../by-authors/id/I/IS/ISHIGAKI
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Archive::Any::Lite (no description available)
+description         Archive::Any::Lite - simple CPAN package extractor
 
-long_description    ${description}
+long_description    This is a fork of Archive::Any by Michael Schwern and \
+                    Clint Moore. The main difference is this works properly \
+                    even when you fork(), and may require less memory to \
+                    extract a tarball.
 
 checksums           rmd160 ed70657153b0d39a5b155b018af31c377045fb90 \
                     sha256 15c188253993a4b66e5599f0789b1326f0a66c092bdbfac9313706d41c285170
 
 if {${perl5.major} != ""} {
     depends_build-append \
-                    port:p${perl5.major}-test-useallmodules
+                    port:p${perl5.major}-test-useallmodules \
+                    port:p${perl5.major}-extutils-makemaker-cpanfile
     depends_lib-append \
                     port:p${perl5.major}-archive-zip
 }
-
-
