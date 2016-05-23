@@ -6,19 +6,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Test-NoTabs 0.15
-#perl5.setup         Dist-Zilla-Plugin-Test-NoTabs 0.15 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::NoTabs (no description available)
+description         Dist::Zilla::Plugin::Test::NoTabs - Author tests that ensure hard tabs are not used
 
-long_description    ${description}
+long_description    This is a plugin that runs at the gather files stage, \
+                    providing the file xt/author/no-tabs.t, a standard \
+                    Test::NoTabs test.
 
 checksums           rmd160 bd74d4c0c20b093b5791c70b5cecfcece6ba7c32 \
                     sha256 1b610c42916929bb70143c36b79e5717525b0e9de78e3d4609a978642b64d0a4
@@ -38,5 +37,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-sub-exporter-formethods
 }
-
-
