@@ -1,0 +1,36 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-Plugin-Test-MinimumVersion 2.000006
+#perl5.setup         Dist-Zilla-Plugin-Test-MinimumVersion 2.000006 ../by-authors/id/D/DO/DOHERTY
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Plugin::Test::MinimumVersion (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 628d3a1085fecb17c4db1d937da14f8d557f83cb \
+                    sha256 c13ea60532154f9a521faa115c8d79baed56116722c478b7b4f6d282fb18f530
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-test-output
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-test-minimumversion
+}
+
+
