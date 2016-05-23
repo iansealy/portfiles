@@ -6,19 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-Kwalitee 1.22
-#perl5.setup         Test-Kwalitee 1.22 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Kwalitee (no description available)
+description         Test::Kwalitee - Test the Kwalitee of a distribution before you release it
 
-long_description    ${description}
+long_description    Kwalitee is an automatically-measurable gauge of how \
+                    good your software is. That's very different from \
+                    quality, which a computer really can't measure in a \
+                    general sense.
 
 checksums           rmd160 d062c650fc6702c2467ca11e9eb8c0abb52cfbc7 \
                     sha256 09f05d75c8ec2d94deafd6a6aaf6fde1e32508b2116280a52f993cb6a2ef84ae
@@ -32,5 +32,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-module-cpants-analyse \
                     port:p${perl5.major}-namespace-clean
 }
-
-
