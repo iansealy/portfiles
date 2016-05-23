@@ -6,21 +6,20 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         constant-defer 6
-#perl5.setup         constant-defer 6 ../by-authors/id/K/KR/KRYDE
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             GPL-3+
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         constant::defer (no description available)
+description         constant::defer - constant subs with deferred value calculation
 
-long_description    ${description}
+long_description    constant::defer creates a subroutine which on the first \
+                    call runs given code to calculate its value, and on any \
+                    subsequent calls just returns that value, like a \
+                    constant. The value code is discarded once run, \
+                    allowing it to be garbage collected.
 
 checksums           rmd160 bfe904fd84606b7f4a1dbfc22abb9834340a12b9 \
                     sha256 7b21263198ca22686efff3ae987a240be423dd2160afdeb29fe716d032986ffa
-
-
