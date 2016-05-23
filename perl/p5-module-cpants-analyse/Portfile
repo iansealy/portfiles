@@ -6,17 +6,14 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Module-CPANTS-Analyse 0.96
-#perl5.setup         Module-CPANTS-Analyse 0.96 ../by-authors/id/I/IS/ISHIGAKI
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Module::CPANTS::Analyse (no description available)
+description         Module::CPANTS::Analyse - Generate Kwalitee ratings for a distribution
 
 long_description    ${description}
 
@@ -39,5 +36,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-software-license \
                     port:p${perl5.major}-software-license-ccpack
 }
-
-
