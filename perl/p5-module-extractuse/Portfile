@@ -6,19 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Module-ExtractUse 0.341
-#perl5.setup         Module-ExtractUse 0.341 ../by-authors/id/D/DO/DOMM
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Module::ExtractUse (no description available)
+description         Module::ExtractUse - Find out what modules are used
 
-long_description    ${description}
+long_description    Module::ExtractUse is basically a Parse::RecDescent \
+                    grammar to parse Perl code. It tries very hard to find \
+                    all modules (whether pragmas, Core, or from CPAN) used \
+                    by the parsed code.
 
 checksums           rmd160 9ea55a28af60bf88db640461f399224747d2b411 \
                     sha256 9b0df07eaa28229da6667538ff114ecab37560f474f807b2a1476700e77106d8
