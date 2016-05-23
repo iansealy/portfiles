@@ -1,0 +1,35 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Module-ExtractUse 0.341
+#perl5.setup         Module-ExtractUse 0.341 ../by-authors/id/D/DO/DOMM
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Module::ExtractUse (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 9ea55a28af60bf88db640461f399224747d2b411 \
+                    sha256 9b0df07eaa28229da6667538ff114ecab37560f474f807b2a1476700e77106d8
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-deep \
+                    port:p${perl5.major}-test-nowarnings
+    depends_lib-append \
+                    port:p${perl5.major}-parse-recdescent \
+                    port:p${perl5.major}-pod-strip
+}
+
+perl5.use_module_build
