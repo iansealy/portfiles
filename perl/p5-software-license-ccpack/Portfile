@@ -5,20 +5,19 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Software-License-CCpack 1.11
-#perl5.setup         Software-License-CCpack 1.11 ../by-authors/id/B/BB/BBYRD
+perl5.setup         Software-License-CCpack 1.11 ../by-authors/id/B/BB/BBYRD
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             LGPL-3
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Software::License::CCpack (no description available)
+description         Software::License::CCpack - Software::License pack for Creative Commons' licenses
 
-long_description    ${description}
+long_description    This "license pack" contains all of the licenses from \
+                    Creative Commons, except for CC0, which is already \
+                    included in Software::License.
 
 checksums           rmd160 7b199287988486c49a31ab4b75f8371d01c96d6f \
                     sha256 594f5c6abc216c95cd45877c41dec56d2bc30e1d0316ad3855b0a2aa8e5d53b1
@@ -29,5 +28,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-software-license
 }
-
-
