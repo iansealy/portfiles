@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         File-Find-Iterator 0.4
+#perl5.setup         File-Find-Iterator 0.4 ../by-authors/id/T/TE/TEXMEC
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         File::Find::Iterator (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 5635d3e51b6d67d2c671c6194726e19516db52b4 \
+                    sha256 a2b87ab9756a2e5bb674adbd39937663ed20c28c716bf5a1095a3ca44d54ab2c
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-class-iterator
+}
+
+
