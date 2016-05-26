@@ -6,19 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-Vars 0.009
-#perl5.setup         Test-Vars 0.009 ../by-authors/id/D/DR/DROLSKY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Vars (no description available)
+description         Test::Vars - Detects unused variables in perl modules
 
-long_description    ${description}
+long_description    Test::Vars provides test functions to report unused \
+                    variables either in an entire distribution or in some \
+                    files of your choice in order to keep the source code \
+                    tidy.
 
 checksums           rmd160 8136260ce6a924200d583105be8b1a99041622f9 \
                     sha256 3dd8c9d78cda37b498b1024c54744d4aa3d04a0c7117975e46ccf5a928f2328a
