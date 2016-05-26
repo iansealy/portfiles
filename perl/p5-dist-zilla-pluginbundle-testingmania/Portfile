@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-PluginBundle-TestingMania 0.25
-#perl5.setup         Dist-Zilla-PluginBundle-TestingMania 0.25 ../by-authors/id/D/DO/DOHERTY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::PluginBundle::TestingMania (no description available)
+description         Dist::Zilla::PluginBundle::TestingMania - test your dist with every testing plugin conceivable
 
-long_description    ${description}
+long_description    This plugin bundle collects all the testing plugins for \
+                    Dist::Zilla which exist (and are not deprecated).
 
 checksums           rmd160 4a1ead56c69af369c577bdd6161bba14b01902c9 \
                     sha256 5e0bb2c00f140fd64dcbd12fa5d3c9e244b9356828af465198b6230469d4591c
@@ -53,5 +51,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-test-perl-critic \
                     port:p${perl5.major}-test-version
 }
-
-
