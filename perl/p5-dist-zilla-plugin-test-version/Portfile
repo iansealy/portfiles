@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Test-Version 1.09
-#perl5.setup         Dist-Zilla-Plugin-Test-Version 1.09 ../by-authors/id/P/PL/PLICEASE
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Artistic-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Test::Version (no description available)
+description         Dist::Zilla::Plugin::Test::Version - Author Test::Version tests
 
-long_description    ${description}
+long_description    This module will add a Test::Version test as a author \
+                    test to your module.
 
 checksums           rmd160 50e3634d40ae568ef552796352256afbe56b6503 \
                     sha256 7240508731bc1bf6dfad7701ec65450a18ef9245a521ab26ebd6acb39a9ebe17
@@ -40,5 +38,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-sub-exporter-formethods \
                     port:p${perl5.major}-test-version
 }
-
-
