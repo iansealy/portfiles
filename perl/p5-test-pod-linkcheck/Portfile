@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-Pod-LinkCheck 0.008
-#perl5.setup         Test-Pod-LinkCheck 0.008 ../by-authors/id/A/AP/APOCAL
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Pod::LinkCheck (no description available)
+description         Test::Pod::LinkCheck - Tests POD for invalid links
 
-long_description    ${description}
+long_description    This module looks for any links in your POD and \
+                    verifies that they point to a valid resource.
 
 checksums           rmd160 e60cd6dee21fa42f9a784c99a69c6c71ccfd9fd9 \
                     sha256 2bfe771173c38b69eeb089504e3f76511b8e45e6a9e6dac3e616e400ea67bcf0
@@ -30,5 +28,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-podlinkcheck \
                     port:p${perl5.major}-test-pod
 }
-
-
