@@ -6,21 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-Synopsis 0.15
-#perl5.setup         Test-Synopsis 0.15 ../by-authors/id/Z/ZO/ZOFFIX
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Synopsis (no description available)
+description         Test::Synopsis - Test your SYNOPSIS code
 
-long_description    ${description}
+long_description    Test::Synopsis is an (author) test module to find .pm \
+                    or .pod files under your lib directory and then make \
+                    sure the example snippet code in your SYNOPSIS section \
+                    passes the perl compile check.
 
 checksums           rmd160 33b6e80b210a0712ad6fde3adbedb97c77d39a30 \
                     sha256 d1d5636692756c0647d4ac94c3d5898d0b4df7b46a08d202b14822c7618bbdb3
-
-
