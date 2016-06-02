@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-CheckChangesHasContent 0.008
+perl5.setup         Dist-Zilla-Plugin-CheckChangesHasContent 0.010
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    This is a "before release" Dist::Zilla plugin that \
                     ensures that your Changes file actually has some \
                     content since the last release.
 
-checksums           rmd160 f339f326cf6800fb0e45ffb5a8ceb6dcbd626deb \
-                    sha256 6a23ba1a868795b4562cb650db0173acaf0f2ba5d3d67ee06a122c080b7bb13d
+checksums           rmd160 a6642fa8e5f0d019c6dfb5e290834e7e8ed7a079 \
+                    sha256 a7f91560ed7dc497e191bb505bcbc62478e62d385b384682b17702fbda9bb433
 
 if {${perl5.major} != ""} {
     depends_build-append \
