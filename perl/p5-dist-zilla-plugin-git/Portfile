@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Git 2.036
+perl5.setup         Dist-Zilla-Plugin-Git 2.039
 
 platforms           darwin
 maintainers         nomaintainer
@@ -13,13 +13,14 @@ license             {Artistic-1 GPL}
 
 #supported_archs     noarch
 
-description         Dist::Zilla::PluginBundle::Git - all git plugins in one go
+description         Dist::Zilla::Plugin::Git - update your git repository after release
 
-long_description    This is a plugin bundle to load the most common Git \
-                    plugins.
+long_description    This set of plugins for Dist::Zilla can do interesting \
+                    things for module authors using Git \
+                    (http://git-scm.com) to track their work.
 
-checksums           rmd160 7021374fcd3b4ab8dbe16797523c0eb72f5f41c6 \
-                    sha256 ac08a085eb96104b8dfa081a96416f7862af262307c51bbb7a4295ba5829dd95
+checksums           rmd160 9d85c34b70192b6327b4cc1b83a3fed088def0f8 \
+                    sha256 2b10e97fe941aee54a060531f5849e654a9f8128d72293193d748bb9aaa7e6f7
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -40,7 +41,6 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-file-homedir \
                     port:p${perl5.major}-git-wrapper \
                     port:p${perl5.major}-ipc-system-simple \
-                    port:p${perl5.major}-list-moreutils \
                     port:p${perl5.major}-module-runtime \
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-moosex-has-sugar \
@@ -52,5 +52,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-try-tiny \
                     port:p${perl5.major}-version-next
 }
-
-perl5.use_module_build
