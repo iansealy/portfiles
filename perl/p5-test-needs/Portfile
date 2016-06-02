@@ -6,21 +6,20 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Test-Needs 0.002000
-#perl5.setup         Test-Needs 0.002000 ../by-authors/id/H/HA/HAARG
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Needs (no description available)
+description         Test::Needs - Skip tests when modules not available
 
-long_description    ${description}
+long_description    Skip test scripts if modules are not available. The \
+                    requested modules will be loaded, and optionally have \
+                    their versions checked. If the module is missing, the \
+                    test script will be skipped. Modules that are found but \
+                    fail to compile will exit with an error rather than skip.
 
 checksums           rmd160 9f015a706480ed44e5bd7f770cf86ef6744dc664 \
                     sha256 225a438f84d92d530687edbdfc66bd2025a53ed5e374ebfe8c451c932eb2a0aa
-
-
