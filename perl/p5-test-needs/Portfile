@@ -1,0 +1,26 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Test-Needs 0.002000
+#perl5.setup         Test-Needs 0.002000 ../by-authors/id/H/HA/HAARG
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Test::Needs (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 9f015a706480ed44e5bd7f770cf86ef6744dc664 \
+                    sha256 225a438f84d92d530687edbdfc66bd2025a53ed5e374ebfe8c451c932eb2a0aa
+
+
