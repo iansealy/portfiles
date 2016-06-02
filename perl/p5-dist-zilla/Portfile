@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla 5.047
+perl5.setup         Dist-Zilla 6.005
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,8 +18,8 @@ description         Dist::Zilla - distribution builder
 long_description    Dist::Zilla builds distributions of code to be uploaded \
                     to the CPAN.
 
-checksums           rmd160 952682fb63440b259f90421b06c27bcfa493ad38 \
-                    sha256 97d24345c33adcab443dc4f8ae2492e6d9b42284cdee2a3fb19de1ba7ecbefa1
+checksums           rmd160 fbf98dce3bb8657d3cd309514c2313f1965a1f5b \
+                    sha256 e91760689cc428f6b841701e7e2c075754bc941e966de765d4a14b6162e31075
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -46,19 +46,17 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-json-maybexs \
                     port:p${perl5.major}-log-dispatchouli \
                     port:p${perl5.major}-mixin-linewise \
+                    port:p${perl5.major}-module-runtime \
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-moosex-lazyrequire \
                     port:p${perl5.major}-moosex-role-parameterized \
                     port:p${perl5.major}-moosex-setonce \
                     port:p${perl5.major}-moosex-types \
-                    port:p${perl5.major}-moosex-types-path-class \
                     port:p${perl5.major}-moosex-types-perl \
                     port:p${perl5.major}-namespace-autoclean \
                     port:p${perl5.major}-params-util \
-                    port:p${perl5.major}-path-class \
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-perl-prereqscanner \
-                    port:p${perl5.major}-perl-version \
                     port:p${perl5.major}-pod-eventual \
                     port:p${perl5.major}-ppi \
                     port:p${perl5.major}-software-license \
