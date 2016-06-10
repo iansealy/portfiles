@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Test-ReportPrereqs 0.024
+perl5.setup         Dist-Zilla-Plugin-Test-ReportPrereqs 0.025
 
 platforms           darwin
 maintainers         nomaintainer
@@ -21,8 +21,8 @@ long_description    This Dist::Zilla plugin adds a t/00-report-prereqs.t \
                     in the distribution metadata prerequisites (including \
                     'recommends', 'suggests', etc.).
 
-checksums           rmd160 fb2429d49e26a57bd587de98a2197d79215b8138 \
-                    sha256 275287b8913cd82b3b43670d6f4f5a18d0f4f4ebefa15399d85b2b2a91bdc9fe
+checksums           rmd160 8b2d4e56703a4c4a234cbfc0f502a6bd7500d5cb \
+                    sha256 9926cf5bff3c233e4ab23ddae4654eb3d1ffdcbef4dc935d0a601dc1c1c81a65
 
 if {${perl5.major} != ""} {
     depends_build-append \
