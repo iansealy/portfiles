@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Test-Portability 2.000006
+perl5.setup         Dist-Zilla-Plugin-Test-Portability 2.000007
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Dist::Zilla::Plugin::Test::Portability - Release tests for p
 
 long_description    ${description}
 
-checksums           rmd160 91e3f0ea9b4fd2cc66b36aa748501bad0072a59d \
-                    sha256 27f4dbbc0ef83597fa005a7110e7edb78a2cbd4fdf23d7362d154ef550af5836
+checksums           rmd160 e45f1f81f743217e12f37aa0775e2351b56921ab \
+                    sha256 01d2446e001ce5c5e6f6eb883332636b673d44ea9dfc0286a23590f8eb4d2ede
 
 if {${perl5.major} != ""} {
     depends_build-append \
