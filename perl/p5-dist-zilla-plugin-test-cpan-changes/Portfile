@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Test-CPAN-Changes 0.009
+perl5.setup         Dist-Zilla-Plugin-Test-CPAN-Changes 0.012
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Dist::Zilla::Plugin::Test::CPAN::Changes - release tests for
 
 long_description    ${description}
 
-checksums           rmd160 0463d81f87d826e722c115c6efc6ea182157f7bf \
-                    sha256 a5eadc2e1652da5621b0751715673bb0070b84dd72a4169f02591d8a26fb5a71
+checksums           rmd160 74848a946871551d6a939b5e975bd2a5374c92cd \
+                    sha256 215b3a5c3c58c8bab0ea27130441bbdaec737eecc00f0670937f608bdbf64806
 
 if {${perl5.major} != ""} {
     depends_build-append \
