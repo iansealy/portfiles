@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Test-Synopsis 2.000006
+perl5.setup         Dist-Zilla-Plugin-Test-Synopsis 2.000007
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Dist::Zilla::Plugin::Test::Synopsis - Release tests for syno
 
 long_description    ${description}
 
-checksums           rmd160 f97f767a64611f63d4218314206ee3a04c6ed90a \
-                    sha256 60b7bd2b452670485b3c864fa877d15bcfafbbbee5ef5bfd511778acf8f21480
+checksums           rmd160 486c3c72a72fcce9df0a5cb4ca74859a9d1ee1af \
+                    sha256 e7d5e2530cd8a5bb5aadf3e1669a653aaa96e32cad7bd6b9caba6b425ceab563
 
 if {${perl5.major} != ""} {
     depends_build-append \
