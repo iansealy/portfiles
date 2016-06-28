@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-OurPkgVersion 0.08
+perl5.setup         Dist-Zilla-Plugin-OurPkgVersion 0.10
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,13 +19,13 @@ long_description    This module was created as an alternative to \
                     Dist::Zilla::Plugin::PkgVersion and uses some code from \
                     that module.
 
-checksums           rmd160 224994f951ba8b9707a2bb56234d7789d996d000 \
-                    sha256 9fb960c525cc5bc6fb44b5e3f0a1ce94cd85e9a7d85cb529ac5dea0371251cd2
+checksums           rmd160 adea97d6c1027285800490b572a2c1ff372c4539 \
+                    sha256 f9f87d27772a351540b4fb15c59ab2ebbf8cd0e7501fe2a7e151d1626b79be60
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-dist-zilla \
-                    port:p${perl5.major}-path-class \
+                    port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-test-version
     depends_lib-append \
                     port:p${perl5.major}-dist-zilla \
