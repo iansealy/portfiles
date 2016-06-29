@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         autobox-Junctions 0.001
+perl5.setup         autobox-Junctions 0.002
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,8 +20,8 @@ long_description    This is a simple autoboxifying wrapper around \
                     references with the functions provided by that package \
                     as methods for arrays: any, all, one, and none.
 
-checksums           rmd160 4a8f7883106694b9979341efc2d652ad4a025251 \
-                    sha256 da623158dfbecf9cc9668c7359265ff7f4839cbfc40aaea19a5bb6dd6daeeaf8
+checksums           rmd160 373125a36e2e4b337ef87ccac27e79d0578b55c6 \
+                    sha256 30f5eac88817a45231f14f8b309162a535cf7c4fe1ebd131c942984134fcb12d
 
 if {${perl5.major} != ""} {
     depends_build-append \
