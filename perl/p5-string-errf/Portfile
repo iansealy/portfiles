@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         String-Errf 0.007
+perl5.setup         String-Errf 0.008
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,12 +18,12 @@ description         String::Errf - a simple sprintf-like dialect
 long_description    String::Errf provides errf, a simple string formatter \
                     that works something like sprintf.
 
-checksums           rmd160 19e805d2c36e31f45ba97c7fdad6953e03bf625d \
-                    sha256 d2491c753f2dce96aab98594ac7a770d1ae80dd744ad3567b03b73ac5baff6aa
+checksums           rmd160 d1ec2247f7149969ed455c50e5c062958492acb3 \
+                    sha256 ae136f783dac6587aea2d22d64ec205272153a83f954b075766e3d298a4ed6db
 
 if {${perl5.major} != ""} {
     depends_build-append \
-                    port:p${perl5.major}-json \
+                    port:p${perl5.major}-json-maybexs \
                     port:p${perl5.major}-timedate
     depends_lib-append \
                     port:p${perl5.major}-params-util \
