@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-CheckExtraTests 0.029
-#perl5.setup         Dist-Zilla-Plugin-CheckExtraTests 0.029 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::CheckExtraTests (no description available)
+description         Dist::Zilla::Plugin::CheckExtraTests - check xt tests before release
 
-long_description    ${description}
+long_description    Runs all xt tests before release. Dies if any fail. \
+                    Sets RELEASE_TESTING and AUTHOR_TESTING.
 
 checksums           rmd160 30219eeeb8dab5195ce51d7a9d9a5ae55d7e5db2 \
                     sha256 00ec020a8dc46353e442efda3c1d08fdfa709c2951b17c6d9ffd05af920f92e9
@@ -39,5 +37,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-iterator-rule \
                     port:p${perl5.major}-path-tiny
 }
-
-
