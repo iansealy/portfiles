@@ -6,19 +6,16 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Util-Test-KENTNL 1.005013
-#perl5.setup         Dist-Zilla-Util-Test-KENTNL 1.005013 ../by-authors/id/K/KE/KENTNL
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Util::Test::KENTNL (no description available)
+description         Dist::Zilla::Util::Test::KENTNL - KENTNL's DZil plugin testing tool
 
-long_description    ${description}
+long_description    This module is KENTNL's kit for testing Dist::Zilla.
 
 checksums           rmd160 5609b6b7b4ab58f5f0f246985ee02decf20af71d \
                     sha256 0ff5d2454a515eb3c8c82877e8e5012a5fd4de89b4ec3319dd11a9efd3680f50
@@ -37,5 +34,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-test-fatal \
                     port:p${perl5.major}-try-tiny
 }
-
-
