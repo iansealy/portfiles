@@ -1,0 +1,45 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-PluginBundle-Starter 0.004
+#perl5.setup         Dist-Zilla-PluginBundle-Starter 0.004 ../by-authors/id/D/DB/DBOOK
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::PluginBundle::Starter (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 ec77ee9e52feb0ddcda71a6ce2da3084d1bed5b9 \
+                    sha256 f37afd19f8d1a39fe3ec7de4e8cc8dd062cab24de109c34e8c914f02e1f294cc
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-path-tiny \
+                    port:p${perl5.major}-test-file-sharedir
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-dist-zilla-config-slicer \
+                    port:p${perl5.major}-dist-zilla-plugin-checkextratests \
+                    port:p${perl5.major}-dist-zilla-plugin-metaprovides-package \
+                    port:p${perl5.major}-dist-zilla-plugin-readmeanyfrompod \
+                    port:p${perl5.major}-dist-zilla-plugin-test-compile \
+                    port:p${perl5.major}-dist-zilla-plugin-test-reportprereqs \
+                    port:p${perl5.major}-dist-zilla-role-pluginbundle-pluginremover \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-namespace-clean \
+                    port:p${perl5.major}-test-pod
+}
+
+
