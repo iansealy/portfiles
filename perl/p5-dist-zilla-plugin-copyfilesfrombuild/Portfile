@@ -6,19 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-CopyFilesFromBuild 0.161350
-#perl5.setup         Dist-Zilla-Plugin-CopyFilesFromBuild 0.161350 ../by-authors/id/R/RT/RTHOMPSON
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::CopyFilesFromBuild (no description available)
+description         Dist::Zilla::Plugin::CopyFilesFromBuild - Copy (or move) specific files after building (for SCM inclusion, etc.)
 
-long_description    ${description}
+long_description    This plugin will automatically copy the files that you \
+                    specify in dist.ini from the build directory into the \
+                    distribution directoory. This is so you can commit them \
+                    to version control.
 
 checksums           rmd160 f3f6aa13725e030db3891ff10a8e223d57b48faa \
                     sha256 dd3e236a86997d3a0203a1b6acdaa8053295a99d7a22cc8fe5fcfd13907feec4
@@ -31,5 +31,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-set-scalar
 }
-
-
