@@ -5,20 +5,19 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         recommended 0.003
-#perl5.setup         recommended 0.003 ../by-authors/id/D/DA/DAGOLDEN
+perl5.setup         recommended 0.003 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         recommended (no description available)
+description         recommended - Load recommended modules on demand when available
 
-long_description    ${description}
+long_description    This module gathers a list of recommended modules and \
+                    versions and provides means to check if they are \
+                    available. It is a thin veneer around Module::Runtime.
 
 checksums           rmd160 4200618afc445a8eac0335711b7b30d195e6da90 \
                     sha256 6bac5036ea9dac3d4691efa5ddf65f41835537057d40005a1f628379e51afcf6
@@ -27,5 +26,3 @@ if {${perl5.major} != ""} {
     depends_lib-append \
                     port:p${perl5.major}-module-runtime
 }
-
-
