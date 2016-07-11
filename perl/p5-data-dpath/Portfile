@@ -6,19 +6,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Data-DPath 0.55
-#perl5.setup         Data-DPath 0.55 ../by-authors/id/S/SC/SCHWIGON
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Data::DPath (no description available)
+description         Data::DPath - DPath is not XPath!
 
-long_description    ${description}
+long_description    With this module you can address points in a \
+                    datastructure by describing a "path" to it using hash \
+                    keys, array indexes or some wildcard-like steps. It is \
+                    inspired by XPath but differs from it.
 
 checksums           rmd160 bf1e54b12d1be7af10726aaec211c1c12f64986d \
                     sha256 869319599aeeeee04d2f6208ea969642d8602fa5fc93ea1956e05c1eae35a568
@@ -33,5 +33,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-list-moreutils \
                     port:p${perl5.major}-sub-exporter
 }
-
-
