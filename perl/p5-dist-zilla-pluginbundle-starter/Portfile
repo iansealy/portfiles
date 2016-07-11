@@ -6,19 +6,20 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-PluginBundle-Starter 0.004
-#perl5.setup         Dist-Zilla-PluginBundle-Starter 0.004 ../by-authors/id/D/DB/DBOOK
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Artistic-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::PluginBundle::Starter (no description available)
+description         Dist::Zilla::PluginBundle::Starter - A minimal Dist::Zilla plugin bundle
 
-long_description    ${description}
+long_description    The \[@Starter] plugin bundle for Dist::Zilla is designed \
+                    to do the minimal amount of work to release a complete \
+                    distribution reliably. It is similar in purpose to \
+                    \[@Basic], but with additional features to stay up to \
+                    date and allow greater customization.
 
 checksums           rmd160 ec77ee9e52feb0ddcda71a6ce2da3084d1bed5b9 \
                     sha256 f37afd19f8d1a39fe3ec7de4e8cc8dd062cab24de109c34e8c914f02e1f294cc
@@ -41,5 +42,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-namespace-clean \
                     port:p${perl5.major}-test-pod
 }
-
-
