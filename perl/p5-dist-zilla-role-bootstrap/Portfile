@@ -1,0 +1,38 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Dist-Zilla-Role-Bootstrap 1.001003
+#perl5.setup         Dist-Zilla-Role-Bootstrap 1.001003 ../by-authors/id/K/KE/KENTNL
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::Role::Bootstrap (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 639c436f2b91906ceee67e0e7830991fe0bb3287 \
+                    sha256 305901d2021bf499234ae4589523f253cc940bd6f9b7b13d858b26e28be8abad
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-file-copy-recursive \
+                    port:p${perl5.major}-moose
+    depends_lib-append \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-list-utilsby \
+                    port:p${perl5.major}-moose \
+                    port:p${perl5.major}-path-tiny
+}
+
+
