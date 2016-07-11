@@ -6,19 +6,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Plugin-Bootstrap-lib 1.001000
-#perl5.setup         Dist-Zilla-Plugin-Bootstrap-lib 1.001000 ../by-authors/id/K/KE/KENTNL
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::Bootstrap::lib (no description available)
+description         Dist::Zilla::Plugin::Bootstrap::lib - A minimal boot-strapping for Dist::Zilla Plug-ins.
 
-long_description    ${description}
+long_description    This module exists for loading either /lib or \
+                    /Dist-Name-\$VERSION/lib into your @INC early on.
 
 checksums           rmd160 75c7842b21037169ea1122d65f03115af176967e \
                     sha256 84578bbe9309c1f7e88b060b96cb78c937fabc8c4ca4970d67d56fbbbf46149d
@@ -31,5 +29,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-dist-zilla-role-bootstrap \
                     port:p${perl5.major}-moose
 }
-
-
