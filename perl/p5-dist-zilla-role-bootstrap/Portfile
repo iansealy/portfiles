@@ -6,19 +6,22 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Role-Bootstrap 1.001003
-#perl5.setup         Dist-Zilla-Role-Bootstrap 1.001003 ../by-authors/id/K/KE/KENTNL
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Role::Bootstrap (no description available)
+description         Dist::Zilla::Role::Bootstrap - Shared logic for bootstrap things.
 
-long_description    ${description}
+long_description    This module is a role that aims to be consumed by \
+                    plugins that want to perform some very early bootstrap \
+                    operation that may affect the loading environment of \
+                    successive plugins, especially with regards to plugins \
+                    that may wish to build with themselves, either by \
+                    consuming the source tree itself, or by consuming a \
+                    previous built iteration.
 
 checksums           rmd160 639c436f2b91906ceee67e0e7830991fe0bb3287 \
                     sha256 305901d2021bf499234ae4589523f253cc940bd6f9b7b13d858b26e28be8abad
@@ -34,5 +37,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-path-tiny
 }
-
-
