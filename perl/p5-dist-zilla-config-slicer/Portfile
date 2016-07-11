@@ -6,19 +6,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Config-Slicer 0.201
-#perl5.setup         Dist-Zilla-Config-Slicer 0.201 ../by-authors/id/R/RW/RWSTAUNER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Config::Slicer (no description available)
+description         Dist::Zilla::Config::Slicer - Config::MVP::Slicer customized for Dist::Zilla
 
-long_description    ${description}
+long_description    This is a subclass of Config::MVP::Slicer that overrides \
+                    the default match_package to expand packages according \
+                    to Dist::Zilla's rules.
 
 checksums           rmd160 42652e479b21ebf3c48865d440b037ad9a32e8a8 \
                     sha256 6b1b34fc31a5280be19ac97819eb1cf58f26821c908deee21b84b416e6c52897
@@ -31,5 +30,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-moose
 }
-
-
