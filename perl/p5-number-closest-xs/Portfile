@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Number-Closest-XS 0.09
+#perl5.setup         Number-Closest-XS 0.09 ../by-authors/id/Z/ZW/ZWON
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Number::Closest::XS (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 aec7950aae51082a8aae059aa78f79550a433aeb \
+                    sha256 0da5b82d0d35dfa64f960abbe171432b8e65dc5893b1d7124314c2e4aa2c6eac
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-most
+}
+
+
