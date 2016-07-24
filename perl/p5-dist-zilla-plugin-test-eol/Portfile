@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Test-EOL 0.18
+perl5.setup         Dist-Zilla-Plugin-Test-EOL 0.19
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Dist::Zilla::Plugin::Test::EOL - Author tests making sure co
 
 long_description    Generate an author Test::EOL.
 
-checksums           rmd160 c6c74b18fe1850ff3d62737303c4592c3274cd4c \
-                    sha256 9df81ed587b122de16b6ca476bf4d8f064b45eb281a4d6259e84306df0cfc37d
+checksums           rmd160 ee66d1350ae629992e6c07dcbf70181bb97bfe23 \
+                    sha256 a2b959c7a02ccc32edd43ee58609875613efd53cbcbbd60399e17f15467a4338
 
 if {${perl5.major} != ""} {
     depends_build-append \
