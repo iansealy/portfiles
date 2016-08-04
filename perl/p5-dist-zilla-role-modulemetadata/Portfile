@@ -6,19 +6,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
 perl5.setup         Dist-Zilla-Role-ModuleMetadata 0.004
-#perl5.setup         Dist-Zilla-Role-ModuleMetadata 0.004 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Role::ModuleMetadata (no description available)
+description         Dist::Zilla::Role::ModuleMetadata - A role for plugins that use Module::Metadata
 
-long_description    ${description}
+long_description    This role provides some common utilities for Dist::Zilla \
+                    plugins which use Module::Metadata and the information \
+                    that it provides.
 
 checksums           rmd160 0fcb3ab7556c10a9264a9440c1f756f63b182f59 \
                     sha256 101b5a4e1bd106cb9bf2bdc1d13d71d38cef565129e06580381358f686233e97
@@ -35,5 +34,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-namespace-autoclean
 }
-
-
