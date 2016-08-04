@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-MetaProvides-Package 2.003002
+perl5.setup         Dist-Zilla-Plugin-MetaProvides-Package 2.004002
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,20 +20,20 @@ long_description    This is a Dist::Zilla Plugin that populates the provides \
                     your shipped modules, in a manner similar to how PAUSE \
                     itself does it.
 
-checksums           rmd160 694ed96a1cb3ed9ca7db7696c99da78565a1cca2 \
-                    sha256 04a6feac3024d75ab2fa5cacf9b760a93f2e14679ea0babe15d0117fde112fc3
+checksums           rmd160 a4c809b7f545543e7e42a06760a9cdaa3b7b1790 \
+                    sha256 270069a1770dc82c8836b710d2f930b5a809c4a73d053fcbe9ef7207a08c0e51
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-dist-zilla \
-                    port:p${perl5.major}-dist-zilla-util-test-kentnl \
                     port:p${perl5.major}-moose \
+                    port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-test-fatal
     depends_lib-append \
                     port:p${perl5.major}-data-dump \
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-dist-zilla-plugin-metaprovides \
-                    port:p${perl5.major}-dist-zilla-util-configdumper \
+                    port:p${perl5.major}-dist-zilla-role-modulemetadata \
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-moosex-lazyrequire \
                     port:p${perl5.major}-moosex-types \
