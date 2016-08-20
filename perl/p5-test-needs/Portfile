@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Test-Needs 0.002001
+perl5.setup         Test-Needs 0.002004
 
 platforms           darwin
 maintainers         nomaintainer
@@ -21,5 +21,5 @@ long_description    Skip test scripts if modules are not available. The \
                     test script will be skipped. Modules that are found but \
                     fail to compile will exit with an error rather than skip.
 
-checksums           rmd160 1d2e33e2ce499ecebcbdddff9f909b9828d03897 \
-                    sha256 86bbebea593a31ff712370cd975b4838e65b95676b938a125e4e951ca7790a7b
+checksums           rmd160 98056184fc975b6d31ab429c689d1f49f7f3f108 \
+                    sha256 e24c32c50872e54966cbda1bc0692d6416183f7a31fe4fb94f78e7d53d48705f
