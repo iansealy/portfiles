@@ -1,0 +1,35 @@
+# $Id: Portfile 139469 2015-08-18 01:10:17Z jmr@macports.org $
+
+PortSystem 1.0
+
+name		abook
+version		0.6.1
+revision    1
+categories	mail
+license		GPL-2
+description	Address book with mutt support
+long_description	abook uses curses libs and is able to import \
+			addressbooks from pine and netscape (ldif). \
+			Exports to mutt alias, html, pine, gcrd (GnomeCard), \
+			csv, elm alias, and plain text.
+homepage	http://abook.sourceforge.net
+platforms	darwin freebsd
+maintainers	gmail.com:sbranzo
+master_sites    http://abook.sourceforge.net/devel
+checksums	rmd160 6b991103fa6b20297e7a18d48bf83b114e618f9a \
+                sha256 f0a90df8694fb34685ecdd45d97db28b88046c15c95e7b0700596028bd8bc0f9
+depends_lib	port:gettext \
+		port:libiconv \
+		port:ncurses \
+		port:readline
+use_autoreconf  yes
+autoreconf.args -fvi
+configure.args	--with-libintl-prefix=${prefix} \
+		--with-libiconv-prefix=${prefix} \
+		--with-curses=${prefix} \
+		--with-readline=${prefix} \
+		--mandir=${prefix}/share/man
+post-configure  {
+	reinplace "s|DESTDIR =|#DESTDIR =|g" ${worksrcpath}/Makefile
+	reinplace "s|inline int field_id|int field_id|" ${worksrcpath}/database.h
+}
