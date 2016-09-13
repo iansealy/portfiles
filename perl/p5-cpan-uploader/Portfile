@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         CPAN-Uploader 0.103012
+perl5.setup         CPAN-Uploader 0.103013
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         CPAN::Uploader - upload things to the CPAN
 
 long_description    ${description}
 
-checksums           rmd160 e7ed6bec69880acf77358d0f238a6a49c7987b89 \
-                    sha256 1d3dde79747bac8414aa90d0cea830a22fa480e9f1a2c7c76442794e416d6da2
+checksums           rmd160 199c219ea915050b37b6d4bd8e84885650f914c3 \
+                    sha256 f81647d287b391430a5af9d141b2834acbbe477b9351a1cecf35c9fd908a681e
 
 if {${perl5.major} != ""} {
     depends_lib-append \
@@ -29,5 +29,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-lwp-protocol-https \
                     port:p${perl5.major}-term-readkey
 }
-
-
