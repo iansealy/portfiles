@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Git-Wrapper 0.045
+perl5.setup         Git-Wrapper 0.046
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    Git::Wrapper provides an API for git(7) that uses Perl \
                     data structures for argument passing, instead of \
                     CLI-style --options as Git does.
 
-checksums           rmd160 330b3cae2a7f35103508dec158c5d1c40c00c8cc \
-                    sha256 deedf3fd8961b7a77ed5e4baa93ff82de107c541ce7fd3fd9970e15776685c2f
+checksums           rmd160 3ba734e9ac69244817a2296eed0b5dd6818c64cc \
+                    sha256 6d75b9e9fd9c1b4b38a569e1adc6687703ea9460068fc5bb3614e1cc6303c43b
 
 if {${perl5.major} != ""} {
     depends_build-append \
