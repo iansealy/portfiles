@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Pod-Weaver 4.014
+perl5.setup         Pod-Weaver 4.015
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,8 +18,8 @@ description         Pod::Weaver - weave together a Pod document from an outline
 long_description    Pod::Weaver is a system for building Pod documents from \
                     templates.
 
-checksums           rmd160 e0751e37a4cb730294d83db0641dc199636aeb1a \
-                    sha256 5ca76396710e077b91e12ce32de82514d4785c49eb1ad95b9278045d77c260f5
+checksums           rmd160 ed05e80ac50c29fc58f56d31159e004b01337546 \
+                    sha256 5af25b29a55783e495a9df5ef6293240e2c9ab02764613d79f1ed50b12dec5ae
 
 if {${perl5.major} != ""} {
     depends_build-append \
