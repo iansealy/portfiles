@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Test-Vars 0.010
+perl5.setup         Test-Vars 0.011
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,7 +20,7 @@ long_description    Test::Vars provides test functions to report unused \
                     files of your choice in order to keep the source code \
                     tidy.
 
-checksums           rmd160 c0599fd3f6c18d9b4314bf3d3fcba692bdb44103 \
-                    sha256 6e0c24654db5ce8ba8e105257cfac2a93e92d66ce30d201597e773b2895fb7b1
+checksums           rmd160 67eab3c5b0eba2be1d268c28c6ec2e88dc48c620 \
+                    sha256 9874385f4a3d64557cd826b015796367fb452db420e84d67712386ec51f9ae2d
 
 perl5.use_module_build
