@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         Dist-Zilla-Plugin-Test-Compile 2.054
+perl5.setup         Dist-Zilla-Plugin-Test-Compile 2.056
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    This is a Dist::Zilla plugin that runs at the gather \
                     files stage, providing a test file (configurable, \
                     defaulting to t/00-compile.t).
 
-checksums           rmd160 b42835c74d16ab940d53cf9d49779fdaba418227 \
-                    sha256 363fc251785a36a0b2028fda3b38d71d30c7048b09145362bbfac13fc41eab7e
+checksums           rmd160 a663c8ec0cbb71d6836e20fd2122e9f4d1532e8e \
+                    sha256 4c75290f6ea5e7f13a9ac647e881ad2e50d715cb9076c449222432b12b1ea37c
 
 if {${perl5.major} != ""} {
     depends_build-append \
