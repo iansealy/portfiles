@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.22 5.24
-perl5.setup         TAP-SimpleOutput 0.003
+perl5.setup         TAP-SimpleOutput 0.004
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    We provide one function, counters(), that returns a \
                     number of simple closures designed to help output TAP \
                     easily and correctly, with a minimum of fuss.
 
-checksums           rmd160 ab125495b01c78399bebbf90ae830b90147c17e4 \
-                    sha256 58b08d34007482a4f30e47620ef08b1110d7313f8fd998ef65036d22c0a39e22
+checksums           rmd160 d356b99b19294ea7ac5f5d2db20ce6e8206915ec \
+                    sha256 2ac25d73f7bd84ffc3aefadc65fc8408ced338e0b09662ce4ebce4b1d6d8cf14
 
 if {${perl5.major} != ""} {
     depends_build-append \
