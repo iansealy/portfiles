@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-Git 2.039
+perl5.setup         Dist-Zilla-Plugin-Git 2.041
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    This set of plugins for Dist::Zilla can do interesting \
                     things for module authors using Git \
                     (http://git-scm.com) to track their work.
 
-checksums           rmd160 9d85c34b70192b6327b4cc1b83a3fed088def0f8 \
-                    sha256 2b10e97fe941aee54a060531f5849e654a9f8128d72293193d748bb9aaa7e6f7
+checksums           rmd160 2407fb5c5040bd6eaa5a2cab81cd55bf56ceb43a \
+                    sha256 28be653a8c0d736246cae968dbe4b54a9ad27a27c00043bce29272f5ca0afca6
 
 if {${perl5.major} != ""} {
     depends_build-append \
