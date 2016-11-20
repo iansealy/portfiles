@@ -5,7 +5,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-ReadmeAnyFromPod 0.161170
+perl5.setup         Dist-Zilla-Plugin-ReadmeAnyFromPod 0.163250
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,8 +18,8 @@ description         Dist::Zilla::Plugin::ReadmeAnyFromPod - Automatically conver
 long_description    Generates a README for your Dist::Zilla powered dist \
                     from its main_module in any of several formats.
 
-checksums           rmd160 82e6429c5aefea12760f4e088cc351536efc73f2 \
-                    sha256 61255ad8887bde1e2398c4d8eb44ccc65a2e28bd2cbd727e8a75cb003a0733a1
+checksums           rmd160 699345c2afdba3cc092dc5b92e37dc9f735efb7f \
+                    sha256 d44f2799922f78b2a7961ed89123e11bdd77abfe85ba2040d82b80ad72ed13bc
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -35,5 +35,6 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moosex-has-sugar \
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-pod-markdown \
+                    port:p${perl5.major}-pod-markdown-github \
                     port:p${perl5.major}-ppi
 }
