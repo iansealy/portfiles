@@ -1,0 +1,31 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Pod-Markdown-Github 0.01
+#perl5.setup         Pod-Markdown-Github 0.01 ../by-authors/id/M/MI/MINIMAL
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Pod::Markdown::Github (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 fd9534ba8cc8a43d2efbf7a9b7443f59d3ca47e1 \
+                    sha256 4c6407d1049f0c88326a58abf67db7c1a550cdb8bea84ceb05157aa0c1f6d0df
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-pod-markdown
+}
+
+
