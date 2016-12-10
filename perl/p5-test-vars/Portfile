@@ -1,11 +1,10 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Test-Vars 0.011
+perl5.setup         Test-Vars 0.012
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,7 +19,7 @@ long_description    Test::Vars provides test functions to report unused \
                     files of your choice in order to keep the source code \
                     tidy.
 
-checksums           rmd160 67eab3c5b0eba2be1d268c28c6ec2e88dc48c620 \
-                    sha256 9874385f4a3d64557cd826b015796367fb452db420e84d67712386ec51f9ae2d
+checksums           rmd160 a1a028b9b79a27394278e8b66eaf125ad8912157 \
+                    sha256 3575f5680452b2040ca1500dc0c43c84f076238697b69cd3c6c8d3014386e77a
 
 perl5.use_module_build
