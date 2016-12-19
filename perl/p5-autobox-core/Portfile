@@ -1,11 +1,10 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         autobox-Core 1.32
+perl5.setup         autobox-Core 1.33
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,8 +19,8 @@ long_description    The autobox module promotes Perl's primitive types \
                     hashes) into first-class objects. However, autobox does \
                     not provide any methods for these new classes.
 
-checksums           rmd160 b71b7b2776d96679f7fde5fc14ce50fe4f5a97c5 \
-                    sha256 ec7ed74fb4b6c8eac246ed4fade88864d3a3963fa12ad3a27785c57f4b8deec4
+checksums           rmd160 19818265a70f732eadc4287a7dd2dd08c8726237 \
+                    sha256 a9c396ebfaf8dcb881324a93d7d1a4dcd19c5e82fccc2ec6ee7a2aad324bd4e7
 
 if {${perl5.major} != ""} {
     depends_lib-append \
