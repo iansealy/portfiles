@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Bio-DB-HTS 2.6
+perl5.setup         Bio-DB-HTS 2.7
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,8 +20,8 @@ long_description    This module provides a Perl interface to the HTSlib \
                     also provides callback functionality for calling SNPs and \
                     performing other base-by-base functions.
 
-checksums           rmd160 95a57596b985dd09f5373ec87a0d6e357781d25b \
-                    sha256 b391a5da17cc953abff4516b36640630f6ac6044687e8c2682362c4b4293e550
+checksums           rmd160 e1f33382e175ab38b4074303dcc32b4bc8c2ad9f \
+                    sha256 21bf0ecf4b972ff46b476326e668eccd0da312b7d16a5a1dad445814d598f6d9
 
 if {${perl5.major} != ""} {
     depends_lib-append \
