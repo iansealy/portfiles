@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Test-Mojibake 1.1
+perl5.setup         Test-Mojibake 1.3
 
 platforms           darwin
 maintainers         nomaintainer
@@ -22,5 +22,5 @@ long_description    Many modern text editors automatically save files using \
                     will suffer of so-called Mojibake (lit. \"unintelligible \
                     sequence of characters\").
 
-checksums           rmd160 1b12c489a4dd833125fb8515d8891034f14ace8d \
-                    sha256 6324d5fe08d64276a1a9f8360894d199ef8130d28ca6b6c9b15657d1a232decb
+checksums           rmd160 7a9f7203c0e12283f6d07a3cd0e15c550a418044 \
+                    sha256 8ffe75ff9b69352488727dca73db91f8aa14b59f2fa104eb7717c0d71a5f1b33
