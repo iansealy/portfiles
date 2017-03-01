@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-MetaProvides 2.002003
+perl5.setup         Dist-Zilla-Plugin-MetaProvides 2.002004
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         Dist::Zilla::Plugin::MetaProvides - Generating and Populatin
 
 long_description    ${description}
 
-checksums           rmd160 d484045bf6ab8983a7204544049554c24f91bada \
-                    sha256 fe9f4aadd7f5a84b0c99c113cbb3113f79d8559a55a5ffe708d2cca2be333220
+checksums           rmd160 5b6a6898e7d74610c4592b5f1dd3a8d5d813724b \
+                    sha256 fc28142da9a44c3d0b4a819e422b654fb2c700c1e657d15b53aad39f22d07717
 
 if {${perl5.major} != ""} {
     depends_build-append \
