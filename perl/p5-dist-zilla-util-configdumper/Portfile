@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Util-ConfigDumper 0.003007
+perl5.setup         Dist-Zilla-Util-ConfigDumper 0.003008
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,8 +20,8 @@ long_description    This module contains a utility function for use within \
                     order for plugins like Dist::Zilla::Plugin::MetaConfig \
                     to expose those values to consumers.
 
-checksums           rmd160 eddefe7f0aae53b754bd0dc5b4a1d63b51220018 \
-                    sha256 b2d1c35b5220ba5866abad86bf2f4b7a85a52d76250807b73d422a77c5f77f27
+checksums           rmd160 627108544b53240378b921c4015f81248b550cc0 \
+                    sha256 43940b8fbd9e653f52b4f58b6a9a8bbce456fefe4b9d8e154be91475918be405
 
 if {${perl5.major} != ""} {
     depends_build-append \
