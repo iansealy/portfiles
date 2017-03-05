@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Util-Test-KENTNL 1.005013
+perl5.setup         Dist-Zilla-Util-Test-KENTNL 1.005014
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         Dist::Zilla::Util::Test::KENTNL - KENTNL's DZil plugin testi
 
 long_description    This module is KENTNL's kit for testing Dist::Zilla.
 
-checksums           rmd160 5609b6b7b4ab58f5f0f246985ee02decf20af71d \
-                    sha256 0ff5d2454a515eb3c8c82877e8e5012a5fd4de89b4ec3319dd11a9efd3680f50
+checksums           rmd160 74b4b5ac9c554422bfb7baa1bbc2f3be7b196d4b \
+                    sha256 e6b3ad849e58e9918e724674783255b2d7f34327693939b38f10d7714a2ef0de
 
 if {${perl5.major} != ""} {
     depends_build-append \
