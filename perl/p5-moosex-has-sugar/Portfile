@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         MooseX-Has-Sugar 1.000004
+perl5.setup         MooseX-Has-Sugar 1.000006
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    Moose has syntax is generally fine, but sometimes one \
                     for things. The MooseX::Types module exists and in many \
                     ways reduces the need for constant string creation.
 
-checksums           rmd160 7873a08c6991bd202285ca262e2fd2742471f66c \
-                    sha256 f7574c9fbae0faabf0c1a7de0682267328157b0a206b1554a733c1750b8387c8
+checksums           rmd160 aed9db29afa48ba333e98e50207787970b60ff45 \
+                    sha256 efeed3ddb3a8ea18f416d485f3c2b0427145d267e63368c651d488eaa8c28d09
 
 if {${perl5.major} != ""} {
     depends_build-append \
