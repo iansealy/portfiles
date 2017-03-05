@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Role-Bootstrap 1.001003
+perl5.setup         Dist-Zilla-Role-Bootstrap 1.001004
 
 platforms           darwin
 maintainers         nomaintainer
@@ -22,8 +22,8 @@ long_description    This module is a role that aims to be consumed by \
                     consuming the source tree itself, or by consuming a \
                     previous built iteration.
 
-checksums           rmd160 639c436f2b91906ceee67e0e7830991fe0bb3287 \
-                    sha256 305901d2021bf499234ae4589523f253cc940bd6f9b7b13d858b26e28be8abad
+checksums           rmd160 ce17190232e2880288c1de445b405e5edd126fe0 \
+                    sha256 34996ff1e27fbb60fb24d2c715ddbc223904325e23dc69353028aabbdddc2e50
 
 if {${perl5.major} != ""} {
     depends_build-append \
