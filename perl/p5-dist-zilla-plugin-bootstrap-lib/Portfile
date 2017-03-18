@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-Bootstrap-lib 1.001001
+perl5.setup         Dist-Zilla-Plugin-Bootstrap-lib 1.001002
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,13 +17,12 @@ description         Dist::Zilla::Plugin::Bootstrap::lib - A minimal boot-strappi
 long_description    This module exists for loading either /lib or \
                     /Dist-Name-\$VERSION/lib into your @INC early on.
 
-checksums           rmd160 3e3231d38bc46bc7ccf8163bb14c7ad73b9edfde \
-                    sha256 3c751b4586863a86b85540ffa919ce949d5f17131823dd3c2d2bd92505e77c81
+checksums           rmd160 9a306d8c2c544c8c918fc408de0467a1f194c01c \
+                    sha256 9870e4a6220cbd9756bc296d879badba07252fff076efcb34d4ceedccf59f467
 
 if {${perl5.major} != ""} {
     depends_build-append \
-                    port:p${perl5.major}-dist-zilla \
-                    port:p${perl5.major}-dist-zilla-util-test-kentnl
+                    port:p${perl5.major}-dist-zilla
     depends_lib-append \
                     port:p${perl5.major}-dist-zilla-role-bootstrap \
                     port:p${perl5.major}-moose
