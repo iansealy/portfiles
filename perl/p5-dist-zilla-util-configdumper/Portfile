@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Util-ConfigDumper 0.003008
+perl5.setup         Dist-Zilla-Util-ConfigDumper 0.003009
 
 platforms           darwin
 maintainers         nomaintainer
@@ -14,20 +14,19 @@ license             {Artistic-1 GPL}
 
 description         Dist::Zilla::Util::ConfigDumper - A Dist::Zilla plugin configuration extraction utility
 
-long_description    This module contains a utility function for use within \
+long_description     This module contains a utility function for use within \
                     the Dist::Zilla plugin ecosystem, to simplify \
                     extraction of plugin settings for plugin authors, in \
                     order for plugins like Dist::Zilla::Plugin::MetaConfig \
                     to expose those values to consumers.
 
-checksums           rmd160 627108544b53240378b921c4015f81248b550cc0 \
-                    sha256 43940b8fbd9e653f52b4f58b6a9a8bbce456fefe4b9d8e154be91475918be405
+checksums           rmd160 896ebb1f9348c326f3ea726b7cb78fff17391f5f \
+                    sha256 8646c5805fd3b88003ad7a283cce18e2d43757ef5d72c72c7825b555328695fd
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-dist-zilla-plugin-bootstrap-lib \
-                    port:p${perl5.major}-dist-zilla-util-test-kentnl \
                     port:p${perl5.major}-moose
     depends_lib-append \
                     port:p${perl5.major}-sub-exporter-progressive \
