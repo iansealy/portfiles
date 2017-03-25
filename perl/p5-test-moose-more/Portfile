@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Test-Moose-More 0.043
+perl5.setup         Test-Moose-More 0.045
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    This package contains a number of additional tests that \
                     intended to replace Test::Moose in your tests, and \
                     re-exports any tests that it has and we do not, yet.
 
-checksums           rmd160 a31b44c132eb4f6325fe1ff6ba39ad0a76165339 \
-                    sha256 0a09255946d2f463cb53a53186451305a4fdea6c1b9bb4287044997b5f9ea9b5
+checksums           rmd160 54ec4eddf08e858c965dbc403223c094706aaab0 \
+                    sha256 36e916bc4f9e48f9a80349840ee1913c60ab9767cb21b650e402275821a6a568
 
 if {${perl5.major} != ""} {
     depends_build-append \
