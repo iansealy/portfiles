@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-CopyFilesFromBuild 0.163040
+perl5.setup         Dist-Zilla-Plugin-CopyFilesFromBuild 0.170880
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    This plugin will automatically copy the files that you \
                     distribution directoory. This is so you can commit them \
                     to version control.
 
-checksums           rmd160 da23b3bba980dc82474aefe3483e5c1a763a9f0f \
-                    sha256 b8b224ce72caba1b76e24f012a7b27b9ea6b7de400442f41bb74655c1884f6eb
+checksums           rmd160 fc29cea8aeaa2d45fff751ab4377265e9dd417be \
+                    sha256 9a08b6327a0923ffa2534c6a2e4e4b8900b7b55d0503accea7d5016963c6d480
 
 if {${perl5.major} != ""} {
     depends_build-append \
