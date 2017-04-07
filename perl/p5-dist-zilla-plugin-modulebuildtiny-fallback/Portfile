@@ -1,24 +1,23 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id$
 
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.22 5.24
+perl5.branches      5.24
 perl5.setup         Dist-Zilla-Plugin-ModuleBuildTiny-Fallback 0.025
-#perl5.setup         Dist-Zilla-Plugin-ModuleBuildTiny-Fallback 0.025 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::ModuleBuildTiny::Fallback (no description available)
+description         Dist::Zilla::Plugin::ModuleBuildTiny::Fallback - Generate a Build.PL that uses Module::Build::Tiny, falling back to Module::Build as needed
 
-long_description    ${description}
+long_description    This is a Dist::Zilla plugin that provides a Build.PL in \
+                    your distribution that attempts to use Module::Build::Tiny \
+                    when available, falling back to Module::Build when it is \
+                    missing.
 
 checksums           rmd160 1701f015804579b40c55a4d528a6534ffeb34845 \
                     sha256 16996afe71413024c0c79d2241e027aa6d3fa5494d28d45834733306f773df75
@@ -39,5 +38,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moosex-types \
                     port:p${perl5.major}-namespace-autoclean
 }
-
-
