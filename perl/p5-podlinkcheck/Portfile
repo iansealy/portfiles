@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         podlinkcheck 14 ../by-authors/id/K/KR/KRYDE
+perl5.setup         podlinkcheck 15 ../by-authors/id/K/KR/KRYDE
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,8 +18,8 @@ long_description    PodLinkCheck parses Perl POD from a script, module or \
                     documentation and checks that L<> links within it refer \
                     to a known program, module, or man page.
 
-checksums           rmd160 bea08779496d549fe5bea61c290b8611f092595e \
-                    sha256 8ad152bdffbb7f5080616c0c0ae142f75b4c1255ed82b9cd80a5f4e3172fed3d
+checksums           rmd160 954d1ba7a0452a8813108a267f8aa3ee39c2b6d0 \
+                    sha256 4e3bebec1bf82dbf850a94ae26a253644cf5806ec41afc74e43e1710a37321db
 
 if {${perl5.major} != ""} {
     depends_lib-append \
