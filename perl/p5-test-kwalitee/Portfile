@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Test-Kwalitee 1.25
+perl5.setup         Test-Kwalitee 1.26
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    Kwalitee is an automatically-measurable gauge of how \
                     quality, which a computer really can't measure in a \
                     general sense.
 
-checksums           rmd160 266e3621ce7181e50efde137bd56290dd8ed8a58 \
-                    sha256 9f1ba0473bde788955e7ce6e2e3089186206845967c7e7aa21210c818d9f6903
+checksums           rmd160 28e416c81bd9e6003cc3716abcf732893e550f8d \
+                    sha256 f7dc8efbad2ce1747b65679e2695485907d18c09c9f4b78e994f79b31411c176
 
 if {${perl5.major} != ""} {
     depends_build-append \
