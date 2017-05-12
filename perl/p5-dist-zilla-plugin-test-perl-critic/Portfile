@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-Test-Perl-Critic 3.000
+perl5.setup         Dist-Zilla-Plugin-Test-Perl-Critic 3.001
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Dist::Zilla::Plugin::Test::Perl::Critic - Tests to check you
 long_description    This will provide a t/author/critic.t file for use \
                     during the "test" and "release" calls of dzil.
 
-checksums           rmd160 21cfb8370c8b28005587baf953a17a77440aa7d7 \
-                    sha256 96e7d2ec56d17ceb403ed752ee06c2fc93619b427bc2a555515906119476468a
+checksums           rmd160 0c2fe3357e5ca2addf68962b62e5f7eb278accaf \
+                    sha256 9250b59d5dc1ae4c6893ba783bd3f05131b14ff9e91afb4555314f55268a3825
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -28,7 +28,6 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-namespace-autoclean \
+                    port:p${perl5.major}-sub-exporter-formethods \
                     port:p${perl5.major}-test-perl-critic
 }
-
-perl5.use_module_build
