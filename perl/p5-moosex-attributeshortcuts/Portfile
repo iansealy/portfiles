@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         MooseX-AttributeShortcuts 0.028
+perl5.setup         MooseX-AttributeShortcuts 0.029
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,26 +17,24 @@ description         MooseX::AttributeShortcuts - Shorthand for common attribute 
 long_description    This package causes an attribute trait to be applied to \
                     all attributes defined to the using class.
 
-checksums           rmd160 98ed0f6628f4fbffd192a0a457ad4f6d6bdff02c \
-                    sha256 ad1ae0affdca9bef42bce9fc0c352e415984953c53b88fde3a5b154994d20a64
+checksums           rmd160 c20146b6fba45ba2014e05e58730510748e1e075 \
+                    sha256 291005811810bf74e2641073e63edf48989e33e559b815aacee7ba7231aa2d16
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-moosex-types-path-class \
+                    port:p${perl5.major}-namespace-autoclean \
                     port:p${perl5.major}-path-class \
                     port:p${perl5.major}-test-checkdeps \
                     port:p${perl5.major}-test-fatal \
-                    port:p${perl5.major}-test-moose-more \
-                    port:p${perl5.major}-test-warn
+                    port:p${perl5.major}-test-moose-more
     depends_lib-append \
                     port:p${perl5.major}-aliased \
-                    port:p${perl5.major}-list-allutils \
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-moosex-meta-typeconstraint-mooish \
                     port:p${perl5.major}-moosex-role-parameterized \
                     port:p${perl5.major}-moosex-types \
                     port:p${perl5.major}-moosex-types-common \
-                    port:p${perl5.major}-namespace-autoclean \
-                    port:p${perl5.major}-package-deprecationmanager
+                    port:p${perl5.major}-namespace-autoclean
 }
