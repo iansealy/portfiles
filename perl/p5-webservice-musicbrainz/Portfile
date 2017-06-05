@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         WebService-MusicBrainz 1.0.1
+perl5.setup         WebService-MusicBrainz 1.0.2
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         WebService::MusicBrainz - search the MusicBrainz database th
 
 long_description    ${description}
 
-checksums           rmd160 16596ed68e1bab13dd6b70bd15f55378af2882ef \
-                    sha256 e9604a9bb1c3e7c8ca64fd6ab210c1f535afcb8603833de32f50a5a5791b506b
+checksums           rmd160 a80bd93699fb342e9af3e38c5c00f32d5c332b56 \
+                    sha256 37e0a132f501b630d221a19c7d6817cd4347ed8da8d85e7ff62d75a9a9450c0a
 
 if {${perl5.major} != ""} {
     depends_lib-append \
