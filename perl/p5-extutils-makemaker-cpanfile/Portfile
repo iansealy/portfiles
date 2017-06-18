@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         ExtUtils-MakeMaker-CPANfile 0.07
+perl5.setup         ExtUtils-MakeMaker-CPANfile 0.08
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,8 +20,8 @@ long_description    ExtUtils::MakeMaker::CPANfile loads cpanfile in your \
                     ExtUtils::MakeMaker (which should be loaded internally), \
                     and prepare cpanfile.
 
-checksums           rmd160 0a05dcb5c7988ce87057270dac22405573121663 \
-                    sha256 cacb54c0c20e0468a773d92855387dc1dcd60a8d6e9a24fda73d4cbcd76b5ed1
+checksums           rmd160 3b541307a311301ce0bf1249439041ef2be4b1ca \
+                    sha256 14eb7ae3a2a6c1ba6d52100d05e23f720b430dd6cc228855a607a01e35f9e279
 
 if {${perl5.major} != ""} {
     depends_lib-append \
