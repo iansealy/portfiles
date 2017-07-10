@@ -1,6 +1,6 @@
-diff -rc alpine-2.20/alpine/adrbkcmd.c alpine-2.20.rules/alpine/adrbkcmd.c
-*** alpine-2.20/alpine/adrbkcmd.c	2015-01-11 22:12:25.468178265 -0700
---- alpine-2.20.rules/alpine/adrbkcmd.c	2015-08-15 12:28:19.408147226 -0600
+diff -rc alpine-2.21/alpine/adrbkcmd.c alpine-2.21.rules/alpine/adrbkcmd.c
+*** alpine-2.21/alpine/adrbkcmd.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/adrbkcmd.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 4128,4133 ****
 --- 4128,4135 ----
@@ -22,12 +22,12 @@ diff -rc alpine-2.20/alpine/adrbkcmd.c alpine-2.20.rules/alpine/adrbkcmd.c
       }
   
       compose_mail(addr, fcc, role, NULL, NULL);
-diff -rc alpine-2.20/alpine/alpine.c alpine-2.20.rules/alpine/alpine.c
-*** alpine-2.20/alpine/alpine.c	2015-01-11 22:12:25.464178246 -0700
---- alpine-2.20.rules/alpine/alpine.c	2015-08-15 12:28:19.416147260 -0600
+diff -rc alpine-2.21/alpine/alpine.c alpine-2.21.rules/alpine/alpine.c
+*** alpine-2.21/alpine/alpine.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/alpine.c	Sun Feb  5 16:15:21 2017
 ***************
-*** 469,474 ****
---- 469,475 ----
+*** 485,490 ****
+--- 485,491 ----
       /* Set up optional for user-defined display filtering */
       pine_state->tools.display_filter	     = dfilter;
       pine_state->tools.display_filter_trigger = dfilter_trigger;
@@ -36,8 +36,8 @@ diff -rc alpine-2.20/alpine/alpine.c alpine-2.20.rules/alpine/alpine.c
   #ifdef _WINDOWS
       if(ps_global->install_flag){
 ***************
-*** 3141,3146 ****
---- 3142,3150 ----
+*** 3162,3167 ****
+--- 3163,3171 ----
       extern KBESC_T *kbesc;
   
       dprint((2, "goodnight_gracey:\n"));    
@@ -47,9 +47,9 @@ diff -rc alpine-2.20/alpine/alpine.c alpine-2.20.rules/alpine/alpine.c
   
       /* We want to do this here before we close up the streams */
       trim_remote_adrbks();
-diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.rules/alpine/confscroll.c
-*** alpine-2.20/alpine/confscroll.c	2015-01-11 22:12:25.464178246 -0700
---- alpine-2.20.rules/alpine/confscroll.c	2015-08-15 12:28:19.428147310 -0600
+diff -rc alpine-2.21/alpine/confscroll.c alpine-2.21.rules/alpine/confscroll.c
+*** alpine-2.21/alpine/confscroll.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/confscroll.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 51,56 ****
 --- 51,57 ----
@@ -61,8 +61,8 @@ diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.rules/alpine/confscroll.c
   
   #define	CONFIG_SCREEN_HELP_TITLE	_("HELP FOR SETUP CONFIGURATION")
 ***************
-*** 2431,2436 ****
---- 2432,2440 ----
+*** 2436,2441 ****
+--- 2437,2445 ----
   	 * Now go and set the current_val based on user_val changes
   	 * above.  Turn off command line settings...
   	 */
@@ -73,8 +73,8 @@ diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.rules/alpine/confscroll.c
   	fix_side_effects(ps, (*cl)->var, 0);
   
 ***************
-*** 5174,5179 ****
---- 5178,5207 ----
+*** 5200,5205 ****
+--- 5204,5233 ----
   	    var == &ps->vars[V_ABOOK_FORMATS]){
   	addrbook_reset();
       }
@@ -105,9 +105,9 @@ diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.rules/alpine/confscroll.c
       else if(var == &ps->vars[V_INDEX_FORMAT]){
   	reset_index_format();
   	clear_index_cache(ps->mail_stream, 0);
-diff -rc alpine-2.20/alpine/dispfilt.c alpine-2.20.rules/alpine/dispfilt.c
-*** alpine-2.20/alpine/dispfilt.c	2015-01-11 22:12:25.465178251 -0700
---- alpine-2.20.rules/alpine/dispfilt.c	2015-08-15 12:28:19.430147319 -0600
+diff -rc alpine-2.21/alpine/dispfilt.c alpine-2.21.rules/alpine/dispfilt.c
+*** alpine-2.21/alpine/dispfilt.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/dispfilt.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 461,463 ****
 --- 461,523 ----
@@ -174,11 +174,11 @@ diff -rc alpine-2.20/alpine/dispfilt.c alpine-2.20.rules/alpine/dispfilt.c
 + 
 +     return(status);
 + }
-diff -rc alpine-2.20/alpine/dispfilt.h alpine-2.20.rules/alpine/dispfilt.h
-*** alpine-2.20/alpine/dispfilt.h	2015-01-11 22:12:25.498178408 -0700
---- alpine-2.20.rules/alpine/dispfilt.h	2015-08-15 12:28:19.430147319 -0600
+diff -rc alpine-2.21/alpine/dispfilt.h alpine-2.21.rules/alpine/dispfilt.h
+*** alpine-2.21/alpine/dispfilt.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/dispfilt.h	Sun Feb  5 16:15:21 2017
 ***************
-*** 24,30 ****
+*** 25,31 ****
   char	*expand_filter_tokens(char *, ENVELOPE *, char **, char **, char **, int *, int *, int *);
   char	*filter_session_key(void);
   char	*filter_data_file(int);
@@ -186,7 +186,7 @@ diff -rc alpine-2.20/alpine/dispfilt.h alpine-2.20.rules/alpine/dispfilt.h
   
   
   #endif /* PINE_DISPFILT_INCLUDED */
---- 24,30 ----
+--- 25,31 ----
   char	*expand_filter_tokens(char *, ENVELOPE *, char **, char **, char **, int *, int *, int *);
   char	*filter_session_key(void);
   char	*filter_data_file(int);
@@ -194,9 +194,9 @@ diff -rc alpine-2.20/alpine/dispfilt.h alpine-2.20.rules/alpine/dispfilt.h
   
   
   #endif /* PINE_DISPFILT_INCLUDED */
-diff -rc alpine-2.20/alpine/folder.c alpine-2.20.rules/alpine/folder.c
-*** alpine-2.20/alpine/folder.c	2015-01-11 22:12:25.465178251 -0700
---- alpine-2.20.rules/alpine/folder.c	2015-08-15 12:28:19.445147383 -0600
+diff -rc alpine-2.21/alpine/folder.c alpine-2.21.rules/alpine/folder.c
+*** alpine-2.21/alpine/folder.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/folder.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 248,254 ****
       dprint((1, "=== folder_screen called ====\n"));
@@ -224,9 +224,9 @@ diff -rc alpine-2.20/alpine/folder.c alpine-2.20.rules/alpine/folder.c
   }
   
   
-diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
-*** alpine-2.20/alpine/mailcmd.c	2015-01-11 22:12:25.465178251 -0700
---- alpine-2.20.rules/alpine/mailcmd.c	2015-08-15 12:28:19.464147463 -0600
+diff -rc alpine-2.21/alpine/mailcmd.c alpine-2.21.rules/alpine/mailcmd.c
+*** alpine-2.21/alpine/mailcmd.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/mailcmd.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 73,78 ****
 --- 73,79 ----
@@ -238,8 +238,8 @@ diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
   #include "../pico/osdep/mswin.h"
   #endif
 ***************
-*** 2681,2686 ****
---- 2682,2690 ----
+*** 2657,2662 ****
+--- 2658,2666 ----
   		role->nick = cpystr("Default Role");
   	    }
   
@@ -250,7 +250,7 @@ diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
   	    switch(action){
   	      case 'c':
 ***************
-*** 2731,2742 ****
+*** 2707,2718 ****
   	    char *nmsgs, ENVELOPE *env, long int rawmsgno, char *section,
   	    SaveDel *dela, SavePreserveOrder *prea)
   {
@@ -263,7 +263,7 @@ diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
       HelpType	      help;
       SaveDel           del = DontAsk;
       SavePreserveOrder pre = DontAskPreserve;
---- 2735,2746 ----
+--- 2711,2722 ----
   	    char *nmsgs, ENVELOPE *env, long int rawmsgno, char *section,
   	    SaveDel *dela, SavePreserveOrder *prea)
   {
@@ -277,8 +277,8 @@ diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
       SaveDel           del = DontAsk;
       SavePreserveOrder pre = DontAskPreserve;
 ***************
-*** 2744,2749 ****
---- 2748,2754 ----
+*** 2720,2725 ****
+--- 2724,2730 ----
       static HISTORY_S *history = NULL;
       CONTEXT_S	     *tc;
       ESCKEY_S	      ekey[10];
@@ -287,8 +287,8 @@ diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
       if(!cntxt)
         alpine_panic("no context ptr in save_prompt");
 ***************
-*** 2753,2758 ****
---- 2758,2772 ----
+*** 2729,2734 ****
+--- 2734,2748 ----
       if(!(folder = save_get_default(state, env, rawmsgno, section, cntxt)))
         return(0);		/* message expunged! */
   
@@ -304,9 +304,9 @@ diff -rc alpine-2.20/alpine/mailcmd.c alpine-2.20.rules/alpine/mailcmd.c
       /* how many context's can be saved to... */
       for(tc = state->context_list; tc; tc = tc->next)
         if(!NEWS_TEST(tc))
-diff -rc alpine-2.20/alpine/mailindx.c alpine-2.20.rules/alpine/mailindx.c
-*** alpine-2.20/alpine/mailindx.c	2015-01-11 22:12:25.474178294 -0700
---- alpine-2.20.rules/alpine/mailindx.c	2015-08-15 12:28:19.471147493 -0600
+diff -rc alpine-2.21/alpine/mailindx.c alpine-2.21.rules/alpine/mailindx.c
+*** alpine-2.21/alpine/mailindx.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/mailindx.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 229,234 ****
 --- 229,236 ----
@@ -335,9 +335,9 @@ diff -rc alpine-2.20/alpine/mailindx.c alpine-2.20.rules/alpine/mailindx.c
   }
   
   
-diff -rc alpine-2.20/alpine/mailview.c alpine-2.20.rules/alpine/mailview.c
-*** alpine-2.20/alpine/mailview.c	2015-01-11 22:12:25.466178256 -0700
---- alpine-2.20.rules/alpine/mailview.c	2015-08-15 12:28:19.483147544 -0600
+diff -rc alpine-2.21/alpine/mailview.c alpine-2.21.rules/alpine/mailview.c
+*** alpine-2.21/alpine/mailview.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/mailview.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 243,248 ****
 --- 243,250 ----
@@ -360,9 +360,9 @@ diff -rc alpine-2.20/alpine/mailview.c alpine-2.20.rules/alpine/mailview.c
       if(we_cancel)
         cancel_busy_cue(-1);
   
-diff -rc alpine-2.20/alpine/osdep/termin.gen.c alpine-2.20.rules/alpine/osdep/termin.gen.c
-*** alpine-2.20/alpine/osdep/termin.gen.c	2015-01-11 22:12:25.471178279 -0700
---- alpine-2.20.rules/alpine/osdep/termin.gen.c	2015-08-15 12:28:19.486147557 -0600
+diff -rc alpine-2.21/alpine/osdep/termin.gen.c alpine-2.21.rules/alpine/osdep/termin.gen.c
+*** alpine-2.21/alpine/osdep/termin.gen.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/osdep/termin.gen.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 33,38 ****
 --- 33,40 ----
@@ -446,9 +446,9 @@ diff -rc alpine-2.20/alpine/osdep/termin.gen.c alpine-2.20.rules/alpine/osdep/te
   	}
   
   	return(ret);
-diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
-*** alpine-2.20/alpine/reply.c	2015-01-11 22:12:25.474178294 -0700
---- alpine-2.20.rules/alpine/reply.c	2015-08-15 12:28:19.492147582 -0600
+diff -rc alpine-2.21/alpine/reply.c alpine-2.21.rules/alpine/reply.c
+*** alpine-2.21/alpine/reply.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/reply.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 62,68 ****
   #include "../pith/tempfile.h"
@@ -566,7 +566,7 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
        * We may have to loop through first to figure out what default
        * reply-indent-string to offer...
 ***************
-*** 286,293 ****
+*** 287,294 ****
   		outgoing->subject = cpystr("Re: several messages");
   	    }
   	}
@@ -575,7 +575,7 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
       }
   
       /* fill reply header */
---- 351,368 ----
+--- 352,369 ----
   		outgoing->subject = cpystr("Re: several messages");
   	    }
   	}
@@ -595,29 +595,31 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
   
       /* fill reply header */
 ***************
-*** 306,316 ****
+*** 307,319 ****
       if(sp_expunge_count(pine_state->mail_stream))	/* cur msg expunged */
         goto done_early;
   
 !     /* Setup possible role */
-!     if(role_arg)
-!       role = copy_action(role_arg);
+!      if (ps_global->reply.role_chosen)
+! 	role = ps_global->reply.role_chosen;
+!      else if(role_arg)
+! 	role = copy_action(role_arg);
 ! 
 !     if(!role){
   	rflags = ROLE_REPLY;
-  	if(nonempty_patterns(rflags, &dummy)){
+  	if(!ps_global->reply.role_chosen && nonempty_patterns(rflags, &dummy)){
   	    /* setup default role */
---- 381,387 ----
+--- 382,388 ----
       if(sp_expunge_count(pine_state->mail_stream))	/* cur msg expunged */
         goto done_early;
   
 !     if(!do_role_early){
   	rflags = ROLE_REPLY;
-  	if(nonempty_patterns(rflags, &dummy)){
+  	if(!ps_global->reply.role_chosen && nonempty_patterns(rflags, &dummy)){
   	    /* setup default role */
 ***************
-*** 721,726 ****
---- 792,800 ----
+*** 724,729 ****
+--- 793,801 ----
       if(prefix)
         fs_give((void **)&prefix);
   
@@ -628,7 +630,7 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
         fs_give((void **) &fcc);
   
 ***************
-*** 1471,1479 ****
+*** 1598,1606 ****
   	}
       }
   
@@ -638,7 +640,7 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
   
       if(role && role->template){
   	char *filtered;
---- 1545,1558 ----
+--- 1670,1683 ----
   	}
       }
   
@@ -654,8 +656,8 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
       if(role && role->template){
   	char *filtered;
 ***************
-*** 1705,1710 ****
---- 1784,1790 ----
+*** 1832,1837 ****
+--- 1909,1915 ----
   #if	defined(DOS) && !defined(_WINDOWS)
       free((void *)reserve);
   #endif
@@ -663,9 +665,9 @@ diff -rc alpine-2.20/alpine/reply.c alpine-2.20.rules/alpine/reply.c
       pine_send(outgoing, &body, "FORWARD MESSAGE",
   	      role, NULL, &reply, redraft_pos,
   	      NULL, NULL, 0);
-diff -rc alpine-2.20/alpine/roleconf.c alpine-2.20.rules/alpine/roleconf.c
-*** alpine-2.20/alpine/roleconf.c	2015-01-11 22:12:25.473178289 -0700
---- alpine-2.20.rules/alpine/roleconf.c	2015-08-15 12:28:19.517147688 -0600
+diff -rc alpine-2.21/alpine/roleconf.c alpine-2.21.rules/alpine/roleconf.c
+*** alpine-2.21/alpine/roleconf.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/roleconf.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 7706,7711 ****
 --- 7706,7716 ----
@@ -680,9 +682,9 @@ diff -rc alpine-2.20/alpine/roleconf.c alpine-2.20.rules/alpine/roleconf.c
   	    if((*cl)->value)
   	      fs_give((void **)&((*cl)->value));
   
-diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
-*** alpine-2.20/alpine/send.c	2015-01-11 22:12:25.466178256 -0700
---- alpine-2.20.rules/alpine/send.c	2015-08-15 12:28:19.531147748 -0600
+diff -rc alpine-2.21/alpine/send.c alpine-2.21.rules/alpine/send.c
+*** alpine-2.21/alpine/send.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/alpine/send.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 63,69 ****
   #include "../pith/mimetype.h"
@@ -701,8 +703,8 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
   typedef struct body_particulars {
       unsigned short     type, encoding, had_csp;
 ***************
-*** 239,244 ****
---- 239,249 ----
+*** 240,245 ****
+--- 240,250 ----
   	role->nick = cpystr("Default Role");
       }
   
@@ -715,7 +717,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
       compose_mail(NULL, NULL, role, NULL, NULL);
       free_action(&role);
 ***************
-*** 448,455 ****
+*** 449,456 ****
   
   	      ps_global->next_screen = prev_screen;
   	      ps_global->redrawer = redraw;
@@ -724,7 +726,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
   	    }
   	    break;
   	  
---- 453,464 ----
+--- 454,465 ----
   
   	      ps_global->next_screen = prev_screen;
   	      ps_global->redrawer = redraw;
@@ -738,7 +740,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
   	    break;
   	  
 ***************
-*** 644,652 ****
+*** 645,653 ****
   	    }
   	}
   
@@ -748,7 +750,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
   
   	/*
   	 * The type of storage object allocated below is vitally
---- 653,666 ----
+--- 654,667 ----
   	    }
   	}
   
@@ -764,8 +766,8 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
   	/*
   	 * The type of storage object allocated below is vitally
 ***************
-*** 2414,2419 ****
---- 2428,2453 ----
+*** 2476,2481 ****
+--- 2490,2515 ----
   		    removing_trailing_white_space(pf->textbuf);
   		    (void)removing_double_quotes(pf->textbuf);
   		    build_address(pf->textbuf, &addr, NULL, NULL, NULL);
@@ -792,9 +794,76 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.rules/alpine/send.c
   		    rfc822_parse_adrlist(pf->addr, addr,
   					 ps_global->maildomain);
   		    fs_give((void **)&addr);
-diff -rc alpine-2.20/pith/adrbklib.c alpine-2.20.rules/pith/adrbklib.c
-*** alpine-2.20/pith/adrbklib.c	2015-01-11 22:12:25.580178799 -0700
---- alpine-2.20.rules/pith/adrbklib.c	2015-08-15 12:28:19.544147803 -0600
+diff -rc alpine-2.21/pith/Makefile.am alpine-2.21.rules/pith/Makefile.am
+*** alpine-2.21/pith/Makefile.am	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/Makefile.am	Sun Feb  5 16:15:21 2017
+***************
+*** 26,32 ****
+  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
+  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
+  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
+! 	readfile.c remote.c reply.c rfc2231.c save.c search.c sequence.c send.c sort.c \
+  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
+  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
+  
+--- 26,32 ----
+  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
+  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
+  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
+! 	readfile.c remote.c reply.c rfc2231.c rules.c save.c search.c sequence.c send.c sort.c \
+  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
+  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
+  
+diff -rc alpine-2.21/pith/Makefile.in alpine-2.21.rules/pith/Makefile.in
+*** alpine-2.21/pith/Makefile.in	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/Makefile.in	Sun Feb  5 16:15:21 2017
+***************
+*** 147,153 ****
+  	margin.$(OBJEXT) mimedesc.$(OBJEXT) mimetype.$(OBJEXT) \
+  	msgno.$(OBJEXT) newmail.$(OBJEXT) news.$(OBJEXT) \
+  	pattern.$(OBJEXT) pipe.$(OBJEXT) readfile.$(OBJEXT) \
+! 	remote.$(OBJEXT) reply.$(OBJEXT) rfc2231.$(OBJEXT) \
+  	save.$(OBJEXT) search.$(OBJEXT) sequence.$(OBJEXT) \
+  	send.$(OBJEXT) sort.$(OBJEXT) state.$(OBJEXT) status.$(OBJEXT) \
+  	store.$(OBJEXT) stream.$(OBJEXT) string.$(OBJEXT) \
+--- 147,153 ----
+  	margin.$(OBJEXT) mimedesc.$(OBJEXT) mimetype.$(OBJEXT) \
+  	msgno.$(OBJEXT) newmail.$(OBJEXT) news.$(OBJEXT) \
+  	pattern.$(OBJEXT) pipe.$(OBJEXT) readfile.$(OBJEXT) \
+! 	remote.$(OBJEXT) reply.$(OBJEXT) rfc2231.$(OBJEXT) rules.$(OBJEXT) \
+  	save.$(OBJEXT) search.$(OBJEXT) sequence.$(OBJEXT) \
+  	send.$(OBJEXT) sort.$(OBJEXT) state.$(OBJEXT) status.$(OBJEXT) \
+  	store.$(OBJEXT) stream.$(OBJEXT) string.$(OBJEXT) \
+***************
+*** 442,448 ****
+  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
+  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
+  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
+! 	readfile.c remote.c reply.c rfc2231.c save.c search.c sequence.c send.c sort.c \
+  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
+  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
+  
+--- 442,448 ----
+  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
+  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
+  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
+! 	readfile.c remote.c reply.c rfc2231.c rules.c save.c search.c sequence.c send.c sort.c \
+  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
+  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
+  
+***************
+*** 574,579 ****
+--- 574,580 ----
+  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread.Po@am__quote@
+  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/url.Po@am__quote@
+  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
++ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rules.Po@am__quote@
+  
+  .c.o:
+  @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+diff -rc alpine-2.21/pith/adrbklib.c alpine-2.21.rules/pith/adrbklib.c
+*** alpine-2.21/pith/adrbklib.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/adrbklib.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 5136,5143 ****
   	    if(as.cur >= as.how_many_personals)
@@ -820,9 +889,9 @@ diff -rc alpine-2.20/pith/adrbklib.c alpine-2.20.rules/pith/adrbklib.c
   	    /* global address books are forced readonly */
   	    if(pab->type & GLOBAL && pab->access != NoAccess)
   	      pab->access = ReadOnly;
-diff -rc alpine-2.20/pith/conf.c alpine-2.20.rules/pith/conf.c
-*** alpine-2.20/pith/conf.c	2015-01-11 22:12:25.578178790 -0700
---- alpine-2.20.rules/pith/conf.c	2015-08-15 12:28:19.564147888 -0600
+diff -rc alpine-2.21/pith/conf.c alpine-2.21.rules/pith/conf.c
+*** alpine-2.21/pith/conf.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/conf.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 29,34 ****
 --- 29,35 ----
@@ -871,10 +940,10 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.rules/pith/conf.c
 +  
   CONF_TXT_T cf_text_speller[] =		"Specifies the program invoked by ^T in the Composer.";
   
-  CONF_TXT_T cf_text_deadlets[] =		"Specifies the number of dead letter files to keep when canceling.";
+  #ifdef _WINDOWS
 ***************
-*** 544,549 ****
---- 575,608 ----
+*** 550,555 ****
+--- 581,614 ----
   	NULL,			cf_text_thread_exp_char},
   {"threading-lastreply-character",	0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0,
   	"Threading Last Reply Character",	cf_text_thread_lastreply_char},
@@ -910,8 +979,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.rules/pith/conf.c
   {"display-character-set",		0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0,
   	NULL,			cf_text_disp_char_set},
 ***************
-*** 2604,2609 ****
---- 2663,2669 ----
+*** 2635,2640 ****
+--- 2694,2700 ----
         if(cmds_f)
           (*cmds_f)(ps, VAR_INIT_CMD_LIST);
   
@@ -920,8 +989,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.rules/pith/conf.c
       mswin_set_quit_confirm (F_OFF(F_QUIT_WO_CONFIRM, ps_global));
   #endif	/* _WINDOWS */
 ***************
-*** 3048,3053 ****
---- 3108,3115 ----
+*** 3081,3086 ****
+--- 3141,3148 ----
   	 F_FORCE_LOW_SPEED, h_config_force_low_speed, PREF_OS_LWSD, 0},
   	{"auto-move-read-msgs", "Auto Move Read Messages",
   	 F_AUTO_READ_MSGS, h_config_auto_read_msgs, PREF_MISC, 0},
@@ -931,8 +1000,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.rules/pith/conf.c
   	 F_AUTO_UNSELECT, h_config_auto_unselect, PREF_MISC, 0},
   	{"auto-unzoom-after-apply", NULL,
 ***************
-*** 7680,7685 ****
---- 7742,7775 ----
+*** 7699,7704 ****
+--- 7761,7794 ----
   	return(h_config_ab_sort_rule);
         case V_FLD_SORT_RULE :
   	return(h_config_fld_sort_rule);
@@ -967,9 +1036,9 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.rules/pith/conf.c
         case V_POST_CHAR_SET :
   	return(h_config_post_char_set);
         case V_UNK_CHAR_SET :
-diff -rc alpine-2.20/pith/conf.h alpine-2.20.rules/pith/conf.h
-*** alpine-2.20/pith/conf.h	2015-01-11 22:12:25.578178790 -0700
---- alpine-2.20.rules/pith/conf.h	2015-08-15 12:28:19.567147901 -0600
+diff -rc alpine-2.21/pith/conf.h alpine-2.21.rules/pith/conf.h
+*** alpine-2.21/pith/conf.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/conf.h	Sun Feb  5 16:15:21 2017
 ***************
 *** 148,153 ****
 --- 148,193 ----
@@ -1019,9 +1088,9 @@ diff -rc alpine-2.20/pith/conf.h alpine-2.20.rules/pith/conf.h
   #ifndef	_WINDOWS
   #define VAR_CHAR_SET		     vars[V_CHAR_SET].current_val.p
   #define GLO_CHAR_SET		     vars[V_CHAR_SET].global_val.p
-diff -rc alpine-2.20/pith/conftype.h alpine-2.20.rules/pith/conftype.h
-*** alpine-2.20/pith/conftype.h	2015-01-11 22:12:25.579178794 -0700
---- alpine-2.20.rules/pith/conftype.h	2015-08-15 12:28:19.573147926 -0600
+diff -rc alpine-2.21/pith/conftype.h alpine-2.21.rules/pith/conftype.h
+*** alpine-2.21/pith/conftype.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/conftype.h	Sun Feb  5 16:15:21 2017
 ***************
 *** 70,75 ****
 --- 70,89 ----
@@ -1046,8 +1115,8 @@ diff -rc alpine-2.20/pith/conftype.h alpine-2.20.rules/pith/conftype.h
   		, V_CHAR_SET
   		, V_OLD_CHAR_SET
 ***************
-*** 328,333 ****
---- 342,348 ----
+*** 332,337 ****
+--- 346,352 ----
   	F_FULL_AUTO_EXPUNGE,
   	F_EXPUNGE_MANUALLY,
   	F_AUTO_READ_MSGS,
@@ -1055,11 +1124,11 @@ diff -rc alpine-2.20/pith/conftype.h alpine-2.20.rules/pith/conftype.h
   	F_AUTO_FCC_ONLY,
   	F_READ_IN_NEWSRC_ORDER,
   	F_SELECT_WO_CONFIRM,
-diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
-*** alpine-2.20/pith/detoken.c	2015-01-11 22:12:25.602178904 -0700
---- alpine-2.20.rules/pith/detoken.c	2015-08-15 12:28:19.575147935 -0600
+diff -rc alpine-2.21/pith/detoken.c alpine-2.21.rules/pith/detoken.c
+*** alpine-2.21/pith/detoken.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/detoken.c	Sun Feb  5 16:15:21 2017
 ***************
-*** 24,30 ****
+*** 25,31 ****
   #include "../pith/reply.h"
   #include "../pith/mailindx.h"
   #include "../pith/options.h"
@@ -1067,7 +1136,7 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
   
   /*
    * Hook to read signature from local file
---- 24,30 ----
+--- 25,31 ----
   #include "../pith/reply.h"
   #include "../pith/mailindx.h"
   #include "../pith/options.h"
@@ -1076,8 +1145,8 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
   /*
    * Hook to read signature from local file
 ***************
-*** 90,95 ****
---- 90,97 ----
+*** 91,96 ****
+--- 91,98 ----
   
       if(is_sig){
   	/*
@@ -1087,7 +1156,7 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
   	 * Else, if VAR_LITERAL_SIG is set, we use that;
   	 * Else, if role->sig is set, we use that;
 ***************
-*** 103,116 ****
+*** 104,117 ****
   	 * there is no reason to mix them, so we don't provide support to
   	 * do so.
   	 */
@@ -1102,7 +1171,7 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
       }
       else if(role && role->template)
         sigfile = role->template;
---- 105,129 ----
+--- 106,130 ----
   	 * there is no reason to mix them, so we don't provide support to
   	 * do so.
   	 */
@@ -1129,7 +1198,7 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
       else if(role && role->template)
         sigfile = role->template;
 ***************
-*** 301,307 ****
+*** 302,308 ****
   			}
   		    }
   		}
@@ -1137,7 +1206,7 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
   		  repl = get_reply_data(env, role, pt->ctype,
   					subbuf, sizeof(subbuf)-1);
   
---- 314,320 ----
+--- 315,321 ----
   			}
   		    }
   		}
@@ -1145,25 +1214,25 @@ diff -rc alpine-2.20/pith/detoken.c alpine-2.20.rules/pith/detoken.c
   		  repl = get_reply_data(env, role, pt->ctype,
   					subbuf, sizeof(subbuf)-1);
   
-diff -rc alpine-2.20/pith/indxtype.h alpine-2.20.rules/pith/indxtype.h
-*** alpine-2.20/pith/indxtype.h	2015-01-11 22:12:25.581178804 -0700
---- alpine-2.20.rules/pith/indxtype.h	2015-08-15 12:28:19.577147943 -0600
+diff -rc alpine-2.21/pith/indxtype.h alpine-2.21.rules/pith/indxtype.h
+*** alpine-2.21/pith/indxtype.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/indxtype.h	Sun Feb  5 16:15:21 2017
 ***************
-*** 82,87 ****
---- 82,92 ----
+*** 84,89 ****
+--- 84,94 ----
   	      iCurNews, iArrow,
   	      iMailbox, iAddress, iInit, iCursorPos,
   	      iDay2Digit, iMon2Digit, iYear2Digit,
 + 	      iFolder, iFlag, iCollection, iRole, iProcid, iScreen, iPkey,
-+ 	      iNick, iFccFrom, iFccSender, iAltAddress, 
++ 	      iNick, iFccFrom, iFccSender, iAltAddress,
 + 	      iAddressTo, iAddressCc, iAddressRecip, iAddressSender,
 + 	      iBcc, iLcc,
 + 	      iFfrom, iFadd,
-  	      iSTime, iKSize,
+  	      iSTime, iSTime24, iKSize,
   	      iRoleNick, iNewLine,
   	      iHeader, iText,
 ***************
-*** 103,117 ****
+*** 105,119 ****
   
   
   /* these are flags for the what_for field in INDEX_PARSE_T */
@@ -1179,7 +1248,7 @@ diff -rc alpine-2.20/pith/indxtype.h alpine-2.20.rules/pith/indxtype.h
   
   #define DEFAULT_REPLY_INTRO "default"
   
---- 108,133 ----
+--- 110,135 ----
   
   
   /* these are flags for the what_for field in INDEX_PARSE_T */
@@ -1206,9 +1275,9 @@ diff -rc alpine-2.20/pith/indxtype.h alpine-2.20.rules/pith/indxtype.h
   
   #define DEFAULT_REPLY_INTRO "default"
   
-diff -rc alpine-2.20/pith/mailcmd.c alpine-2.20.rules/pith/mailcmd.c
-*** alpine-2.20/pith/mailcmd.c	2015-01-11 22:12:25.578178790 -0700
---- alpine-2.20.rules/pith/mailcmd.c	2015-08-15 12:28:19.583147969 -0600
+diff -rc alpine-2.21/pith/mailcmd.c alpine-2.21.rules/pith/mailcmd.c
+*** alpine-2.21/pith/mailcmd.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/mailcmd.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 39,44 ****
 --- 39,45 ----
@@ -1468,8 +1537,8 @@ diff -rc alpine-2.20/pith/mailcmd.c alpine-2.20.rules/pith/mailcmd.c
   	for(; f && *archive; archive++){
   	    char *p;
 ***************
-*** 2752,2754 ****
---- 2649,2943 ----
+*** 2755,2757 ****
+--- 2652,2946 ----
   
       return(*target ? target : NULL);
   }
@@ -1765,9 +1834,9 @@ diff -rc alpine-2.20/pith/mailcmd.c alpine-2.20.rules/pith/mailcmd.c
 + 
 +   }
 + }
-diff -rc alpine-2.20/pith/mailcmd.h alpine-2.20.rules/pith/mailcmd.h
-*** alpine-2.20/pith/mailcmd.h	2015-01-11 22:12:25.577178785 -0700
---- alpine-2.20.rules/pith/mailcmd.h	2015-08-15 12:28:19.584147973 -0600
+diff -rc alpine-2.21/pith/mailcmd.h alpine-2.21.rules/pith/mailcmd.h
+*** alpine-2.21/pith/mailcmd.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/mailcmd.h	Sun Feb  5 16:15:21 2017
 ***************
 *** 42,47 ****
 --- 42,49 ----
@@ -1795,9 +1864,9 @@ diff -rc alpine-2.20/pith/mailcmd.h alpine-2.20.rules/pith/mailcmd.h
   void	   cross_delete_crossposts(MAILSTREAM *);
   long	   zoom_index(struct pine *, MAILSTREAM *, MSGNO_S *, int);
   int	   unzoom_index(struct pine *, MAILSTREAM *, MSGNO_S *);
-diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
-*** alpine-2.20/pith/mailindx.c	2015-01-11 22:12:25.579178794 -0700
---- alpine-2.20.rules/pith/mailindx.c	2015-08-15 12:28:19.597148028 -0600
+diff -rc alpine-2.21/pith/mailindx.c alpine-2.21.rules/pith/mailindx.c
+*** alpine-2.21/pith/mailindx.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/mailindx.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 40,45 ****
 --- 40,46 ----
@@ -1809,8 +1878,8 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   #include "../pico/osdep/mswin.h"
   #endif
 ***************
-*** 374,379 ****
---- 375,387 ----
+*** 377,382 ****
+--- 378,390 ----
       PAT_STATE     pstate;
       PAT_S        *pat;
       int           we_set_it = 0;
@@ -1825,7 +1894,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       if(ps_global->mail_stream && nonempty_patterns(rflags, &pstate)){
   	for(pat = first_pattern(&pstate); pat; pat = next_pattern(&pstate)){
 ***************
-*** 447,460 ****
+*** 450,463 ****
   static INDEX_PARSE_T itokens[] = {
       {"STATUS",		iStatus,	FOR_INDEX},
       {"MSGNO",		iMessNo,	FOR_INDEX},
@@ -1837,10 +1906,10 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       {"SIZENARROW",	iSizeNarrow,	FOR_INDEX},
       {"KSIZE",		iKSize,		FOR_INDEX},
 !     {"SUBJECT",		iSubject,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
+      {"SHORTSUBJECT",	iShortSubject,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"FULLSTATUS",	iFStatus,	FOR_INDEX},
       {"IMAPSTATUS",	iIStatus,	FOR_INDEX},
-      {"SHORTIMAPSTATUS",	iSIStatus,	FOR_INDEX},
---- 455,468 ----
+--- 458,471 ----
   static INDEX_PARSE_T itokens[] = {
       {"STATUS",		iStatus,	FOR_INDEX},
       {"MSGNO",		iMessNo,	FOR_INDEX},
@@ -1852,11 +1921,11 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       {"SIZENARROW",	iSizeNarrow,	FOR_INDEX},
       {"KSIZE",		iKSize,		FOR_INDEX},
 !     {"SUBJECT",		iSubject,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE|FOR_TRIM},
+      {"SHORTSUBJECT",	iShortSubject,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"FULLSTATUS",	iFStatus,	FOR_INDEX},
       {"IMAPSTATUS",	iIStatus,	FOR_INDEX},
-      {"SHORTIMAPSTATUS",	iSIStatus,	FOR_INDEX},
 ***************
-*** 463,517 ****
+*** 469,524 ****
       {"SUBJECTTEXT",	iSubjectText,	FOR_INDEX},
       {"SUBJKEYTEXT",	iSubjKeyText,	FOR_INDEX},
       {"SUBJKEYINITTEXT", iSubjKeyInitText, FOR_INDEX},
@@ -1879,6 +1948,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
 !     {"SHORTDATEISO",	iDateIsoS,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 !     {"SMARTDATE",	iSDate,		FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 !     {"SMARTTIME",	iSTime,		FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
+      {"SMARTTIME24",	iSTime24,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 !     {"SMARTDATEISO",	iSDateIso,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 !     {"SMARTDATESHORTISO",iSDateIsoS,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 !     {"SMARTDATES1",	iSDateS1,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
@@ -1912,7 +1982,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       {"RECIPS",		iRecips,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"NEWS",		iNews,		FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"TOANDNEWS",	iToAndNews,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
---- 471,529 ----
+--- 477,536 ----
       {"SUBJECTTEXT",	iSubjectText,	FOR_INDEX},
       {"SUBJKEYTEXT",	iSubjKeyText,	FOR_INDEX},
       {"SUBJKEYINITTEXT", iSubjKeyInitText, FOR_INDEX},
@@ -1935,6 +2005,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
 !     {"SHORTDATEISO",	iDateIsoS,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE},
 !     {"SMARTDATE",	iSDate,		FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE},
 !     {"SMARTTIME",	iSTime,		FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE},
+      {"SMARTTIME24",	iSTime24,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 !     {"SMARTDATEISO",	iSDateIso,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE},
 !     {"SMARTDATESHORTISO",iSDateIsoS,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE},
 !     {"SMARTDATES1",	iSDateS1,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE|FOR_RULE|FOR_SAVE},
@@ -1973,7 +2044,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       {"NEWS",		iNews,		FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"TOANDNEWS",	iToAndNews,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
 ***************
-*** 520,575 ****
+*** 527,582 ****
       {"NEWSANDRECIPS",	iNewsAndRecips,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"MSGID",		iMsgID,		FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"CURNEWS",		iCurNews,	FOR_REPLY_INTRO|FOR_TEMPLATE},
@@ -2030,7 +2101,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       {NULL,		iNothing,	FOR_NOTHING}
   };
   
---- 532,602 ----
+--- 539,609 ----
       {"NEWSANDRECIPS",	iNewsAndRecips,	FOR_INDEX|FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"MSGID",		iMsgID,		FOR_REPLY_INTRO|FOR_TEMPLATE},
       {"CURNEWS",		iCurNews,	FOR_REPLY_INTRO|FOR_TEMPLATE},
@@ -2103,8 +2174,8 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   };
   
 ***************
-*** 2465,2470 ****
---- 2492,2515 ----
+*** 2483,2488 ****
+--- 2510,2533 ----
   		from_str(cdesc->ctype, idata, str, sizeof(str), ice);
   	        break;
   
@@ -2130,8 +2201,8 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   		if(((field = ((addr = fetch_to(idata))
   			      ? "To"
 ***************
-*** 3803,3809 ****
---- 3848,3864 ----
+*** 3833,3839 ****
+--- 3878,3894 ----
   
   			if(p > buf){
   			    size_t l;
@@ -2150,7 +2221,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   			    l += 100;
   			    firsttext = fs_get((l+1) * sizeof(char));
 ***************
-*** 5267,5276 ****
+*** 5407,5416 ****
   {
       char          *subject, *origsubj, *origstr, *rawsubj, *sptr = NULL;
       char          *p, *border, *q = NULL, *free_subj = NULL;
@@ -2161,7 +2232,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       int            save;
       int            do_subj = 0, truncated_tree = 0;
       PINETHRD_S    *thd, *thdorig;
---- 5322,5331 ----
+--- 5462,5471 ----
   {
       char          *subject, *origsubj, *origstr, *rawsubj, *sptr = NULL;
       char          *p, *border, *q = NULL, *free_subj = NULL;
@@ -2173,31 +2244,25 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
       int            do_subj = 0, truncated_tree = 0;
       PINETHRD_S    *thd, *thdorig;
 ***************
-*** 5325,5331 ****
-       * origsubj is the original subject but it has been decoded. We need
+*** 5466,5471 ****
+--- 5521,5534 ----
        * to free it at the end of this routine.
        */
-! 
   
-      /*
-       * prepend_keyword will put the keyword stuff before the subject
---- 5380,5392 ----
-       * origsubj is the original subject but it has been decoded. We need
-       * to free it at the end of this routine.
-       */
-!     if (rule_result = find_value("_SUBJECT_", origsubj, PROCESS_SP, idata, 4)){
-!        if(origsubj)
-! 	 fs_give((void **)&origsubj);
-!        we_clear++;
-!        origsubj = cpystr(rule_result);
-!        fs_give((void **)&rule_result);
-!     }
++     if (rule_result = find_value("_SUBJECT_", origsubj, PROCESS_SP, idata, 4)){
++ 	if(origsubj)
++ 	  fs_give((void **)&origsubj);
++ 	we_clear++;
++ 	origsubj = cpystr(rule_result);
++ 	fs_give((void **)&rule_result);
++     }
++ 
+      if(shorten)
+         shorten_subject(origsubj);
   
-      /*
-       * prepend_keyword will put the keyword stuff before the subject
 ***************
-*** 5766,5771 ****
---- 5827,5835 ----
+*** 5908,5913 ****
+--- 5971,5979 ----
   
       if(free_subj)
         fs_give((void **) &free_subj);
@@ -2208,7 +2273,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   
   
 ***************
-*** 6134,6149 ****
+*** 6276,6291 ****
   				 ? "To"
   				 : (addr = fetch_cc(idata))
   				 ? "Cc"
@@ -2220,12 +2285,12 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   		    if(ctype == iFromTo &&
   		       (newsgroups = fetch_newsgroups(idata)) &&
   		       *newsgroups){
-! 			snprintf(fptr, strsize, "To: %-*.*s", strsize-1-4, strsize-1-4,
+! 			snprintf(fptr, strsize, "To: %-*.*s", (int)(strsize-1-4), (int)(strsize-1-4),
 ! 				newsgroups);
   			break;
   		    }
   
---- 6198,6230 ----
+--- 6342,6374 ----
   				 ? "To"
   				 : (addr = fetch_cc(idata))
   				 ? "Cc"
@@ -2260,7 +2325,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   		    }
   
 ***************
-*** 6156,6162 ****
+*** 6298,6304 ****
   	      break;
   
   	  case iFrom:
@@ -2268,7 +2333,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   	    break;
   
   	  case iAddress:
---- 6237,6251 ----
+--- 6381,6395 ----
   	      break;
   
   	  case iFrom:
@@ -2285,8 +2350,8 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
   
   	  case iAddress:
 ***************
-*** 6454,6456 ****
---- 6543,6606 ----
+*** 6596,6598 ****
+--- 6687,6750 ----
   	}
       }
   }
@@ -2351,9 +2416,9 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.rules/pith/mailindx.c
 +  }
 +  return rule_result;
 + }
-diff -rc alpine-2.20/pith/mailindx.h alpine-2.20.rules/pith/mailindx.h
-*** alpine-2.20/pith/mailindx.h	2015-01-11 22:12:25.582178809 -0700
---- alpine-2.20.rules/pith/mailindx.h	2015-08-15 12:28:19.598148032 -0600
+diff -rc alpine-2.21/pith/mailindx.h alpine-2.21.rules/pith/mailindx.h
+*** alpine-2.21/pith/mailindx.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/mailindx.h	Sun Feb  5 16:15:21 2017
 ***************
 *** 30,35 ****
 --- 30,38 ----
@@ -2366,78 +2431,11 @@ diff -rc alpine-2.20/pith/mailindx.h alpine-2.20.rules/pith/mailindx.h
   int	       msgline_hidden(MAILSTREAM *, MSGNO_S *, long, int);
   void	       adjust_cur_to_visible(MAILSTREAM *, MSGNO_S *);
   unsigned long  line_hash(char *);
-diff -rc alpine-2.20/pith/Makefile.am alpine-2.20.rules/pith/Makefile.am
-*** alpine-2.20/pith/Makefile.am	2015-01-11 22:12:25.585178823 -0700
---- alpine-2.20.rules/pith/Makefile.am	2015-08-15 12:28:19.600148041 -0600
+diff -rc alpine-2.21/pith/makefile.wnt alpine-2.21.rules/pith/makefile.wnt
+*** alpine-2.21/pith/makefile.wnt	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/makefile.wnt	Sun Feb  5 16:15:21 2017
 ***************
-*** 25,31 ****
-  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
-  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
-  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
-! 	readfile.c remote.c reply.c rfc2231.c save.c search.c sequence.c send.c sort.c \
-  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
-  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
-  
---- 25,31 ----
-  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
-  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
-  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
-! 	readfile.c remote.c reply.c rfc2231.c rules.c save.c search.c sequence.c send.c sort.c \
-  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
-  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
-  
-diff -rc alpine-2.20/pith/Makefile.in alpine-2.20.rules/pith/Makefile.in
-*** alpine-2.20/pith/Makefile.in	2015-01-18 00:00:44.062653689 -0700
---- alpine-2.20.rules/pith/Makefile.in	2015-08-15 12:28:19.602148049 -0600
-***************
-*** 137,143 ****
-  	margin.$(OBJEXT) mimedesc.$(OBJEXT) mimetype.$(OBJEXT) \
-  	msgno.$(OBJEXT) newmail.$(OBJEXT) news.$(OBJEXT) \
-  	pattern.$(OBJEXT) pipe.$(OBJEXT) readfile.$(OBJEXT) \
-! 	remote.$(OBJEXT) reply.$(OBJEXT) rfc2231.$(OBJEXT) \
-  	save.$(OBJEXT) search.$(OBJEXT) sequence.$(OBJEXT) \
-  	send.$(OBJEXT) sort.$(OBJEXT) state.$(OBJEXT) status.$(OBJEXT) \
-  	store.$(OBJEXT) stream.$(OBJEXT) string.$(OBJEXT) \
---- 137,143 ----
-  	margin.$(OBJEXT) mimedesc.$(OBJEXT) mimetype.$(OBJEXT) \
-  	msgno.$(OBJEXT) newmail.$(OBJEXT) news.$(OBJEXT) \
-  	pattern.$(OBJEXT) pipe.$(OBJEXT) readfile.$(OBJEXT) \
-! 	remote.$(OBJEXT) reply.$(OBJEXT) rfc2231.$(OBJEXT) rules.$(OBJEXT) \
-  	save.$(OBJEXT) search.$(OBJEXT) sequence.$(OBJEXT) \
-  	send.$(OBJEXT) sort.$(OBJEXT) state.$(OBJEXT) status.$(OBJEXT) \
-  	store.$(OBJEXT) stream.$(OBJEXT) string.$(OBJEXT) \
-***************
-*** 429,435 ****
-  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
-  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
-  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
-! 	readfile.c remote.c reply.c rfc2231.c save.c search.c sequence.c send.c sort.c \
-  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
-  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
-  
---- 429,435 ----
-  	filter.c flag.c folder.c handle.c help.c helpindx.c hist.c icache.c imap.c init.c \
-  	keyword.c ldap.c list.c mailcap.c mailcmd.c mailindx.c maillist.c mailview.c \
-  	margin.c mimedesc.c mimetype.c msgno.c newmail.c news.c pattern.c pipe.c \
-! 	readfile.c remote.c reply.c rfc2231.c rules.c save.c search.c sequence.c send.c sort.c \
-  	state.c status.c store.c stream.c string.c strlst.c takeaddr.c tempfile.c text.c \
-  	thread.c adjtime.c url.c util.c helptext.c smkeys.c smime.c
-  
-***************
-*** 562,567 ****
---- 562,568 ----
-  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/thread.Po@am__quote@
-  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/url.Po@am__quote@
-  @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@
-+ @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/rules.Po@am__quote@
-  
-  .c.o:
-  @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-diff -rc alpine-2.20/pith/makefile.wnt alpine-2.20.rules/pith/makefile.wnt
-*** alpine-2.20/pith/makefile.wnt	2015-01-11 22:12:25.602178904 -0700
---- alpine-2.20.rules/pith/makefile.wnt	2015-08-15 12:28:22.934162195 -0600
-***************
-*** 44,50 ****
+*** 45,51 ****
   	init.h keyword.h ldap.h list.h mailcap.h mailcmd.h mailindx.h maillist.h \
   	mailpart.h mailview.h margin.h mimedesc.h mimetype.h msgno.h newmail.h news.h \
   	options.h pattern.h pineelt.h pipe.h readfile.h remote.h remtype.h repltype.h reply.h \
@@ -2445,7 +2443,7 @@ diff -rc alpine-2.20/pith/makefile.wnt alpine-2.20.rules/pith/makefile.wnt
   	state.h status.h store.h stream.h string.h strlst.h takeaddr.h tempfile.h text.h \
   	thread.h url.h user.h util.h
   
---- 44,50 ----
+--- 45,51 ----
   	init.h keyword.h ldap.h list.h mailcap.h mailcmd.h mailindx.h maillist.h \
   	mailpart.h mailview.h margin.h mimedesc.h mimetype.h msgno.h newmail.h news.h \
   	options.h pattern.h pineelt.h pipe.h readfile.h remote.h remtype.h repltype.h reply.h \
@@ -2454,7 +2452,7 @@ diff -rc alpine-2.20/pith/makefile.wnt alpine-2.20.rules/pith/makefile.wnt
   	thread.h url.h user.h util.h
   
 ***************
-*** 53,59 ****
+*** 54,60 ****
   	filter.obj flag.obj folder.obj handle.obj help.obj helptext.obj hist.obj icache.obj imap.obj init.obj \
   	keyword.obj ldap.obj list.obj mailcap.obj mailcmd.obj mailindx.obj maillist.obj mailview.obj \
   	margin.obj mimedesc.obj mimetype.obj msgno.obj newmail.obj news.obj pattern.obj pipe.obj \
@@ -2462,7 +2460,7 @@ diff -rc alpine-2.20/pith/makefile.wnt alpine-2.20.rules/pith/makefile.wnt
   	status.obj store.obj stream.obj string.obj strlst.obj takeaddr.obj tempfile.obj text.obj \
   	thread.obj adjtime.obj url.obj util.obj
   
---- 53,59 ----
+--- 54,60 ----
   	filter.obj flag.obj folder.obj handle.obj help.obj helptext.obj hist.obj icache.obj imap.obj init.obj \
   	keyword.obj ldap.obj list.obj mailcap.obj mailcmd.obj mailindx.obj maillist.obj mailview.obj \
   	margin.obj mimedesc.obj mimetype.obj msgno.obj newmail.obj news.obj pattern.obj pipe.obj \
@@ -2470,13 +2468,13 @@ diff -rc alpine-2.20/pith/makefile.wnt alpine-2.20.rules/pith/makefile.wnt
   	status.obj store.obj stream.obj string.obj strlst.obj takeaddr.obj tempfile.obj text.obj \
   	thread.obj adjtime.obj url.obj util.obj
   
-diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
-*** alpine-2.20/pith/pine.hlp	2015-01-11 22:12:25.584178818 -0700
---- alpine-2.20.rules/pith/pine.hlp	2015-08-15 12:28:24.157167387 -0600
+diff -rc alpine-2.21/pith/pine.hlp alpine-2.21.rules/pith/pine.hlp
+*** alpine-2.21/pith/pine.hlp	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/pine.hlp	Sun Feb  5 16:15:21 2017
 ***************
-*** 3463,3468 ****
---- 3463,3469 ----
-  <li><a href="h_config_alt_role_menu">FEATURE: <!--#echo var="FEAT_alternate-role-menu"--></a>
+*** 3855,3860 ****
+--- 3855,3861 ----
+  <li><a href="h_config_alt_reply_menu">FEATURE: <!--#echo var="FEAT_alternate-reply-menu"--></a>
   <li><a href="h_config_force_low_speed">FEATURE: <!--#echo var="FEAT_assume-slow-link"--></a>
   <li><a href="h_config_auto_read_msgs">FEATURE: <!--#echo var="FEAT_auto-move-read-msgs"--></a>
 + <li><a href="h_config_auto_read_msgs_rules">FEATURE: <!--#echo var="FEAT_auto-move-read-msgs-using-rules"--></a>
@@ -2484,8 +2482,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <li><a href="h_config_auto_unselect">FEATURE: <!--#echo var="FEAT_auto-unselect-after-apply"--></a>
   <li><a href="h_config_auto_unzoom">FEATURE: <!--#echo var="FEAT_auto-unzoom-after-apply"--></a>
 ***************
-*** 18601,18606 ****
---- 18602,18608 ----
+*** 19045,19050 ****
+--- 19046,19052 ----
   <A HREF="h_config_index_format">&quot;<!--#echo var="VAR_index-format"-->&quot;</A> option,
   in the <A HREF="h_config_reply_intro">&quot;<!--#echo var="VAR_reply-leadin"-->&quot;</A> option,
   in signature files,
@@ -2494,7 +2492,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <A HREF="h_rules_roles">&quot;roles&quot;</A>, and in the folder name
   that is the target of a Filter Rule.
 ***************
-*** 18613,18619 ****
+*** 19057,19063 ****
   <P>
   <P>
   
@@ -2502,7 +2500,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   
   <DL>
   <DT>SUBJECT</DT>
---- 18615,18621 ----
+--- 19059,19065 ----
   <P>
   <P>
   
@@ -2511,8 +2509,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <DL>
   <DT>SUBJECT</DT>
 ***************
-*** 18646,18651 ****
---- 18648,18669 ----
+*** 19091,19096 ****
+--- 19093,19114 ----
   For example, &quot;mailbox@domain&quot;.
   </DD>
   
@@ -2536,8 +2534,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <DD>
   This is the same as the &quot;ADDRESS&quot; except that the 
 ***************
-*** 18693,18698 ****
---- 18711,18725 ----
+*** 19138,19143 ****
+--- 19156,19170 ----
   message's &quot;Cc:&quot; header field.
   </DD>
   
@@ -2554,8 +2552,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <DD>
   This token represents the personal names (or email addresses if the names
 ***************
-*** 18701,18706 ****
---- 18728,18741 ----
+*** 19146,19151 ****
+--- 19173,19186 ----
   the message's &quot;Cc:&quot; header field.
   </DD>
   
@@ -2571,8 +2569,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <DD>
   This token represents the newsgroups from the
 ***************
-*** 19797,19802 ****
---- 19832,19941 ----
+*** 20270,20275 ****
+--- 20305,20414 ----
   </DL>
   
   <P>
@@ -2684,8 +2682,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   
   <DL>
 ***************
-*** 22923,22928 ****
---- 23062,23958 ----
+*** 23397,23402 ****
+--- 23536,24432 ----
   &lt;End of help on this topic&gt;
   </BODY>
   </HTML>
@@ -3584,8 +3582,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <HTML>
   <HEAD>
 ***************
-*** 26510,26515 ****
---- 27540,27615 ----
+*** 27005,27010 ****
+--- 28035,28110 ----
   &lt;End of help on this topic&gt;
   </BODY>
   </HTML>
@@ -3663,8 +3661,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <HTML>
   <HEAD>
 ***************
-*** 29990,29995 ****
---- 31090,31118 ----
+*** 30595,30600 ****
+--- 31695,31723 ----
   them as deleted in the INBOX.  Messages in the INBOX marked with an 
   &quot;N&quot; (meaning New, or unseen) are not affected.
   <P>
@@ -3694,9 +3692,9 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.rules/pith/pine.hlp
   <UL>   
   <LI><A HREF="h_finding_help">Finding more information and requesting help</A>
   </UL><P>
-diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
-*** alpine-2.20/pith/reply.c	2015-01-11 22:12:25.582178809 -0700
---- alpine-2.20.rules/pith/reply.c	2015-08-15 12:28:24.165167421 -0600
+diff -rc alpine-2.21/pith/reply.c alpine-2.21.rules/pith/reply.c
+*** alpine-2.21/pith/reply.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/reply.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 47,52 ****
 --- 47,54 ----
@@ -3709,7 +3707,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   
   /*
 ***************
-*** 859,866 ****
+*** 864,871 ****
   reply_quote_str(ENVELOPE *env)
   {
       char *prefix, *repl, *p, buf[MAX_PREFIX+1], pbf[MAX_SUBSTITUTION+1];
@@ -3718,7 +3716,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
       buf[sizeof(buf)-1] = '\0';
   
       /* set up the prefix to quote included text */
---- 861,887 ----
+--- 866,892 ----
   reply_quote_str(ENVELOPE *env)
   {
       char *prefix, *repl, *p, buf[MAX_PREFIX+1], pbf[MAX_SUBSTITUTION+1];
@@ -3747,7 +3745,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   
       /* set up the prefix to quote included text */
 ***************
-*** 912,921 ****
+*** 917,926 ****
   int
   reply_quote_str_contains_tokens(void)
   {
@@ -3758,7 +3756,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   }
   
   
---- 933,961 ----
+--- 938,966 ----
   int
   reply_quote_str_contains_tokens(void)
   {
@@ -3789,8 +3787,8 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   
   
 ***************
-*** 1379,1384 ****
---- 1419,1428 ----
+*** 1385,1390 ****
+--- 1425,1434 ----
       buf[0] = '\0';
   
       switch(type){
@@ -3802,7 +3800,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   	addr = env ? env->from : NULL;
   	break;
 ***************
-*** 1764,1785 ****
+*** 1797,1818 ****
   
   	break;
   
@@ -3825,7 +3823,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
         case iNewLine:
   	if(maxlen >= strlen(NEWLINE)){
   	    strncpy(buf, NEWLINE, maxlen);
---- 1808,2001 ----
+--- 1841,2034 ----
   
   	break;
   
@@ -4021,8 +4019,8 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   	if(maxlen >= strlen(NEWLINE)){
   	    strncpy(buf, NEWLINE, maxlen);
 ***************
-*** 1807,1812 ****
---- 2023,2033 ----
+*** 1840,1845 ****
+--- 2056,2066 ----
   
   	break;
   
@@ -4035,8 +4033,8 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
         case iCurNews:
   	get_news_data(env, type, buf, maxlen);
 ***************
-*** 1856,1861 ****
---- 2077,2090 ----
+*** 1889,1894 ****
+--- 2110,2123 ----
   
   	break;
   
@@ -4049,10 +4047,10 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
 + 	break;
 + 
         case iSubject:
+        case iShortSubject:
   	if(env && env->subject){
-  	    size_t n, len;
 ***************
-*** 1914,1920 ****
+*** 1951,1957 ****
       if(!env)
         return;
   
@@ -4060,7 +4058,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
       buf[MAX_DELIM] = '\0';
       /* preserve exact default behavior from before */
       if(!strcmp(buf, DEFAULT_REPLY_INTRO)){
---- 2143,2160 ----
+--- 2180,2197 ----
       if(!env)
         return;
   
@@ -4080,8 +4078,8 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
       /* preserve exact default behavior from before */
       if(!strcmp(buf, DEFAULT_REPLY_INTRO)){
 ***************
-*** 2173,2178 ****
---- 2413,2419 ----
+*** 2210,2215 ****
+--- 2450,2456 ----
   {
       size_t l;
       char  *p, buftmp[MAILTMPLEN];
@@ -4090,7 +4088,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
       if(!env)
         return(NULL);
 ***************
-*** 2180,2188 ****
+*** 2217,2225 ****
       dprint((9, "checking subject: \"%s\"\n",
   	       env->subject ? env->subject : "NULL"));
   
@@ -4100,7 +4098,7 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   	/* decode any 8bit (copy to the temp buffer if decoding doesn't) */
   	if(rfc1522_decode_to_utf8((unsigned char *) tmp_20k_buf,
   				  SIZEOF_20KBUF, buftmp) == (unsigned char *) buftmp)
---- 2421,2439 ----
+--- 2458,2476 ----
       dprint((9, "checking subject: \"%s\"\n",
   	       env->subject ? env->subject : "NULL"));
   
@@ -4120,9 +4118,9 @@ diff -rc alpine-2.20/pith/reply.c alpine-2.20.rules/pith/reply.c
   	/* decode any 8bit (copy to the temp buffer if decoding doesn't) */
   	if(rfc1522_decode_to_utf8((unsigned char *) tmp_20k_buf,
   				  SIZEOF_20KBUF, buftmp) == (unsigned char *) buftmp)
-diff -rc alpine-2.20/pith/rules.c alpine-2.20.rules/pith/rules.c
-*** alpine-2.20/pith/rules.c	2015-08-15 13:07:04.141016674 -0600
---- alpine-2.20.rules/pith/rules.c	2015-08-15 12:55:56.077180468 -0600
+diff -rc alpine-2.21/pith/rules.c alpine-2.21.rules/pith/rules.c
+*** alpine-2.21/pith/rules.c	Sun Feb  5 16:15:22 2017
+--- alpine-2.21.rules/pith/rules.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 0 ****
 --- 1,1416 ----
@@ -5350,7 +5348,7 @@ diff -rc alpine-2.20/pith/rules.c alpine-2.20.rules/pith/rules.c
 +       return test;
 + 
 +    while(begin_text = strstr(test+offset,tval->testxt)){
-+       strcpy(begin_text, begin_text+strlen(tval->testxt));
++       memmove(begin_text, begin_text+strlen(tval->testxt), strlen(begin_text) - strlen(tval->testxt));
 +       offset = begin_text - test;
 +    }
 + 
@@ -5542,9 +5540,9 @@ diff -rc alpine-2.20/pith/rules.c alpine-2.20.rules/pith/rules.c
 +   env = pine_mail_fetchenvelope(idata->stream, idata->rawno);
 +   return env;
 + }
-diff -rc alpine-2.20/pith/rules.h alpine-2.20.rules/pith/rules.h
-*** alpine-2.20/pith/rules.h	2015-08-15 13:07:04.142016678 -0600
---- alpine-2.20.rules/pith/rules.h	2015-08-15 12:55:22.301037074 -0600
+diff -rc alpine-2.21/pith/rules.h alpine-2.21.rules/pith/rules.h
+*** alpine-2.21/pith/rules.h	Sun Feb  5 16:15:22 2017
+--- alpine-2.21.rules/pith/rules.h	Sun Feb  5 16:15:22 2017
 ***************
 *** 0 ****
 --- 1,151 ----
@@ -5699,9 +5697,9 @@ diff -rc alpine-2.20/pith/rules.h alpine-2.20.rules/pith/rules.h
 + #define RELAXED 0x2
 + 
 + #endif 	/* PITH_RULES_INCLUDED */
-diff -rc alpine-2.20/pith/rulestype.h alpine-2.20.rules/pith/rulestype.h
-*** alpine-2.20/pith/rulestype.h	2015-08-15 13:07:04.143016683 -0600
---- alpine-2.20.rules/pith/rulestype.h	2015-08-15 12:28:24.167167430 -0600
+diff -rc alpine-2.21/pith/rulestype.h alpine-2.21.rules/pith/rulestype.h
+*** alpine-2.21/pith/rulestype.h	Sun Feb  5 16:15:22 2017
+--- alpine-2.21.rules/pith/rulestype.h	Sun Feb  5 16:15:22 2017
 ***************
 *** 0 ****
 --- 1,85 ----
@@ -5790,9 +5788,9 @@ diff -rc alpine-2.20/pith/rulestype.h alpine-2.20.rules/pith/rulestype.h
 + 
 + 
 + #endif	/* PITH_RULESTYPE_INCLUDED */
-diff -rc alpine-2.20/pith/save.c alpine-2.20.rules/pith/save.c
-*** alpine-2.20/pith/save.c	2015-01-11 22:12:25.580178799 -0700
---- alpine-2.20.rules/pith/save.c	2015-08-15 12:28:24.172167451 -0600
+diff -rc alpine-2.21/pith/save.c alpine-2.21.rules/pith/save.c
+*** alpine-2.21/pith/save.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/save.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 954,960 ****
   	      *date = '\0';
@@ -5810,9 +5808,9 @@ diff -rc alpine-2.20/pith/save.c alpine-2.20.rules/pith/save.c
   				   mc ? mc->rfc822_size : 0L, flags, date, so);
   
   	    if(flags)
-diff -rc alpine-2.20/pith/send.c alpine-2.20.rules/pith/send.c
-*** alpine-2.20/pith/send.c	2015-01-11 22:12:25.577178785 -0700
---- alpine-2.20.rules/pith/send.c	2015-08-15 12:28:24.184167502 -0600
+diff -rc alpine-2.21/pith/send.c alpine-2.21.rules/pith/send.c
+*** alpine-2.21/pith/send.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/send.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 44,49 ****
 --- 44,50 ----
@@ -5916,9 +5914,9 @@ diff -rc alpine-2.20/pith/send.c alpine-2.20.rules/pith/send.c
       }
       else if((postcmd = smtp_command(ps_global->c_client_error, sizeof(ps_global->c_client_error))) != NULL){
   	char *cmdlist[2];
-diff -rc alpine-2.20/pith/sort.c alpine-2.20.rules/pith/sort.c
-*** alpine-2.20/pith/sort.c	2015-01-11 22:12:25.578178790 -0700
---- alpine-2.20.rules/pith/sort.c	2015-08-15 12:28:24.187167514 -0600
+diff -rc alpine-2.21/pith/sort.c alpine-2.21.rules/pith/sort.c
+*** alpine-2.21/pith/sort.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/sort.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 30,36 ****
   #include "../pith/signal.h"
@@ -6020,27 +6018,27 @@ diff -rc alpine-2.20/pith/sort.c alpine-2.20.rules/pith/sort.c
 +         return is_rev || rev  ?  SortScore : EndofList;
 +    return EndofList;
 + }
-diff -rc alpine-2.20/pith/sort.h alpine-2.20.rules/pith/sort.h
-*** alpine-2.20/pith/sort.h	2015-01-11 22:12:25.602178904 -0700
---- alpine-2.20.rules/pith/sort.h	2015-08-15 12:28:24.187167514 -0600
+diff -rc alpine-2.21/pith/sort.h alpine-2.21.rules/pith/sort.h
+*** alpine-2.21/pith/sort.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/sort.h	Sun Feb  5 16:15:22 2017
 ***************
-*** 44,49 ****
+*** 45,50 ****
   void	 sort_folder(MAILSTREAM *, MSGNO_S *, SortOrder, int, unsigned);
   int	 decode_sort(char *, SortOrder *, int *);
   void	 reset_sort_order(unsigned);
 ! 
   
   #endif /* PITH_SORT_INCLUDED */
---- 44,49 ----
+--- 45,50 ----
   void	 sort_folder(MAILSTREAM *, MSGNO_S *, SortOrder, int, unsigned);
   int	 decode_sort(char *, SortOrder *, int *);
   void	 reset_sort_order(unsigned);
 ! SortOrder translate(char *, int);
   
   #endif /* PITH_SORT_INCLUDED */
-diff -rc alpine-2.20/pith/state.c alpine-2.20.rules/pith/state.c
-*** alpine-2.20/pith/state.c	2015-01-11 22:12:25.582178809 -0700
---- alpine-2.20.rules/pith/state.c	2015-08-15 12:28:24.189167523 -0600
+diff -rc alpine-2.21/pith/state.c alpine-2.21.rules/pith/state.c
+*** alpine-2.21/pith/state.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/state.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 33,39 ****
   #include "../pith/remote.h"
@@ -6059,8 +6057,8 @@ diff -rc alpine-2.20/pith/state.c alpine-2.20.rules/pith/state.c
   /*
    * Globals referenced throughout pine...
 ***************
-*** 217,222 ****
---- 217,225 ----
+*** 239,244 ****
+--- 239,247 ----
       if((*pps)->msgmap)
         msgno_give(&(*pps)->msgmap);
       
@@ -6070,9 +6068,9 @@ diff -rc alpine-2.20/pith/state.c alpine-2.20.rules/pith/state.c
       free_vars(*pps);
   
       fs_give((void **) pps);
-diff -rc alpine-2.20/pith/state.h alpine-2.20.rules/pith/state.h
-*** alpine-2.20/pith/state.h	2015-01-11 22:12:25.582178809 -0700
---- alpine-2.20.rules/pith/state.h	2015-08-15 12:28:24.190167527 -0600
+diff -rc alpine-2.21/pith/state.h alpine-2.21.rules/pith/state.h
+*** alpine-2.21/pith/state.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/state.h	Sun Feb  5 16:15:22 2017
 ***************
 *** 33,39 ****
   #include "../pith/stream.h"
@@ -6105,8 +6103,8 @@ diff -rc alpine-2.20/pith/state.h alpine-2.20.rules/pith/state.h
   
       char         cur_folder[MAXPATH+1];
 ***************
-*** 342,347 ****
---- 347,353 ----
+*** 349,354 ****
+--- 354,360 ----
       struct {
           char	*(*display_filter)(char *, STORE_S *, gf_io_t, FILTLIST_S *);
           char	*(*display_filter_trigger)(BODY *, char *, size_t);
@@ -6115,8 +6113,8 @@ diff -rc alpine-2.20/pith/state.h alpine-2.20.rules/pith/state.h
   
       KEYWORD_S   *keywords;
 ***************
-*** 352,357 ****
---- 358,366 ----
+*** 359,364 ****
+--- 365,373 ----
       char	 last_error[500];
       INIT_ERR_S  *init_errs;
   
@@ -6126,9 +6124,9 @@ diff -rc alpine-2.20/pith/state.h alpine-2.20.rules/pith/state.h
       PRINT_S	*print;
   
   #ifdef SMIME
-diff -rc alpine-2.20/pith/string.c alpine-2.20.rules/pith/string.c
-*** alpine-2.20/pith/string.c	2015-01-11 22:12:25.579178794 -0700
---- alpine-2.20.rules/pith/string.c	2015-08-15 12:28:24.195167548 -0600
+diff -rc alpine-2.21/pith/string.c alpine-2.21.rules/pith/string.c
+*** alpine-2.21/pith/string.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/string.c	Sun Feb  5 16:15:22 2017
 ***************
 *** 20,25 ****
 --- 20,26 ----
@@ -6174,10 +6172,10 @@ diff -rc alpine-2.20/pith/string.c alpine-2.20.rules/pith/string.c
   
   /*----------------------------------------------------------------------
 ***************
-*** 2889,2891 ****
---- 2915,2949 ----
-  	fs_give((void **) strp);
-      }
+*** 2983,2985 ****
+--- 3009,3043 ----
+    if(i < len) rn[i] = '\0';
+    rn[len-1] = '\0';
   }
 + 
 + 
@@ -6211,12 +6209,12 @@ diff -rc alpine-2.20/pith/string.c alpine-2.20.rules/pith/string.c
 +         }
 + }
 + 
-diff -rc alpine-2.20/pith/string.h alpine-2.20.rules/pith/string.h
-*** alpine-2.20/pith/string.h	2015-01-11 22:12:25.581178804 -0700
---- alpine-2.20.rules/pith/string.h	2015-08-15 12:28:24.196167553 -0600
+diff -rc alpine-2.21/pith/string.h alpine-2.21.rules/pith/string.h
+*** alpine-2.21/pith/string.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.rules/pith/string.h	Sun Feb  5 16:15:22 2017
 ***************
-*** 86,91 ****
---- 86,92 ----
+*** 87,92 ****
+--- 87,93 ----
   
   /* exported protoypes */
   char	   *rplstr(char *, size_t, int, char *);
@@ -6225,8 +6223,8 @@ diff -rc alpine-2.20/pith/string.h alpine-2.20.rules/pith/string.h
   void	    sqznewlines(char *);
   void	    removing_leading_white_space(char *);
 ***************
-*** 93,98 ****
---- 94,100 ----
+*** 94,99 ****
+--- 95,101 ----
   void	    replace_tabs_by_space(char *);
   void	    removing_leading_and_trailing_white_space(char *);
   int 	    removing_double_quotes(char *);

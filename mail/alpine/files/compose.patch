@@ -1,6 +1,6 @@
-diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
-*** alpine-2.20/alpine/send.c	2015-01-11 22:12:25.466178256 -0700
---- alpine-2.20.compose/alpine/send.c	2015-09-18 15:05:59.258383675 -0600
+diff -rc alpine-2.21/alpine/send.c alpine-2.21.compose/alpine/send.c
+*** alpine-2.21/alpine/send.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.compose/alpine/send.c	Sun Feb  5 16:15:32 2017
 ***************
 *** 52,57 ****
 --- 52,58 ----
@@ -12,7 +12,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   #include "../pith/mailcmd.h"
   #include "../pith/ablookup.h"
 ***************
-*** 275,286 ****
+*** 276,287 ****
       char	  *fcc_to_free,
   		  *fcc      = NULL,
   		  *lcc      = NULL,
@@ -25,7 +25,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   
       dprint((1,
                    "\n\n    ---- COMPOSE SCREEN (not in pico yet) ----\n"));
---- 276,290 ----
+--- 277,291 ----
       char	  *fcc_to_free,
   		  *fcc      = NULL,
   		  *lcc      = NULL,
@@ -42,8 +42,8 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
       dprint((1,
                    "\n\n    ---- COMPOSE SCREEN (not in pico yet) ----\n"));
 ***************
-*** 332,337 ****
---- 336,343 ----
+*** 333,338 ****
+--- 337,344 ----
    	char    *postpnd  = "Postponed";
    	char    *formltr  = "FormLetter";
    	char    *roles    = "setRole";
@@ -53,8 +53,8 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   	ESCKEY_S compose_style[6];
   	unsigned which_help;
 ***************
-*** 369,374 ****
---- 375,412 ----
+*** 370,375 ****
+--- 376,413 ----
   	compose_style[ekey_num].name    = "R";
   	compose_style[ekey_num++].label = roles;
   
@@ -94,7 +94,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   
    	if(F_ON(F_BLANK_KEYMENU,ps_global)){
 ***************
-*** 423,429 ****
+*** 424,430 ****
   
    	chosen_task = radio_buttons(prompt, -FOOTER_ROWS(ps_global),
    				    compose_style, 'n', 'x', help, RB_NORM);
@@ -102,7 +102,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   
   	switch(chosen_task){
   	  case 'i':
---- 461,467 ----
+--- 462,468 ----
   
    	chosen_task = radio_buttons(prompt, -FOOTER_ROWS(ps_global),
    				    compose_style, 'n', 'x', help, RB_NORM);
@@ -111,7 +111,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   	switch(chosen_task){
   	  case 'i':
 ***************
-*** 452,458 ****
+*** 453,459 ****
   		role = combine_inherited_role(role);
   	    }
   	    break;
@@ -119,7 +119,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   	  case 'f':
   	    form = 1;
   	    break;
---- 490,504 ----
+--- 491,505 ----
   		role = combine_inherited_role(role);
   	    }
   	    break;
@@ -136,8 +136,8 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
   	    form = 1;
   	    break;
 ***************
-*** 611,616 ****
---- 657,686 ----
+*** 612,617 ****
+--- 658,687 ----
           body         = mail_newbody();
           outgoing     = mail_newenvelope();
   
@@ -168,12 +168,12 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.compose/alpine/send.c
           if(given_to)
   	  rfc822_parse_adrlist(&outgoing->to, given_to, ps_global->maildomain);
   
-diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.compose/pith/pine.hlp
-*** alpine-2.20/pith/pine.hlp	2015-01-11 22:12:25.584178818 -0700
---- alpine-2.20.compose/pith/pine.hlp	2015-09-18 15:04:01.558312975 -0600
+diff -rc alpine-2.21/pith/pine.hlp alpine-2.21.compose/pith/pine.hlp
+*** alpine-2.21/pith/pine.hlp	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.compose/pith/pine.hlp	Sun Feb  5 16:15:32 2017
 ***************
-*** 28860,28865 ****
---- 28860,28879 ----
+*** 29384,29389 ****
+--- 29384,29403 ----
   <P>
   setRole, for selecting a role to apply to a composition.
   
@@ -195,7 +195,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.compose/pith/pine.hlp
   &lt;End of help on this topic&gt;
   </BODY>
 ***************
-*** 36135,36159 ****
+*** 36836,36860 ****
   with question marks; return to the composer; or cancel message altogether.
   ========== h_compose_intrptd ==========
   N, compose a new msg. I, continue interrupted msg. R, set a role.
@@ -221,7 +221,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.compose/pith/pine.hlp
   ========== h_config_context_del_except ==========
   If you delete the last exceptional collection you can only add it back by
   manually editing the exceptions config file.
---- 36149,36173 ----
+--- 36850,36874 ----
   with question marks; return to the composer; or cancel message altogether.
   ========== h_compose_intrptd ==========
   N, compose a new msg. I, continue interrupted msg. R, set a role.

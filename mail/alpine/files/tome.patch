@@ -1,9 +1,9 @@
-diff -rc alpine-2.20/pith/conf.c alpine-2.20.tome/pith/conf.c
-*** alpine-2.20/pith/conf.c	2015-01-07 22:53:20.676657373 -0700
---- alpine-2.20.tome/pith/conf.c	2015-01-07 23:19:43.546610347 -0700
+diff -rc alpine-2.21/pith/conf.c alpine-2.21.tome/pith/conf.c
+*** alpine-2.21/pith/conf.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.tome/pith/conf.c	Sun Feb  5 16:15:31 2017
 ***************
-*** 2925,2930 ****
---- 2925,2932 ----
+*** 2958,2963 ****
+--- 2958,2965 ----
   	 F_ENABLE_SPACE_AS_TAB, h_config_cruise_mode, PREF_INDX, 0},
   	{"enable-cruise-mode-delete", "Enable Cruise Mode With Deleting",
   	 F_ENABLE_TAB_DELETES, h_config_cruise_mode_delete, PREF_INDX, 0},
@@ -13,8 +13,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.tome/pith/conf.c
   	 F_MARK_FOR_CC, h_config_mark_for_cc, PREF_INDX, 1},
   	{"next-thread-without-confirm", "Read Next Thread Without Confirming",
 ***************
-*** 7082,7087 ****
---- 7084,7090 ----
+*** 7100,7105 ****
+--- 7102,7108 ----
   	break;
   
         case F_MARK_FOR_CC :
@@ -22,12 +22,12 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.tome/pith/conf.c
   	clear_index_cache(ps->mail_stream, 0);
   	if(THREADING() && sp_viewing_a_thread(ps->mail_stream))
   	  unview_thread(ps, ps->mail_stream, ps->msgmap);
-diff -rc alpine-2.20/pith/conftype.h alpine-2.20.tome/pith/conftype.h
-*** alpine-2.20/pith/conftype.h	2015-01-07 22:53:20.677657376 -0700
---- alpine-2.20.tome/pith/conftype.h	2015-01-07 23:19:43.546610347 -0700
+diff -rc alpine-2.21/pith/conftype.h alpine-2.21.tome/pith/conftype.h
+*** alpine-2.21/pith/conftype.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.tome/pith/conftype.h	Sun Feb  5 16:15:31 2017
 ***************
-*** 410,415 ****
---- 410,416 ----
+*** 415,420 ****
+--- 415,421 ----
   	F_FIRST_SEND_FILTER_DFLT,
   	F_ALWAYS_LAST_FLDR_DFLT,
   	F_TAB_TO_NEW,
@@ -35,11 +35,11 @@ diff -rc alpine-2.20/pith/conftype.h alpine-2.20.tome/pith/conftype.h
   	F_MARK_FOR_CC,
   	F_WARN_ABOUT_NO_SUBJECT,
   	F_WARN_ABOUT_NO_FCC,
-diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
-*** alpine-2.20/pith/mailindx.c	2015-01-07 22:53:20.677657376 -0700
---- alpine-2.20.tome/pith/mailindx.c	2015-01-07 23:19:43.547610349 -0700
+diff -rc alpine-2.21/pith/mailindx.c alpine-2.21.tome/pith/mailindx.c
+*** alpine-2.21/pith/mailindx.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.tome/pith/mailindx.c	Sun Feb  5 16:15:31 2017
 ***************
-*** 2075,2084 ****
+*** 2093,2102 ****
   			      if(to_us == ' ')
   				to_us = '+';
   
@@ -50,7 +50,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			    ice->to_us = 1;
   			    if(to_us == ' ')
   			      to_us = '+';
---- 2075,2089 ----
+--- 2093,2107 ----
   			      if(to_us == ' ')
   				to_us = '+';
   
@@ -67,7 +67,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			    if(to_us == ' ')
   			      to_us = '+';
 ***************
-*** 2132,2138 ****
+*** 2150,2156 ****
   			    ielem->color = new_color_pair(VAR_IND_IMP_FORE_COLOR, VAR_IND_IMP_BACK_COLOR);
   			}
   		    }
@@ -75,7 +75,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			if(VAR_IND_PLUS_FORE_COLOR && VAR_IND_PLUS_BACK_COLOR){
   			    ielem = ifield->ielem;
   			    ielem->freecolor = 1;
---- 2137,2143 ----
+--- 2155,2161 ----
   			    ielem->color = new_color_pair(VAR_IND_IMP_FORE_COLOR, VAR_IND_IMP_BACK_COLOR);
   			}
   		    }
@@ -84,8 +84,8 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			    ielem = ifield->ielem;
   			    ielem->freecolor = 1;
 ***************
-*** 2188,2193 ****
---- 2193,2204 ----
+*** 2206,2211 ****
+--- 2211,2222 ----
   			for(addr = fetch_to(idata); addr; addr = addr->next)
   			  if(address_is_us(addr, ps_global)){
   			      to_us = '+';
@@ -99,7 +99,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			  }
   		      
 ***************
-*** 2283,2289 ****
+*** 2301,2307 ****
   
   		  if(pico_usingcolor()){
   
@@ -107,7 +107,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			  if(start == 0
   			     && VAR_IND_PLUS_FORE_COLOR
   			     && VAR_IND_PLUS_BACK_COLOR){
---- 2294,2300 ----
+--- 2312,2318 ----
   
   		  if(pico_usingcolor()){
   
@@ -116,7 +116,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   			     && VAR_IND_PLUS_FORE_COLOR
   			     && VAR_IND_PLUS_BACK_COLOR){
 ***************
-*** 3107,3113 ****
+*** 3137,3143 ****
   		  tice->linecolor = new_color_pair(VAR_IND_IMP_FORE_COLOR,
   						   VAR_IND_IMP_BACK_COLOR);
   	    }
@@ -124,7 +124,7 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   		    && VAR_IND_PLUS_FORE_COLOR && VAR_IND_PLUS_BACK_COLOR){
   		ielem = ifield->ielem;
   		ielem->freecolor = 1;
---- 3118,3124 ----
+--- 3148,3154 ----
   		  tice->linecolor = new_color_pair(VAR_IND_IMP_FORE_COLOR,
   						   VAR_IND_IMP_BACK_COLOR);
   	    }
@@ -132,12 +132,12 @@ diff -rc alpine-2.20/pith/mailindx.c alpine-2.20.tome/pith/mailindx.c
   		    && VAR_IND_PLUS_FORE_COLOR && VAR_IND_PLUS_BACK_COLOR){
   		ielem = ifield->ielem;
   		ielem->freecolor = 1;
-diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
-*** alpine-2.20/pith/pine.hlp	2015-01-07 22:53:20.683657394 -0700
---- alpine-2.20.tome/pith/pine.hlp	2015-01-07 23:19:43.554610367 -0700
+diff -rc alpine-2.21/pith/pine.hlp alpine-2.21.tome/pith/pine.hlp
+*** alpine-2.21/pith/pine.hlp	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.tome/pith/pine.hlp	Sun Feb  5 16:15:31 2017
 ***************
-*** 3578,3583 ****
---- 3578,3584 ----
+*** 3971,3976 ****
+--- 3971,3977 ----
   <li><a href="h_config_add_ldap">FEATURE: <!--#echo var="FEAT_ldap-result-to-addrbook-add"--></a>
   <li><a href="h_config_maildrops_preserve_state">FEATURE: <!--#echo var="FEAT_maildrops-preserve-state"--></a>
   <li><a href="h_config_mark_fcc_seen">FEATURE: <!--#echo var="FEAT_mark-fcc-seen"--></a>
@@ -146,8 +146,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   <li><a href="h_config_mulnews_as_typed">FEATURE: <!--#echo var="FEAT_mult-newsrc-hostnames-as-typed"--></a>
   <li><a href="h_config_news_uses_recent">FEATURE: <!--#echo var="FEAT_news-approximates-new-status"--></a>
 ***************
-*** 4727,4732 ****
---- 4728,4737 ----
+*** 5123,5128 ****
+--- 5124,5133 ----
   	message in the thread was sent to you as a cc:. This symbol will only show up if
   	the feature
   	&quot;<A HREF="h_config_mark_for_cc"><!--#echo var="FEAT_mark-for-cc"--></A>&quot; is turned on (which is the default).
@@ -159,8 +159,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   	&quot;select&quot; command.  (Some systems may optionally allow selected
   	messages to be denoted by the index line being displayed in bold
 ***************
-*** 4886,4891 ****
---- 4891,4900 ----
+*** 5282,5287 ****
+--- 5287,5296 ----
   	message was sent to you as a cc:. This symbol will only show up if
   	the feature
   	&quot;<A HREF="h_config_mark_for_cc"><!--#echo var="FEAT_mark-for-cc"--></A>&quot; is turned on (which is the default).
@@ -172,7 +172,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   	&quot;select&quot; command.  (Some systems may optionally allow selected
   	messages to be denoted by the index line being displayed in bold
 ***************
-*** 19046,19052 ****
+*** 19502,19508 ****
   The first character is either blank,
   a '*' for message marked Important, or a '+' indicating a message
   addressed directly to you (as opposed to your having received it via a
@@ -180,7 +180,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   When the feature
   &quot;<A HREF="h_config_mark_for_cc"><!--#echo var="FEAT_mark-for-cc"--></A>&quot;
   is set, if the first character would have been
---- 19055,19065 ----
+--- 19511,19521 ----
   The first character is either blank,
   a '*' for message marked Important, or a '+' indicating a message
   addressed directly to you (as opposed to your having received it via a
@@ -193,8 +193,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   &quot;<A HREF="h_config_mark_for_cc"><!--#echo var="FEAT_mark-for-cc"--></A>&quot;
   is set, if the first character would have been
 ***************
-*** 33443,33448 ****
---- 33456,33483 ----
+*** 34089,34094 ****
+--- 34102,34129 ----
   &lt;End of help on this topic&gt;
   </BODY>
   </HTML>
@@ -224,7 +224,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   <HTML>
   <HEAD>
 ***************
-*** 33452,33458 ****
+*** 34098,34104 ****
   <H1>FEATURE: <!--#echo var="FEAT_mark-for-cc"--></H1>
   
   This feature affects Alpine's MESSAGE INDEX display.
@@ -232,7 +232,7 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   message is addressed directly to you.
   When this feature is set and the message is not addressed to you, then a
   '-' character is displayed if the message is instead Cc'd directly
---- 33487,33493 ----
+--- 34133,34139 ----
   <H1>FEATURE: <!--#echo var="FEAT_mark-for-cc"--></H1>
   
   This feature affects Alpine's MESSAGE INDEX display.
@@ -240,9 +240,9 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.tome/pith/pine.hlp
   message is addressed directly to you.
   When this feature is set and the message is not addressed to you, then a
   '-' character is displayed if the message is instead Cc'd directly
-diff -rc alpine-2.20/pith/thread.c alpine-2.20.tome/pith/thread.c
-*** alpine-2.20/pith/thread.c	2015-01-07 22:53:20.679657382 -0700
---- alpine-2.20.tome/pith/thread.c	2015-01-07 23:19:43.554610367 -0700
+diff -rc alpine-2.21/pith/thread.c alpine-2.21.tome/pith/thread.c
+*** alpine-2.21/pith/thread.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.tome/pith/thread.c	Sun Feb  5 16:15:31 2017
 ***************
 *** 1210,1216 ****
   /*

@@ -1,8 +1,8 @@
-diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
-*** alpine-2.20/alpine/send.c	2015-01-07 22:53:20.561657029 -0700
---- alpine-2.20.fromheader/alpine/send.c	2015-01-07 23:15:58.563052655 -0700
+diff -rc alpine-2.21/alpine/send.c alpine-2.21.fromheader/alpine/send.c
+*** alpine-2.21/alpine/send.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.fromheader/alpine/send.c	Sun Feb  5 16:15:24 2017
 ***************
-*** 912,918 ****
+*** 913,919 ****
      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, KS_NONE},
     {"From    : ",  "From",        h_composer_from,       10, 0, NULL,
      build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
@@ -10,7 +10,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
     {"Reply-To: ",  "Reply To",    h_composer_reply_to,   10, 0, NULL,
      build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
      0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, KS_TOADDRBOOK},
---- 912,918 ----
+--- 913,919 ----
      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, KS_NONE},
     {"From    : ",  "From",        h_composer_from,       10, 0, NULL,
      build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
@@ -19,8 +19,8 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
      build_address, NULL, NULL, addr_book_compose,    "To AddrBk", NULL, abook_nickname_complete,
      0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, KS_TOADDRBOOK},
 ***************
-*** 2305,2310 ****
---- 2305,2315 ----
+*** 2367,2372 ****
+--- 2367,2377 ----
   			he->rich_header = 0;
   		    }
   		}
@@ -33,7 +33,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
   		he_from			= he;
   		break;
 ***************
-*** 3042,3048 ****
+*** 3104,3110 ****
   	if(outgoing->return_path)
   	  mail_free_address(&outgoing->return_path);
   
@@ -41,7 +41,7 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
   
   	/*
   	 * Don't ever believe the sender that is there.
---- 3047,3055 ----
+--- 3109,3117 ----
   	if(outgoing->return_path)
   	  mail_free_address(&outgoing->return_path);
   
@@ -51,12 +51,12 @@ diff -rc alpine-2.20/alpine/send.c alpine-2.20.fromheader/alpine/send.c
   
   	/*
   	 * Don't ever believe the sender that is there.
-diff -rc alpine-2.20/pith/conf.c alpine-2.20.fromheader/pith/conf.c
-*** alpine-2.20/pith/conf.c	2015-01-07 22:53:20.676657373 -0700
---- alpine-2.20.fromheader/pith/conf.c	2015-01-07 23:15:58.564052657 -0700
+diff -rc alpine-2.21/pith/conf.c alpine-2.21.fromheader/pith/conf.c
+*** alpine-2.21/pith/conf.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.fromheader/pith/conf.c	Sun Feb  5 16:15:24 2017
 ***************
-*** 2851,2856 ****
---- 2851,2858 ----
+*** 2884,2889 ****
+--- 2884,2891 ----
   	 F_NO_FCC_ATTACH, h_config_no_fcc_attach, PREF_SEND, 0},
   	{"fcc-on-bounce", "Include Fcc When Bouncing Messages",
   	 F_FCC_ON_BOUNCE, h_config_fcc_on_bounce, PREF_SEND, 0},
@@ -65,12 +65,12 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.fromheader/pith/conf.c
   	{"mark-fcc-seen", NULL,
   	 F_MARK_FCC_SEEN, h_config_mark_fcc_seen, PREF_SEND, 0},
   	{"fcc-only-without-confirm", "Send to Fcc Only Without Confirming",
-diff -rc alpine-2.20/pith/conftype.h alpine-2.20.fromheader/pith/conftype.h
-*** alpine-2.20/pith/conftype.h	2015-01-07 22:53:20.677657376 -0700
---- alpine-2.20.fromheader/pith/conftype.h	2015-01-07 23:15:58.565052660 -0700
+diff -rc alpine-2.21/pith/conftype.h alpine-2.21.fromheader/pith/conftype.h
+*** alpine-2.21/pith/conftype.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.fromheader/pith/conftype.h	Sun Feb  5 16:15:24 2017
 ***************
-*** 394,399 ****
---- 394,400 ----
+*** 399,404 ****
+--- 399,405 ----
   	F_AUTO_REPLY_TO,
   	F_VERBOSE_POST,
   	F_FCC_ON_BOUNCE,
@@ -78,12 +78,12 @@ diff -rc alpine-2.20/pith/conftype.h alpine-2.20.fromheader/pith/conftype.h
   	F_SEND_WO_CONFIRM,
   	F_USE_SENDER_NOT_X,
   	F_BLANK_KEYMENU,
-diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.fromheader/pith/pine.hlp
-*** alpine-2.20/pith/pine.hlp	2015-01-07 22:53:20.683657394 -0700
---- alpine-2.20.fromheader/pith/pine.hlp	2015-01-07 23:15:58.571052674 -0700
+diff -rc alpine-2.21/pith/pine.hlp alpine-2.21.fromheader/pith/pine.hlp
+*** alpine-2.21/pith/pine.hlp	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.fromheader/pith/pine.hlp	Sun Feb  5 16:15:24 2017
 ***************
-*** 28416,28421 ****
---- 28416,28437 ----
+*** 28940,28945 ****
+--- 28940,28961 ----
   &lt;End of help on this topic&gt;
   </BODY>
   </HTML>
@@ -106,9 +106,9 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.fromheader/pith/pine.hlp
   ====== h_config_use_sender_not_x =====
   <HTML>
   <HEAD>
-diff -rc alpine-2.20/pith/send.c alpine-2.20.fromheader/pith/send.c
-*** alpine-2.20/pith/send.c	2015-01-07 22:53:20.675657370 -0700
---- alpine-2.20.fromheader/pith/send.c	2015-01-07 23:15:58.572052677 -0700
+diff -rc alpine-2.21/pith/send.c alpine-2.21.fromheader/pith/send.c
+*** alpine-2.21/pith/send.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.fromheader/pith/send.c	Sun Feb  5 16:15:24 2017
 ***************
 *** 53,59 ****
   /* name::type::canedit::writehdr::localcopy::rcptto */
@@ -143,9 +143,9 @@ diff -rc alpine-2.20/pith/send.c alpine-2.20.fromheader/pith/send.c
   	pf->rcptto      = pf_template[i].rcptto;
   	pf->writehdr    = pf_template[i].writehdr;
   	pf->localcopy   = pf_template[i].localcopy;
-diff -rc alpine-2.20/pith/send.h alpine-2.20.fromheader/pith/send.h
-*** alpine-2.20/pith/send.h	2015-01-07 22:53:20.679657382 -0700
---- alpine-2.20.fromheader/pith/send.h	2015-01-07 23:15:58.572052677 -0700
+diff -rc alpine-2.21/pith/send.h alpine-2.21.fromheader/pith/send.h
+*** alpine-2.21/pith/send.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.fromheader/pith/send.h	Sun Feb  5 16:15:24 2017
 ***************
 *** 159,164 ****
 --- 159,166 ----

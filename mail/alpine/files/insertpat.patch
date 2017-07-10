@@ -1,9 +1,9 @@
-diff -rc alpine-2.20/pico/display.c alpine-2.20.insertpat/pico/display.c
-*** alpine-2.20/pico/display.c	2015-01-07 22:53:20.664657337 -0700
---- alpine-2.20.insertpat/pico/display.c	2015-01-07 23:16:45.867168871 -0700
+diff -rc alpine-2.21/pico/display.c alpine-2.21.insertpat/pico/display.c
+*** alpine-2.21/pico/display.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.insertpat/pico/display.c	Sun Feb  5 16:15:26 2017
 ***************
-*** 1760,1765 ****
---- 1760,1777 ----
+*** 2205,2210 ****
+--- 2205,2222 ----
   
   	    continue;
   
@@ -22,12 +22,12 @@ diff -rc alpine-2.20/pico/display.c alpine-2.20.insertpat/pico/display.c
   	  case (CTRL|'G') :			/* CTRL-G help		*/
   	    if(term.t_mrow == 0 && km_popped == 0){
   		movecursor(term.t_nrow-2, 0);
-diff -rc alpine-2.20/pico/search.c alpine-2.20.insertpat/pico/search.c
-*** alpine-2.20/pico/search.c	2015-01-07 22:53:20.664657337 -0700
---- alpine-2.20.insertpat/pico/search.c	2015-01-07 23:16:45.868168874 -0700
+diff -rc alpine-2.21/pico/search.c alpine-2.21.insertpat/pico/search.c
+*** alpine-2.21/pico/search.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.insertpat/pico/search.c	Sun Feb  5 16:15:26 2017
 ***************
-*** 81,86 ****
---- 81,90 ----
+*** 122,127 ****
+--- 122,131 ----
   N_("~        Hitting only ~R~e~t~u~r~n or at the prompt will cause the"),
   N_("        search to be made with the default value."),
   "  ",

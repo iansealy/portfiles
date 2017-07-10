@@ -1,9 +1,164 @@
-diff -rc alpine-2.20/alpine/alpine.c alpine-2.20.maildir/alpine/alpine.c
-*** alpine-2.20/alpine/alpine.c	2015-01-11 22:12:25.464178246 -0700
---- alpine-2.20.maildir/alpine/alpine.c	2015-01-20 20:37:55.697011675 -0700
+diff -rc alpine-2.21/README.maildir alpine-2.21.maildir/README.maildir
+*** alpine-2.21/README.maildir	Sun Feb  5 16:15:21 2017
+--- alpine-2.21.maildir/README.maildir	Sun Feb  5 16:15:21 2017
 ***************
-*** 560,565 ****
---- 560,570 ----
+*** 0 ****
+--- 1,149 ----
++ ---------------------------------------
++ 
++ Maildir Driver for Alpine 2.0
++ By Eduardo Chappa 
++ <chappa@gmx.com>
++ 
++ ---------------------------------------
++ 1. General Information About This Patch
++ ---------------------------------------
++ 
++ This patch adds support for the maildir format to Alpine. We take the 
++ approach that this patch is one more driver among the number of formats 
++ supported by Alpine (more generally c-client). This approach differs from 
++ older versions of similar patches, in that once a maildir patch was 
++ applied, it was assumed that all your folders would be created in the 
++ maildir format. 
++ 
++ This patch does not assume that maildir is a preferred format, instead 
++ puts maildir in equal footing with other formats (mbox, mbx, mix, etc), 
++ and so a maildir folder in the mail/ collection is treated in the same way 
++ as any other folder in any other format. In other words, just by reading 
++ the name of a folder, or opening it, or doing any operation with it, you 
++ can not know in which format the folder is.
++ 
++ This implies that if you want to add a folder in the maildir format to the 
++ mail/ collection, then you must add by pressing "A" in the folder list 
++ collection and enter "#driver.md/mail/name_maildir_folder".
++ 
++ If you only want to use maildir, however, you can do so too. In this case, 
++ you must create a maildir collection. In that collection, only maildir 
++ folders will be listed. If there is any folder in any other format, that 
++ folder will be ignored. In another words, any folder listed there is in 
++ maildir format and can be accessed through that collection, conversely, 
++ any folder not listed there is not in maildir format and there is no way 
++ to access it using this collection.
++ 
++ In order to create a maildir collection, you could press M S L, and "A" to 
++ add a collection. Fill in the required fields as follows:
++ 
++ Nickname  : Anything
++ Server    :
++ Path      : #md/relative/path/to/maildir/collection/
++ View      :
++ 
++ For example, if "path" is set to "#md/mail/", then Alpine will look for your 
++ maildir folders that are in ~/mail/.
++ 
++ The code in this patch is mostly based in code for the unix driver plus 
++ some combinations of the mh, mbx and nntp drivers for the c-client 
++ library. Those drivers were designed by Mark Crispin, and bugs in this 
++ code are not his bugs, but my own.
++ 
++   I got all the specification for this patch from 
++ http://cr.yp.to/proto/maildir.html. If you know of a place with a better 
++ specification for maildir format please let me know. The method this patch 
++ uses to create a unique filename for a message is one of the "old 
++ fashioned" methods. I realize that this is old fashioned, but it is 
++ portable, and portability is the main reason why I decided to use an old 
++ fashioned method (most methods are not portable. See the word 
++ "Unfortunately" in that document).
++ 
++ --------------
++ 2. Other Goals
++ --------------
++ 
++   It is intended that this code will work well with any application 
++ written using the c-client library. Of paramount importance is to make the 
++ associated imap server work well when the server accesses a folder in 
++ Maildir format. The program mailutil should also work flawlessly with this 
++ implemetation of the driver.
++ 
++   It is intended that this driver be fast and stable. We intend not to 
++ patch Alpine to make this driver do its work, unless such patching is for 
++ fixing bugs in Alpine or to pass parameters to the driver.
++ 
++ ------------------------------------------------------------------------ 
++ 3. What are the known bugs of this implementation of the Maildir driver? 
++ ------------------------------------------------------------------------
++ 
++   I don't know any at this time. There have been bugs before, though, but 
++ I try to fix bugs as soon as they are reported. 
++ 
++ ----------
++ 4. On UIDs
++ ----------
++ 
++  This patch keeps uids in the name of the file that contains the message, 
++ by adding a ",u=" string to the file name to save the uid of a message. A 
++ file is kept between sessions to save information on the last uid assigned 
++ and its time of validity. Only one session with writing access can write 
++ uids, all others must wait for the other session to assign them. The 
++ session assigning uids creates a ".uidtemp" file which other sessions must 
++ not disturb.
++ 
++   Uid support appeared in Alpine 1.00 (snapshot 925), and is experimental,
++ please report any problems.
++ 
++ ----------------------------------------------
++ 5. Configuring Alpine and Setting up a Maildir 
++ ----------------------------------------------
++ 
++ Once this approach was chosen, it implied the following:
++ 
++     * This patch assumes that your INBOX is located at "$HOME/Maildir".  
++       This is a directory which should have three subdirectories "cur", 
++       "tmp" and "new". Mail is delivered to 'new' and read from 'cur'. I 
++       have added a configuration option "maildir-location" which can be 
++       used to tell Alpine where your Maildir inbox is, in case your system 
++       does not use the above directory (e.g. your system may use 
++       "~/.maildir"). In this case define that variable to be the name of 
++       the directory where your e-mail is being delivered (e.g.  
++       ".maildir").
++ 
++     * If you want to use the above configuration as your inbox, you must 
++       define your inbox-path as "#md/inbox" (no quotes).  You can define 
++       the inbox-path like above even if you have changed the 
++       maildir-location variable. That's the whole point of that variable.
++ 
++ -------------------------------------------
++ 6. What about Courier/Dovecot file systems?
++ -------------------------------------------
++ 
++ In a courier file system all folders are subfolders of a root folder 
++ called INBOX. Normally INBOX is located at ~/Maildir and subfolders are 
++ "dot" directories in ~/Maildir. For example ~/Maildir/.Trash is a 
++ subfolder of INBOX and is accessed with the nickname "INBOX.Trash".
++ 
++ You can not access folders in this way unless you preceed them with the 
++ string "#mc/". The purpose of the string "#mc/" is to warn Alpine that a 
++ collection in the Courier format is going to be accessed. Therefore, you 
++ can SELECT a folder like "#mc/INBOX.Trash", but not "INBOX.Trash"
++ 
++ You can access a collection through a server, but if you want to access a 
++ collection of folders created using the Courier server, you MUST edit your
++ ".pinerc" file and enter the definition of the collection as follows:
++ 
++ folder-collections="Anything you want" #mc/INBOX.[]
++ 
++ You can replace the string "#mc/INBOX." by something different, for example
++ "#mc/Courier/." will make Alpine search for your collection in ~/Courier.
++ 
++ You can not add this setting directly into Alpine because Alpine fails to 
++ accept this value from its input, but it takes it correctly when it is 
++ added through the ".pinerc" file.
++ 
++ You can access your inbox as "#mc/INBOX" or "#md/INBOX". Both definitions 
++ point to the same place.
++ 
++ Last Updated May 28, 2011
+diff -rc alpine-2.21/alpine/alpine.c alpine-2.21.maildir/alpine/alpine.c
+*** alpine-2.21/alpine/alpine.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/alpine/alpine.c	Sun Feb  5 16:15:20 2017
+***************
+*** 576,581 ****
+--- 576,586 ----
       if(F_ON(F_MAILDROPS_PRESERVE_STATE, ps_global))
         mail_parameters(NULL, SET_SNARFPRESERVE, (void *) TRUE);
   
@@ -15,12 +170,12 @@ diff -rc alpine-2.20/alpine/alpine.c alpine-2.20.maildir/alpine/alpine.c
       rvl = 0L;
       if(pine_state->VAR_NNTPRANGE){
   	if(!SVAR_NNTPRANGE(pine_state, rvl, tmp_20k_buf, SIZEOF_20KBUF))
-diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.maildir/alpine/confscroll.c
-*** alpine-2.20/alpine/confscroll.c	2015-01-11 22:12:25.464178246 -0700
---- alpine-2.20.maildir/alpine/confscroll.c	2015-01-20 20:37:55.723011676 -0700
+diff -rc alpine-2.21/alpine/confscroll.c alpine-2.21.maildir/alpine/confscroll.c
+*** alpine-2.21/alpine/confscroll.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/alpine/confscroll.c	Sun Feb  5 16:15:20 2017
 ***************
-*** 5519,5524 ****
---- 5519,5530 ----
+*** 5545,5550 ****
+--- 5545,5556 ----
   			  (void *)var->current_val.p);
       }
   #endif
@@ -33,283 +188,29 @@ diff -rc alpine-2.20/alpine/confscroll.c alpine-2.20.maildir/alpine/confscroll.c
       else if(revert && standard_radio_var(ps, var)){
   
   	cur_rule_value(var, TRUE, FALSE);
-diff -rc alpine-2.20/alpine/Makefile alpine-2.20.maildir/alpine/Makefile
-*** alpine-2.20/alpine/Makefile	2015-01-18 00:00:55.293703107 -0700
---- alpine-2.20.maildir/alpine/Makefile	2015-01-20 20:38:26.573015636 -0700
+diff -rc alpine-2.21/imap/src/c-client/mail.c alpine-2.21.maildir/imap/src/c-client/mail.c
+*** alpine-2.21/imap/src/c-client/mail.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/imap/src/c-client/mail.c	Sun Feb  5 16:15:20 2017
 ***************
-*** 247,261 ****
-      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-    done; \
-    reldir="$$dir2"
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = `cat ../c-client/LDFLAGS`
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 247,261 ----
-      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-    done; \
-    reldir="$$dir2"
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = `cat ../c-client/LDFLAGS`
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 266,272 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 266,272 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 297,303 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 297,303 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 309,315 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 309,315 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 353,362 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/alpine
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/alpine
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 353,362 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/alpine
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/alpine
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 388,394 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 388,394 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/alpine/osdep/Makefile alpine-2.20.maildir/alpine/osdep/Makefile
-*** alpine-2.20/alpine/osdep/Makefile	2015-01-18 00:00:55.270703006 -0700
---- alpine-2.20.maildir/alpine/osdep/Makefile	2015-01-20 20:38:26.540015628 -0700
-***************
-*** 192,206 ****
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 192,206 ----
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 211,217 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 211,217 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 242,248 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 242,248 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 254,260 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 254,260 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 298,307 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/alpine/osdep
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/alpine/osdep
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 298,307 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/alpine/osdep
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/alpine/osdep
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 333,339 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 333,339 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/imap/src/c-client/mail.c alpine-2.20.maildir/imap/src/c-client/mail.c
-*** alpine-2.20/imap/src/c-client/mail.c	2015-01-11 22:12:25.521178518 -0700
---- alpine-2.20.maildir/imap/src/c-client/mail.c	2015-01-20 20:37:55.798011677 -0700
-***************
-*** 1011,1017 ****
+*** 1017,1023 ****
     MAILSTREAM *ts;
     char *s,*t,tmp[MAILTMPLEN];
     size_t i;
 !   DRIVER *d;
   				/* never allow names with newlines */
-    if (s = strpbrk (mailbox,"\015\012")) {
+    if ((s = strpbrk (mailbox,"\015\012")) != NULL) {
       MM_LOG ("Can't create mailbox with such a name",ERROR);
---- 1011,1017 ----
+--- 1017,1023 ----
     MAILSTREAM *ts;
     char *s,*t,tmp[MAILTMPLEN];
     size_t i;
 !   DRIVER *d, *md;
   				/* never allow names with newlines */
-    if (s = strpbrk (mailbox,"\015\012")) {
+    if ((s = strpbrk (mailbox,"\015\012")) != NULL) {
       MM_LOG ("Can't create mailbox with such a name",ERROR);
 ***************
-*** 1035,1040 ****
---- 1035,1042 ----
+*** 1041,1046 ****
+--- 1041,1048 ----
       return NIL;
     }
   
@@ -319,8 +220,8 @@ diff -rc alpine-2.20/imap/src/c-client/mail.c alpine-2.20.maildir/imap/src/c-cli
     if ((mailbox[0] == '#') && ((mailbox[1] == 'd') || (mailbox[1] == 'D')) &&
         ((mailbox[2] == 'r') || (mailbox[2] == 'R')) &&
 ***************
-*** 1065,1070 ****
---- 1067,1079 ----
+*** 1071,1076 ****
+--- 1073,1085 ----
   	   (((*mailbox == '{') || (*mailbox == '#')) &&
   	    (stream = mail_open (NIL,mailbox,OP_PROTOTYPE | OP_SILENT))))
       d = stream->dtb;
@@ -334,12 +235,12 @@ diff -rc alpine-2.20/imap/src/c-client/mail.c alpine-2.20.maildir/imap/src/c-cli
     else if ((*mailbox != '{') && (ts = default_proto (NIL))) d = ts->dtb;
     else {			/* failed utterly */
       sprintf (tmp,"Can't create mailbox %.80s: indeterminate format",mailbox);
-diff -rc alpine-2.20/imap/src/c-client/mail.h alpine-2.20.maildir/imap/src/c-client/mail.h
-*** alpine-2.20/imap/src/c-client/mail.h	2015-01-11 22:12:25.520178513 -0700
---- alpine-2.20.maildir/imap/src/c-client/mail.h	2015-01-20 20:37:55.804011677 -0700
+diff -rc alpine-2.21/imap/src/c-client/mail.h alpine-2.21.maildir/imap/src/c-client/mail.h
+*** alpine-2.21/imap/src/c-client/mail.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/imap/src/c-client/mail.h	Sun Feb  5 16:15:20 2017
 ***************
-*** 354,359 ****
---- 354,363 ----
+*** 366,371 ****
+--- 366,375 ----
   #define SET_SCANCONTENTS (long) 573
   #define GET_MHALLOWINBOX (long) 574
   #define SET_MHALLOWINBOX (long) 575
@@ -350,9 +251,80 @@ diff -rc alpine-2.20/imap/src/c-client/mail.h alpine-2.20.maildir/imap/src/c-cli
   
   /* Driver flags */
   
-diff -rc alpine-2.20/imap/src/osdep/unix/dummy.c alpine-2.20.maildir/imap/src/osdep/unix/dummy.c
-*** alpine-2.20/imap/src/osdep/unix/dummy.c	2015-01-11 22:12:25.504178437 -0700
---- alpine-2.20.maildir/imap/src/osdep/unix/dummy.c	2015-01-20 20:37:55.833011678 -0700
+diff -rc alpine-2.21/imap/src/osdep/unix/Makefile alpine-2.21.maildir/imap/src/osdep/unix/Makefile
+*** alpine-2.21/imap/src/osdep/unix/Makefile	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/imap/src/osdep/unix/Makefile	Sun Feb  5 16:15:20 2017
+***************
+*** 147,153 ****
+  # However, mh needs to be before any sysinbox formats (such as mmdf or unix)
+  # since otherwise INBOX won't work correctly when mh_allow_inbox is set.
+  #
+! DEFAULTDRIVERS=imap nntp pop3 mix mx mbx tenex mtx mh mmdf unix news phile
+  CHUNKSIZE=65536
+  
+  # Normally no need to change any of these
+--- 147,153 ----
+  # However, mh needs to be before any sysinbox formats (such as mmdf or unix)
+  # since otherwise INBOX won't work correctly when mh_allow_inbox is set.
+  #
+! DEFAULTDRIVERS=maildir courier imap nntp pop3 mix mx mbx tenex mtx mh mmdf unix news phile
+  CHUNKSIZE=65536
+  
+  # Normally no need to change any of these
+***************
+*** 156,162 ****
+  BINARIES=osdep.o mail.o misc.o newsrc.o smanager.o utf8.o utf8aux.o siglocal.o \
+   dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
+   rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
+!  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o mix.o
+  CFLAGS=-g
+  
+  CAT=cat
+--- 156,162 ----
+  BINARIES=osdep.o mail.o misc.o newsrc.o smanager.o utf8.o utf8aux.o siglocal.o \
+   dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
+   rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
+!  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o mix.o maildir.o
+  CFLAGS=-g
+  
+  CAT=cat
+***************
+*** 293,299 ****
+  
+  cyg:	# Cygwin - note that most local file drivers don't work!!
+  	$(BUILD) `$(CAT) SPECIALS` OS=$@ \
+! 	DEFAULTDRIVERS="imap nntp pop3 mbx unix phile" \
+  	SIGTYPE=psx CHECKPW=cyg LOGINPW=cyg CRXTYPE=std \
+  	SPOOLDIR=/var \
+  	ACTIVEFILE=/usr/local/news/lib/active \
+--- 293,299 ----
+  
+  cyg:	# Cygwin - note that most local file drivers don't work!!
+  	$(BUILD) `$(CAT) SPECIALS` OS=$@ \
+! 	DEFAULTDRIVERS="imap nntp pop3 mbx unix maildir phile" \
+  	SIGTYPE=psx CHECKPW=cyg LOGINPW=cyg CRXTYPE=std \
+  	SPOOLDIR=/var \
+  	ACTIVEFILE=/usr/local/news/lib/active \
+***************
+*** 911,917 ****
+  unix.o: mail.h misc.h osdep.h unix.h pseudo.h dummy.h
+  utf8.o: mail.h misc.h osdep.h utf8.h tmap.c widths.c
+  utf8aux.o: mail.h misc.h osdep.h utf8.h
+! 
+  
+  # OS-dependent
+  
+--- 911,917 ----
+  unix.o: mail.h misc.h osdep.h unix.h pseudo.h dummy.h
+  utf8.o: mail.h misc.h osdep.h utf8.h tmap.c widths.c
+  utf8aux.o: mail.h misc.h osdep.h utf8.h
+! maildir.o: mail.h misc.h osdep.h maildir.h dummy.h
+  
+  # OS-dependent
+  
+diff -rc alpine-2.21/imap/src/osdep/unix/dummy.c alpine-2.21.maildir/imap/src/osdep/unix/dummy.c
+*** alpine-2.21/imap/src/osdep/unix/dummy.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/imap/src/osdep/unix/dummy.c	Sun Feb  5 16:15:20 2017
 ***************
 *** 103,115 ****
    * Accepts: mailbox name
@@ -507,17 +479,17 @@ diff -rc alpine-2.20/imap/src/osdep/unix/dummy.c alpine-2.20.maildir/imap/src/os
     return T;			/* return success */
   }
   
-diff -rc alpine-2.20/imap/src/osdep/unix/maildir.c alpine-2.20.maildir/imap/src/osdep/unix/maildir.c
-*** alpine-2.20/imap/src/osdep/unix/maildir.c	2015-02-03 22:28:22.632016232 -0700
---- alpine-2.20.maildir/imap/src/osdep/unix/maildir.c	2015-01-21 20:06:56.462383814 -0700
+diff -rc alpine-2.21/imap/src/osdep/unix/maildir.c alpine-2.21.maildir/imap/src/osdep/unix/maildir.c
+*** alpine-2.21/imap/src/osdep/unix/maildir.c	Sun Feb  5 16:15:21 2017
+--- alpine-2.21.maildir/imap/src/osdep/unix/maildir.c	Sun Feb  5 16:15:20 2017
 ***************
 *** 0 ****
---- 1,2682 ----
+--- 1,2671 ----
 + /*
 +  * Maildir driver for Alpine 2.20
 +  * 
 +  * Written by Eduardo Chappa <chappa@gmx.com>
-+  * Last Update: January 21, 2015
++  * Last Update: June 10, 2014
 +  *
 +  */
 + 
@@ -2138,18 +2110,7 @@ diff -rc alpine-2.20/imap/src/osdep/unix/maildir.c alpine-2.20.maildir/imap/src/
 + 	if (strcmp(d->d_name, ".") && strcmp(d->d_name,"..")
 + 		&& (!strcmp(d->d_name, MDDIR)
 + 			|| !strncmp(d->d_name, MDUIDLAST, strlen(MDUIDLAST))
-+ 			|| !strncmp(d->d_name, MDUIDTEMP, strlen(MDUIDTEMP))
-+ 			|| !strcmp(d->d_name,  "courierimapacl")
-+ 			|| !strcmp(d->d_name,  "courierimapuiddb")
-+ 			|| !strcmp(d->d_name,  "dovecot.index")
-+ 			|| !strcmp(d->d_name,  "dovecot.index.cache")
-+ 			|| !strcmp(d->d_name,  "dovecot-keywords")
-+ 			|| !strcmp(d->d_name,  "dovecot-uidlist")
-+ 			|| !strcmp(d->d_name,  "subscriptions")
-+ 			|| !strcmp(d->d_name,  "maildirfolder")
-+ 			|| !strncmp(d->d_name, "dovecot.index.log", 17)
-+ 			|| !strncmp(d->d_name, "dovecot.mailbox.log", 19)
-+ 			|| !strncmp(d->d_name, "dovecot-uidvalidity", 19))){
++ 			|| !strncmp(d->d_name, MDUIDTEMP, strlen(MDUIDTEMP)))){
 + 	   if(strcmp(d->d_name, MDDIR) == 0)
 + 	      mddir++;
 + 	   snprintf(tmp, sizeof(tmp), "%s/%s", realname, d->d_name);
@@ -3195,9 +3156,9 @@ diff -rc alpine-2.20/imap/src/osdep/unix/maildir.c alpine-2.20.maildir/imap/src/
 +       LOCAL->uidtempfile = cpystr(tmp);
 +   }
 + }
-diff -rc alpine-2.20/imap/src/osdep/unix/maildir.h alpine-2.20.maildir/imap/src/osdep/unix/maildir.h
-*** alpine-2.20/imap/src/osdep/unix/maildir.h	2015-02-03 22:28:22.633016235 -0700
---- alpine-2.20.maildir/imap/src/osdep/unix/maildir.h	2015-01-20 20:37:55.836011678 -0700
+diff -rc alpine-2.21/imap/src/osdep/unix/maildir.h alpine-2.21.maildir/imap/src/osdep/unix/maildir.h
+*** alpine-2.21/imap/src/osdep/unix/maildir.h	Sun Feb  5 16:15:21 2017
+--- alpine-2.21.maildir/imap/src/osdep/unix/maildir.h	Sun Feb  5 16:15:20 2017
 ***************
 *** 0 ****
 --- 1,226 ----
@@ -3427,80 +3388,9 @@ diff -rc alpine-2.20/imap/src/osdep/unix/maildir.h alpine-2.20.maildir/imap/src/
 + void maildir_assign_uid(MAILSTREAM *stream, unsigned long msgno, unsigned long uid);
 + void maildir_uid_renew_tempfile(MAILSTREAM *stream);
 + 
-diff -rc alpine-2.20/imap/src/osdep/unix/Makefile alpine-2.20.maildir/imap/src/osdep/unix/Makefile
-*** alpine-2.20/imap/src/osdep/unix/Makefile	2015-01-11 22:12:25.505178442 -0700
---- alpine-2.20.maildir/imap/src/osdep/unix/Makefile	2015-01-20 20:37:55.849011678 -0700
-***************
-*** 147,153 ****
-  # However, mh needs to be before any sysinbox formats (such as mmdf or unix)
-  # since otherwise INBOX won't work correctly when mh_allow_inbox is set.
-  #
-! DEFAULTDRIVERS=imap nntp pop3 mix mx mbx tenex mtx mh mmdf unix news phile
-  CHUNKSIZE=65536
-  
-  # Normally no need to change any of these
---- 147,153 ----
-  # However, mh needs to be before any sysinbox formats (such as mmdf or unix)
-  # since otherwise INBOX won't work correctly when mh_allow_inbox is set.
-  #
-! DEFAULTDRIVERS=maildir courier imap nntp pop3 mix mx mbx tenex mtx mh mmdf unix news phile
-  CHUNKSIZE=65536
-  
-  # Normally no need to change any of these
-***************
-*** 156,162 ****
-  BINARIES=osdep.o mail.o misc.o newsrc.o smanager.o utf8.o utf8aux.o siglocal.o \
-   dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
-   rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
-!  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o mix.o
-  CFLAGS=-g
-  
-  CAT=cat
---- 156,162 ----
-  BINARIES=osdep.o mail.o misc.o newsrc.o smanager.o utf8.o utf8aux.o siglocal.o \
-   dummy.o pseudo.o netmsg.o flstring.o fdstring.o \
-   rfc822.o nntp.o smtp.o imap4r1.o pop3.o \
-!  unix.o mbx.o mmdf.o tenex.o mtx.o news.o phile.o mh.o mx.o mix.o maildir.o
-  CFLAGS=-g
-  
-  CAT=cat
-***************
-*** 293,299 ****
-  
-  cyg:	# Cygwin - note that most local file drivers don't work!!
-  	$(BUILD) `$(CAT) SPECIALS` OS=$@ \
-! 	DEFAULTDRIVERS="imap nntp pop3 mbx unix phile" \
-  	SIGTYPE=psx CHECKPW=cyg LOGINPW=cyg CRXTYPE=std \
-  	SPOOLDIR=/var \
-  	ACTIVEFILE=/usr/local/news/lib/active \
---- 293,299 ----
-  
-  cyg:	# Cygwin - note that most local file drivers don't work!!
-  	$(BUILD) `$(CAT) SPECIALS` OS=$@ \
-! 	DEFAULTDRIVERS="imap nntp pop3 mbx unix maildir phile" \
-  	SIGTYPE=psx CHECKPW=cyg LOGINPW=cyg CRXTYPE=std \
-  	SPOOLDIR=/var \
-  	ACTIVEFILE=/usr/local/news/lib/active \
-***************
-*** 911,917 ****
-  unix.o: mail.h misc.h osdep.h unix.h pseudo.h dummy.h
-  utf8.o: mail.h misc.h osdep.h utf8.h tmap.c widths.c
-  utf8aux.o: mail.h misc.h osdep.h utf8.h
-! 
-  
-  # OS-dependent
-  
---- 911,917 ----
-  unix.o: mail.h misc.h osdep.h unix.h pseudo.h dummy.h
-  utf8.o: mail.h misc.h osdep.h utf8.h tmap.c widths.c
-  utf8aux.o: mail.h misc.h osdep.h utf8.h
-! maildir.o: mail.h misc.h osdep.h maildir.h dummy.h
-  
-  # OS-dependent
-  
-diff -rc alpine-2.20/imap/src/osdep/unix/os_cyg.h alpine-2.20.maildir/imap/src/osdep/unix/os_cyg.h
-*** alpine-2.20/imap/src/osdep/unix/os_cyg.h	2015-01-11 22:12:25.506178446 -0700
---- alpine-2.20.maildir/imap/src/osdep/unix/os_cyg.h	2015-01-20 20:37:55.850011678 -0700
+diff -rc alpine-2.21/imap/src/osdep/unix/os_cyg.h alpine-2.21.maildir/imap/src/osdep/unix/os_cyg.h
+*** alpine-2.21/imap/src/osdep/unix/os_cyg.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/imap/src/osdep/unix/os_cyg.h	Sun Feb  5 16:15:20 2017
 ***************
 *** 47,52 ****
 --- 47,53 ----
@@ -3511,430 +3401,12 @@ diff -rc alpine-2.20/imap/src/osdep/unix/os_cyg.h alpine-2.20.maildir/imap/src/o
   #define geteuid Geteuid
   uid_t Geteuid (void);
   
-diff -rc alpine-2.20/include/config.h alpine-2.20.maildir/include/config.h
-*** alpine-2.20/include/config.h	2015-01-18 00:00:55.367703433 -0700
---- alpine-2.20.maildir/include/config.h	2015-01-20 20:38:26.764015680 -0700
+diff -rc alpine-2.21/pith/conf.c alpine-2.21.maildir/pith/conf.c
+*** alpine-2.21/pith/conf.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/conf.c	Sun Feb  5 16:15:20 2017
 ***************
-*** 148,154 ****
-  /* #undef ENABLE_DMALLOC */
-  
-  /* Enable LDAP query support */
-! /* #undef ENABLE_LDAP */
-  
-  /* Define to 1 if translation of program messages to the user's native
-     language is requested. */
---- 148,154 ----
-  /* #undef ENABLE_DMALLOC */
-  
-  /* Enable LDAP query support */
-! #define ENABLE_LDAP /**/
-  
-  /* Define to 1 if translation of program messages to the user's native
-     language is requested. */
-***************
-*** 474,480 ****
-  #define KEYBOARD_LOCK /**/
-  
-  /* Define if you use OpenLDAP 2.3.x deprecated functions */
-! /* #undef LDAP_DEPRECATED */
-  
-  /* Define to the sub-directory in which libtool stores uninstalled libraries.
-     */
---- 474,480 ----
-  #define KEYBOARD_LOCK /**/
-  
-  /* Define if you use OpenLDAP 2.3.x deprecated functions */
-! #define LDAP_DEPRECATED 1
-  
-  /* Define to the sub-directory in which libtool stores uninstalled libraries.
-     */
-diff -rc alpine-2.20/pico/Makefile alpine-2.20.maildir/pico/Makefile
-*** alpine-2.20/pico/Makefile	2015-01-18 00:00:55.257702949 -0700
---- alpine-2.20.maildir/pico/Makefile	2015-01-20 20:38:26.513015622 -0700
-***************
-*** 246,260 ****
-      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-    done; \
-    reldir="$$dir2"
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 246,260 ----
-      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-    done; \
-    reldir="$$dir2"
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 265,271 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 265,271 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 296,302 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 296,302 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 308,314 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 308,314 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 352,361 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pico
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pico
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 352,361 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pico
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pico
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 387,393 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 387,393 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/pico/osdep/Makefile alpine-2.20.maildir/pico/osdep/Makefile
-*** alpine-2.20/pico/osdep/Makefile	2015-01-18 00:00:55.235702852 -0700
---- alpine-2.20.maildir/pico/osdep/Makefile	2015-01-20 20:38:26.454015609 -0700
-***************
-*** 193,207 ****
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 193,207 ----
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 212,218 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 212,218 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 243,249 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 243,249 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 255,261 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 255,261 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 299,308 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pico/osdep
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pico/osdep
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 299,308 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pico/osdep
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pico/osdep
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 334,340 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 334,340 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/pith/charconv/Makefile alpine-2.20.maildir/pith/charconv/Makefile
-*** alpine-2.20/pith/charconv/Makefile	2015-01-18 00:00:55.204702716 -0700
---- alpine-2.20.maildir/pith/charconv/Makefile	2015-01-20 20:38:26.367015589 -0700
-***************
-*** 188,202 ****
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 188,202 ----
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 207,213 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 207,213 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 238,244 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 238,244 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 250,256 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 250,256 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 294,303 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pith/charconv
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pith/charconv
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 294,303 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pith/charconv
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pith/charconv
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 329,335 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 329,335 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
-*** alpine-2.20/pith/conf.c	2015-01-11 22:12:25.578178790 -0700
---- alpine-2.20.maildir/pith/conf.c	2015-01-20 20:37:55.862011679 -0700
-***************
-*** 432,437 ****
---- 432,440 ----
+*** 438,443 ****
+--- 438,446 ----
   
   CONF_TXT_T cf_text_newsrc_path[] =		"Full path and name of NEWSRC file";
   
@@ -3945,8 +3417,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
   /*----------------------------------------------------------------------
   These are the variables that control a number of pine functions.  They
 ***************
-*** 634,639 ****
---- 637,646 ----
+*** 644,649 ****
+--- 647,656 ----
   	NULL,			cf_text_news_active},
   {"news-spool-directory",		0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0,
   	NULL,			cf_text_news_spooldir},
@@ -3958,8 +3430,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
   	NULL,			cf_text_upload_cmd},
   {"upload-command-prefix",		0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0,
 ***************
-*** 2270,2275 ****
---- 2277,2288 ----
+*** 2301,2306 ****
+--- 2308,2319 ----
         mail_parameters(NULL, SET_NEWSSPOOL,
   		      (void *)VAR_NEWS_SPOOL_DIR);
   
@@ -3973,8 +3445,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
       set_current_val(&vars[V_DEFAULT_SAVE_FOLDER], TRUE, TRUE);
       if(!VAR_DEFAULT_SAVE_FOLDER || !VAR_DEFAULT_SAVE_FOLDER[0])
 ***************
-*** 2897,2902 ****
---- 2910,2919 ----
+*** 2930,2935 ****
+--- 2943,2952 ----
   	 F_SORT_DEFAULT_SAVE_ALPHA, h_config_sort_save_alpha, PREF_FLDR, 0},
   	{"vertical-folder-list", "Use Vertical Folder List",
   	 F_VERTICAL_FOLDER_LIST, h_config_vertical_list, PREF_FLDR, 0},
@@ -3986,7 +3458,7 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
   /* Addr book */
   	{"combined-addrbook-display", "Combined Address Book Display",
 ***************
-*** 7018,7024 ****
+*** 7036,7042 ****
   	       int just_flip_value, EditWhich ew)
   {
       char      **vp, *p, **lval, ***alval;
@@ -3994,7 +3466,7 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
       char       *err;
       long	l;
   
---- 7035,7041 ----
+--- 7053,7059 ----
   	       int just_flip_value, EditWhich ew)
   {
       char      **vp, *p, **lval, ***alval;
@@ -4003,8 +3475,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
       long	l;
   
 ***************
-*** 7071,7076 ****
---- 7088,7100 ----
+*** 7089,7094 ****
+--- 7106,7118 ----
   
   	break;
   
@@ -4019,8 +3491,8 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
         case F_DATES_TO_LOCAL :
   	clear_index_cache(ps->mail_stream, 0);
 ***************
-*** 7854,7859 ****
---- 7878,7887 ----
+*** 7877,7882 ****
+--- 7901,7910 ----
   	return(h_config_newmailwidth);
         case V_NEWSRC_PATH :
   	return(h_config_newsrc_path);
@@ -4030,13 +3502,13 @@ diff -rc alpine-2.20/pith/conf.c alpine-2.20.maildir/pith/conf.c
 + #endif
         case V_BROWSER :
   	return(h_config_browser);
-  #if defined(DOS) || defined(OS2)
-diff -rc alpine-2.20/pith/conf.h alpine-2.20.maildir/pith/conf.h
-*** alpine-2.20/pith/conf.h	2015-01-11 22:12:25.578178790 -0700
---- alpine-2.20.maildir/pith/conf.h	2015-01-20 20:37:55.873011679 -0700
+        case V_HISTORY :
+diff -rc alpine-2.21/pith/conf.h alpine-2.21.maildir/pith/conf.h
+*** alpine-2.21/pith/conf.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/conf.h	Sun Feb  5 16:15:20 2017
 ***************
-*** 252,257 ****
---- 252,261 ----
+*** 256,261 ****
+--- 256,265 ----
   #define GLO_NEWS_ACTIVE_PATH	     vars[V_NEWS_ACTIVE_PATH].global_val.p
   #define VAR_NEWS_SPOOL_DIR	     vars[V_NEWS_SPOOL_DIR].current_val.p
   #define GLO_NEWS_SPOOL_DIR	     vars[V_NEWS_SPOOL_DIR].global_val.p
@@ -4047,12 +3519,12 @@ diff -rc alpine-2.20/pith/conf.h alpine-2.20.maildir/pith/conf.h
   #define VAR_DISABLE_DRIVERS	     vars[V_DISABLE_DRIVERS].current_val.l
   #define VAR_DISABLE_AUTHS	     vars[V_DISABLE_AUTHS].current_val.l
   #define VAR_REMOTE_ABOOK_METADATA    vars[V_REMOTE_ABOOK_METADATA].current_val.p
-diff -rc alpine-2.20/pith/conftype.h alpine-2.20.maildir/pith/conftype.h
-*** alpine-2.20/pith/conftype.h	2015-01-11 22:12:25.579178794 -0700
---- alpine-2.20.maildir/pith/conftype.h	2015-01-20 20:37:55.879011679 -0700
+diff -rc alpine-2.21/pith/conftype.h alpine-2.21.maildir/pith/conftype.h
+*** alpine-2.21/pith/conftype.h	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/conftype.h	Sun Feb  5 16:15:20 2017
 ***************
-*** 116,121 ****
---- 116,124 ----
+*** 119,124 ****
+--- 119,127 ----
   		, V_NEWSRC_PATH
   		, V_NEWS_ACTIVE_PATH
   		, V_NEWS_SPOOL_DIR
@@ -4063,8 +3535,8 @@ diff -rc alpine-2.20/pith/conftype.h alpine-2.20.maildir/pith/conftype.h
   		, V_UPLOAD_CMD_PREFIX
   		, V_DOWNLOAD_CMD
 ***************
-*** 390,395 ****
---- 393,401 ----
+*** 395,400 ****
+--- 398,406 ----
   	F_PASS_C1_CONTROL_CHARS,
   	F_SINGLE_FOLDER_LIST,
   	F_VERTICAL_FOLDER_LIST,
@@ -4074,9 +3546,9 @@ diff -rc alpine-2.20/pith/conftype.h alpine-2.20.maildir/pith/conftype.h
   	F_TAB_CHK_RECENT,
   	F_AUTO_REPLY_TO,
   	F_VERBOSE_POST,
-diff -rc alpine-2.20/pith/init.c alpine-2.20.maildir/pith/init.c
-*** alpine-2.20/pith/init.c	2015-01-11 22:12:25.583178813 -0700
---- alpine-2.20.maildir/pith/init.c	2015-01-20 20:37:55.880011679 -0700
+diff -rc alpine-2.21/pith/init.c alpine-2.21.maildir/pith/init.c
+*** alpine-2.21/pith/init.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/init.c	Sun Feb  5 16:15:20 2017
 ***************
 *** 408,413 ****
 --- 408,416 ----
@@ -4089,263 +3561,9 @@ diff -rc alpine-2.20/pith/init.c alpine-2.20.maildir/pith/init.c
              && strcmp(filename, folder_base)){
   #endif
   #endif
-diff -rc alpine-2.20/pith/Makefile alpine-2.20.maildir/pith/Makefile
-*** alpine-2.20/pith/Makefile	2015-01-18 00:00:55.223702799 -0700
---- alpine-2.20.maildir/pith/Makefile	2015-01-20 20:38:26.399015596 -0700
-***************
-*** 260,274 ****
-      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-    done; \
-    reldir="$$dir2"
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 260,274 ----
-      dir1=`echo "$$dir1" | sed -e "$$sed_rest"`; \
-    done; \
-    reldir="$$dir2"
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 279,285 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 279,285 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 310,316 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 310,316 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 322,328 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 322,328 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 366,375 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pith
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pith
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 366,375 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pith
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pith
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 401,407 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 401,407 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/pith/osdep/Makefile alpine-2.20.maildir/pith/osdep/Makefile
-*** alpine-2.20/pith/osdep/Makefile	2015-01-18 00:00:55.190702654 -0700
---- alpine-2.20.maildir/pith/osdep/Makefile	2015-01-20 20:38:26.350015585 -0700
-***************
-*** 195,209 ****
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 195,209 ----
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = 
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 214,220 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 214,220 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 245,251 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 245,251 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 257,263 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 257,263 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 301,310 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pith/osdep
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/pith/osdep
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 301,310 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pith/osdep
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/pith/osdep
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 336,342 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 336,342 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-diff -rc alpine-2.20/pith/pattern.c alpine-2.20.maildir/pith/pattern.c
-*** alpine-2.20/pith/pattern.c	2015-01-11 22:12:25.579178794 -0700
---- alpine-2.20.maildir/pith/pattern.c	2015-01-20 20:37:55.897011679 -0700
+diff -rc alpine-2.21/pith/pattern.c alpine-2.21.maildir/pith/pattern.c
+*** alpine-2.21/pith/pattern.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/pattern.c	Sun Feb  5 16:15:20 2017
 ***************
 *** 49,55 ****
   #include "../pith/icache.h"
@@ -4433,12 +3651,12 @@ diff -rc alpine-2.20/pith/pattern.c alpine-2.20.maildir/pith/pattern.c
       return(buf[0] != '\0');
   }
   
-diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.maildir/pith/pine.hlp
-*** alpine-2.20/pith/pine.hlp	2015-01-11 22:12:25.584178818 -0700
---- alpine-2.20.maildir/pith/pine.hlp	2015-01-20 20:37:55.946011680 -0700
+diff -rc alpine-2.21/pith/pine.hlp alpine-2.21.maildir/pith/pine.hlp
+*** alpine-2.21/pith/pine.hlp	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/pine.hlp	Sun Feb  5 16:15:21 2017
 ***************
-*** 21891,21896 ****
---- 21891,21992 ----
+*** 22364,22369 ****
+--- 22364,22465 ----
   &lt;End of help on this topic&gt;
   </BODY>
   </HTML>
@@ -4542,8 +3760,8 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.maildir/pith/pine.hlp
   <HTML>
   <HEAD>
 ***************
-*** 29841,29846 ****
---- 29937,29985 ----
+*** 30446,30451 ****
+--- 30542,30590 ----
   <P>
   &lt;End of help on this topic&gt;
   </BODY>
@@ -4593,9 +3811,9 @@ diff -rc alpine-2.20/pith/pine.hlp alpine-2.20.maildir/pith/pine.hlp
   </HTML>
   ====== h_config_verbose_post =====
   <HTML>
-diff -rc alpine-2.20/pith/send.c alpine-2.20.maildir/pith/send.c
-*** alpine-2.20/pith/send.c	2015-01-11 22:12:25.577178785 -0700
---- alpine-2.20.maildir/pith/send.c	2015-01-20 20:37:55.963011681 -0700
+diff -rc alpine-2.21/pith/send.c alpine-2.21.maildir/pith/send.c
+*** alpine-2.21/pith/send.c	Sun Feb  5 16:02:36 2017
+--- alpine-2.21.maildir/pith/send.c	Sun Feb  5 16:15:21 2017
 ***************
 *** 47,52 ****
 --- 47,55 ----
@@ -4624,304 +3842,3 @@ diff -rc alpine-2.20/pith/send.c alpine-2.20.maildir/pith/send.c
   	if(!(IS_REMOTE(tmp) || is_absolute_path(tmp))){
   	    /*
   	     * The mbox is relative to the home directory.
-diff -rc alpine-2.20/README.maildir alpine-2.20.maildir/README.maildir
-*** alpine-2.20/README.maildir	2015-02-03 22:28:22.634016237 -0700
---- alpine-2.20.maildir/README.maildir	2015-01-20 20:37:55.963011681 -0700
-***************
-*** 0 ****
---- 1,149 ----
-+ ---------------------------------------
-+ 
-+ Maildir Driver for Alpine 2.0
-+ By Eduardo Chappa 
-+ <chappa@gmx.com>
-+ 
-+ ---------------------------------------
-+ 1. General Information About This Patch
-+ ---------------------------------------
-+ 
-+ This patch adds support for the maildir format to Alpine. We take the 
-+ approach that this patch is one more driver among the number of formats 
-+ supported by Alpine (more generally c-client). This approach differs from 
-+ older versions of similar patches, in that once a maildir patch was 
-+ applied, it was assumed that all your folders would be created in the 
-+ maildir format. 
-+ 
-+ This patch does not assume that maildir is a preferred format, instead 
-+ puts maildir in equal footing with other formats (mbox, mbx, mix, etc), 
-+ and so a maildir folder in the mail/ collection is treated in the same way 
-+ as any other folder in any other format. In other words, just by reading 
-+ the name of a folder, or opening it, or doing any operation with it, you 
-+ can not know in which format the folder is.
-+ 
-+ This implies that if you want to add a folder in the maildir format to the 
-+ mail/ collection, then you must add by pressing "A" in the folder list 
-+ collection and enter "#driver.md/mail/name_maildir_folder".
-+ 
-+ If you only want to use maildir, however, you can do so too. In this case, 
-+ you must create a maildir collection. In that collection, only maildir 
-+ folders will be listed. If there is any folder in any other format, that 
-+ folder will be ignored. In another words, any folder listed there is in 
-+ maildir format and can be accessed through that collection, conversely, 
-+ any folder not listed there is not in maildir format and there is no way 
-+ to access it using this collection.
-+ 
-+ In order to create a maildir collection, you could press M S L, and "A" to 
-+ add a collection. Fill in the required fields as follows:
-+ 
-+ Nickname  : Anything
-+ Server    :
-+ Path      : #md/relative/path/to/maildir/collection/
-+ View      :
-+ 
-+ For example, if "path" is set to "#md/mail/", then Alpine will look for your 
-+ maildir folders that are in ~/mail/.
-+ 
-+ The code in this patch is mostly based in code for the unix driver plus 
-+ some combinations of the mh, mbx and nntp drivers for the c-client 
-+ library. Those drivers were designed by Mark Crispin, and bugs in this 
-+ code are not his bugs, but my own.
-+ 
-+   I got all the specification for this patch from 
-+ http://cr.yp.to/proto/maildir.html. If you know of a place with a better 
-+ specification for maildir format please let me know. The method this patch 
-+ uses to create a unique filename for a message is one of the "old 
-+ fashioned" methods. I realize that this is old fashioned, but it is 
-+ portable, and portability is the main reason why I decided to use an old 
-+ fashioned method (most methods are not portable. See the word 
-+ "Unfortunately" in that document).
-+ 
-+ --------------
-+ 2. Other Goals
-+ --------------
-+ 
-+   It is intended that this code will work well with any application 
-+ written using the c-client library. Of paramount importance is to make the 
-+ associated imap server work well when the server accesses a folder in 
-+ Maildir format. The program mailutil should also work flawlessly with this 
-+ implemetation of the driver.
-+ 
-+   It is intended that this driver be fast and stable. We intend not to 
-+ patch Alpine to make this driver do its work, unless such patching is for 
-+ fixing bugs in Alpine or to pass parameters to the driver.
-+ 
-+ ------------------------------------------------------------------------ 
-+ 3. What are the known bugs of this implementation of the Maildir driver? 
-+ ------------------------------------------------------------------------
-+ 
-+   I don't know any at this time. There have been bugs before, though, but 
-+ I try to fix bugs as soon as they are reported. 
-+ 
-+ ----------
-+ 4. On UIDs
-+ ----------
-+ 
-+  This patch keeps uids in the name of the file that contains the message, 
-+ by adding a ",u=" string to the file name to save the uid of a message. A 
-+ file is kept between sessions to save information on the last uid assigned 
-+ and its time of validity. Only one session with writing access can write 
-+ uids, all others must wait for the other session to assign them. The 
-+ session assigning uids creates a ".uidtemp" file which other sessions must 
-+ not disturb.
-+ 
-+   Uid support appeared in Alpine 1.00 (snapshot 925), and is experimental,
-+ please report any problems.
-+ 
-+ ----------------------------------------------
-+ 5. Configuring Alpine and Setting up a Maildir 
-+ ----------------------------------------------
-+ 
-+ Once this approach was chosen, it implied the following:
-+ 
-+     * This patch assumes that your INBOX is located at "$HOME/Maildir".  
-+       This is a directory which should have three subdirectories "cur", 
-+       "tmp" and "new". Mail is delivered to 'new' and read from 'cur'. I 
-+       have added a configuration option "maildir-location" which can be 
-+       used to tell Alpine where your Maildir inbox is, in case your system 
-+       does not use the above directory (e.g. your system may use 
-+       "~/.maildir"). In this case define that variable to be the name of 
-+       the directory where your e-mail is being delivered (e.g.  
-+       ".maildir").
-+ 
-+     * If you want to use the above configuration as your inbox, you must 
-+       define your inbox-path as "#md/inbox" (no quotes).  You can define 
-+       the inbox-path like above even if you have changed the 
-+       maildir-location variable. That's the whole point of that variable.
-+ 
-+ -------------------------------------------
-+ 6. What about Courier/Dovecot file systems?
-+ -------------------------------------------
-+ 
-+ In a courier file system all folders are subfolders of a root folder 
-+ called INBOX. Normally INBOX is located at ~/Maildir and subfolders are 
-+ "dot" directories in ~/Maildir. For example ~/Maildir/.Trash is a 
-+ subfolder of INBOX and is accessed with the nickname "INBOX.Trash".
-+ 
-+ You can not access folders in this way unless you preceed them with the 
-+ string "#mc/". The purpose of the string "#mc/" is to warn Alpine that a 
-+ collection in the Courier format is going to be accessed. Therefore, you 
-+ can SELECT a folder like "#mc/INBOX.Trash", but not "INBOX.Trash"
-+ 
-+ You can access a collection through a server, but if you want to access a 
-+ collection of folders created using the Courier server, you MUST edit your
-+ ".pinerc" file and enter the definition of the collection as follows:
-+ 
-+ folder-collections="Anything you want" #mc/INBOX.[]
-+ 
-+ You can replace the string "#mc/INBOX." by something different, for example
-+ "#mc/Courier/." will make Alpine search for your collection in ~/Courier.
-+ 
-+ You can not add this setting directly into Alpine because Alpine fails to 
-+ accept this value from its input, but it takes it correctly when it is 
-+ added through the ".pinerc" file.
-+ 
-+ You can access your inbox as "#mc/INBOX" or "#md/INBOX". Both definitions 
-+ point to the same place.
-+ 
-+ Last Updated May 28, 2011
-diff -rc alpine-2.20/web/src/alpined.d/Makefile alpine-2.20.maildir/web/src/alpined.d/Makefile
-*** alpine-2.20/web/src/alpined.d/Makefile	2015-01-18 00:00:55.339703310 -0700
---- alpine-2.20.maildir/web/src/alpined.d/Makefile	2015-01-20 20:38:26.693015664 -0700
-***************
-*** 235,249 ****
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = `cat ../../../c-client/LDFLAGS`
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
---- 235,249 ----
-  ETAGS = etags
-  CTAGS = ctags
-  DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-! ACLOCAL = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing aclocal-1.13
-  AMTAR = $${TAR-tar}
-  AM_CFLAGS =  -g -pthread
-  AM_DEFAULT_VERBOSITY = 1
-  AM_LDFLAGS = `cat ../../../c-client/LDFLAGS`
-  AR = /usr/bin/ar
-! AUTOCONF = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoconf
-! AUTOHEADER = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing autoheader
-! AUTOMAKE = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing automake-1.13
-  AWK = gawk
-  CC = gcc -std=gnu99
-  CCDEPMODE = depmode=gcc3
-***************
-*** 254,260 ****
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
---- 254,260 ----
-  CYGPATH_W = echo
-  C_CLIENT_CFLAGS = EXTRACFLAGS=" -DTLSV1_2 -I/usr/include/openssl  -g"
-  C_CLIENT_GCCOPTLEVEL = GCCOPTLEVEL="-O0"
-! C_CLIENT_LDFLAGS = EXTRALDFLAGS=" -L/usr/lib   -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5"
-  C_CLIENT_SPECIALS = SSLINCLUDE=/usr/include/openssl SSLLIB=/usr/lib SSLDIR=/etc/ssl SSLCERTS=/etc/ssl/certs SSLKEYS=/etc/ssl/private EXTRAAUTHENTICATORS=gss 
-  C_CLIENT_TARGET = lsu
-  C_CLIENT_WITH_IPV6 = touch imap/ip6
-***************
-*** 285,291 ****
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lcrypto -lssl -ldl  -ltinfo -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
---- 285,291 ----
-  LIBICONV = -liconv
-  LIBINTL = 
-  LIBOBJS = 
-! LIBS =  -ltcl8.6 -lgssapi_krb5 -lpam -lldap -lcrypto -lssl -ldl  -ltinfo -llber -lpam -lkrb5
-  LIBTOOL = $(SHELL) $(top_builddir)/libtool
-  LIBTOOL_DEPS = ./ltmain.sh
-  LIPO = 
-***************
-*** 297,303 ****
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
---- 297,303 ----
-  LTLIBOBJS = 
-  MAINT = #
-  MAKE = /usr/bin/make
-! MAKEINFO = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/missing makeinfo
-  MANIFEST_TOOL = :
-  MKDIR_P = /usr/bin/mkdir -p
-  MSGFMT = /usr/bin/msgfmt
-***************
-*** 341,350 ****
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/web/src/alpined.d
-! abs_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/web/src/alpined.d
-! abs_top_builddir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-! abs_top_srcdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
---- 341,350 ----
-  WEB_PUBCOOKIE_LINK = 
-  XGETTEXT = /usr/bin/xgettext
-  XGETTEXT_015 = /usr/bin/xgettext
-! abs_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/web/src/alpined.d
-! abs_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/web/src/alpined.d
-! abs_top_builddir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-! abs_top_srcdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir
-  ac_ct_AR = ar
-  ac_ct_CC = gcc
-  ac_ct_DUMPBIN = 
-***************
-*** 376,382 ****
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
---- 376,382 ----
-  htmldir = ${docdir}
-  includedir = ${prefix}/include
-  infodir = ${datarootdir}/info
-! install_sh = ${SHELL} /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/install-sh
-  libdir = ${exec_prefix}/lib
-  libexecdir = ${exec_prefix}/libexec
-  localedir = ${datadir}/locale
-***************
-*** 399,406 ****
-  
-  # This is because alpined, libwpcomm and friends are
-  # not intended for system-wide consumption
-! locbindir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/web/src/alpined.d/../../bin
-! loclibdir = /home/echappa/backup/011115.0/public_html/alpine/release/src/alpine-2.20/web/src/alpined.d/../../lib
-  alpined_SOURCES = alpined.c busy.c color.c imap.c ldap.c remote.c \
-  		  signal.c debug.c status.c stubs.c \
-  		  alpined.h color.h ldap.h
---- 399,406 ----
-  
-  # This is because alpined, libwpcomm and friends are
-  # not intended for system-wide consumption
-! locbindir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/web/src/alpined.d/../../bin
-! loclibdir = /home/echappa/backup/011115.0/alpine/alpine-2.20.maildir/web/src/alpined.d/../../lib
-  alpined_SOURCES = alpined.c busy.c color.c imap.c ldap.c remote.c \
-  		  signal.c debug.c status.c stubs.c \
-  		  alpined.h color.h ldap.h
