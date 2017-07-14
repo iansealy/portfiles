@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla 6.009
+perl5.setup         Dist-Zilla 6.010
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Dist::Zilla - distribution builder
 long_description    Dist::Zilla builds distributions of code to be uploaded \
                     to the CPAN.
 
-checksums           rmd160 c50ee07a3a7d8af9efee1e6236f5859b9abf377b \
-                    sha256 61a3aba976a857598c129128809452ca694b7bbe1fe315929556ce2afe0a1d9d
+checksums           rmd160 72eaea9dd9a382de768344ad78e64c9037af9344 \
+                    sha256 90977cd6055cc2af603abc499c17b94cacab22c6b47c3b51637cb2a7e0a10424
 
 if {${perl5.major} != ""} {
     depends_build-append \
