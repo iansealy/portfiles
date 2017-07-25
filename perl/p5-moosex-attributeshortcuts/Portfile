@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         MooseX-AttributeShortcuts 0.032
+perl5.setup         MooseX-AttributeShortcuts 0.033
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,17 +17,19 @@ description         MooseX::AttributeShortcuts - Shorthand for common attribute 
 long_description    This package causes an attribute trait to be applied to \
                     all attributes defined to the using class.
 
-checksums           rmd160 0ba7f07d0053678757d39df1fd56ce234504b634 \
-                    sha256 0c5e3e39c83ee8857279d56e0f50096b6c2cab71da5db7199dea8461412eac28
+checksums           rmd160 13f64e92f0ebe360310826d9e811cf5f5d20201f \
+                    sha256 3bc349d50bff1fbd78d493449e83d6685a5afc82c75c7f3da206a715eff1257a
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-moose \
+                    port:p${perl5.major}-moosex-semiaffordanceaccessor \
                     port:p${perl5.major}-moosex-types-path-class \
                     port:p${perl5.major}-path-class \
                     port:p${perl5.major}-test-checkdeps \
                     port:p${perl5.major}-test-fatal \
-                    port:p${perl5.major}-test-moose-more
+                    port:p${perl5.major}-test-moose-more \
+                    port:p${perl5.major}-test-requires
     depends_lib-append \
                     port:p${perl5.major}-aliased \
                     port:p${perl5.major}-moose \
