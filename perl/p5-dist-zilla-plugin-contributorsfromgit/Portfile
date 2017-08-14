@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-ContributorsFromGit 0.017
+perl5.setup         Dist-Zilla-Plugin-ContributorsFromGit 0.018
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,13 +19,14 @@ long_description    This plugin makes it easy to acknowledge the \
                     with the unique list of all git commit authors reachable \
                     from the current HEAD.
 
-checksums           rmd160 bdd8a1b04148edf57673fcdf37c5761806bce429 \
-                    sha256 175f3c9f333a467d80be457b49045f453e84109fa1d79a6158fb5ccae41a5385
+checksums           rmd160 75c6be7c1e0b35833eca3c712cefc3d4c747d3c5 \
+                    sha256 0b7ba5a3aeb4248a8efb361ba51a4ed548d9e3d559a3df29b2d39acd72e23bb3
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-file-chdir \
+                    port:p${perl5.major}-io-tty \
                     port:p${perl5.major}-test-checkdeps \
                     port:p${perl5.major}-test-file-sharedir \
                     port:p${perl5.major}-test-moose-more \
