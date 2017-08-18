@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Data-DPath 0.56
+perl5.setup         Data-DPath 0.57
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    With this module you can address points in a \
                     keys, array indexes or some wildcard-like steps. It is \
                     inspired by XPath but differs from it.
 
-checksums           rmd160 b6f91400123731732fa8f3b58e0ae424f5274b41 \
-                    sha256 8545692027c3040a9a12ea606753b25345d25915ec05cb6aa1d47a6fd559f3a4
+checksums           rmd160 1a6b6e5cbeaa2209889d99d24da6f9708ec8d40d \
+                    sha256 73f85d44d9b783fb65672a0bf66ea9ea53ae08cf170006539a191aaeb4d2cf5d
 
 if {${perl5.major} != ""} {
     depends_build-append \
