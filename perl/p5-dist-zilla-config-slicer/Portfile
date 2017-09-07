@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Config-Slicer 0.201
+perl5.setup         Dist-Zilla-Config-Slicer 0.202
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,8 +18,8 @@ long_description    This is a subclass of Config::MVP::Slicer that overrides \
                     the default match_package to expand packages according \
                     to Dist::Zilla's rules.
 
-checksums           rmd160 42652e479b21ebf3c48865d440b037ad9a32e8a8 \
-                    sha256 6b1b34fc31a5280be19ac97819eb1cf58f26821c908deee21b84b416e6c52897
+checksums           rmd160 df1fa145aa4713820593cee69a74a95f55ce1411 \
+                    sha256 afa2472f9e381e9b205811959bbf716f75b4cd75656287396361444c970ac558
 
 if {${perl5.major} != ""} {
     depends_build-append \
