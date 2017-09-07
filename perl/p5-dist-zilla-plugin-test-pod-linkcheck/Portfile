@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-Test-Pod-LinkCheck 1.003
+perl5.setup         Dist-Zilla-Plugin-Test-Pod-LinkCheck 1.004
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         Dist::Zilla::Plugin::Test::Pod::LinkCheck - Add release test
 
 long_description    ${description}
 
-checksums           rmd160 c95cff0866caf3fe585e4de124230f63a41af2ed \
-                    sha256 b3b7b24372e742005cb21c1d10af380b1ba934304caa48b6c9d3c9e6fb88f46d
+checksums           rmd160 9c9aec4e7b8151ce081f242c1b5f0b1f14bef8a0 \
+                    sha256 325d236da0940388d2aa86ec5c1326516b4ad45adef8e7a4f83bb91d5ee15490
 
 if {${perl5.major} != ""} {
     depends_lib-append \
