@@ -1,0 +1,26 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id$
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.22 5.24
+perl5.setup         Text-Fuzzy 0.27
+#perl5.setup         Text-Fuzzy 0.27 ../by-authors/id/B/BK/BKB
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Text::Fuzzy (no description available)
+
+long_description    ${description}
+
+checksums           rmd160 70579c3a5e9201df531ecb7c4ae17ebb7df8589f \
+                    sha256 91e7dd458850ce0a68df201228abf25b28494244b537310621a334a4cb28ca68
+
+
