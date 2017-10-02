@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-MakeMaker-Awesome 0.38
+perl5.setup         Dist-Zilla-Plugin-MakeMaker-Awesome 0.39
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         Dist::Zilla::Plugin::MakeMaker::Awesome - A more awesome Mak
 
 long_description    ${description}
 
-checksums           rmd160 fe1fcc5d5f4a27b8623be28dc56a61450936f4cc \
-                    sha256 55200e8db5d72a4273bd146b78c8d9d9459ef580a0ba972f0a5b12182f999691
+checksums           rmd160 d28afcce5b2d45db301e718991e4388b6c852287 \
+                    sha256 a314b50fb968bcb032871fe7b3ea8c4011ae5628ddcc9df429fbf80057ee5840
 
 if {${perl5.major} != ""} {
     depends_build-append \
