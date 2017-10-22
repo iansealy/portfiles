@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         ExtUtils-CppGuess 0.11
+perl5.setup         ExtUtils-CppGuess 0.12
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,8 +18,8 @@ long_description    ExtUtils::CppGuess attempts to guess the system's C++ \
                     compiler that is compatible with the C compiler that \
                     your perl was built with.
 
-checksums           rmd160 529a5107f0b7a6ed7f76ffef12aebb44572a9ac9 \
-                    sha256 c70ce0d29476d76d9dea310850a270721e312eb79eb9bfd0a842c510b2855273
+checksums           rmd160 a4d56292a4ae6dc1a0f74369d7433595d6c615bf \
+                    sha256 31c47b5b15e3e9fd5ae7b35881a0fffd26a2983b241e7e3a1bc340d6d446186b
 
 if {${perl5.major} != ""} {
     depends_build-append \
