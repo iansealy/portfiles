@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Software-License 0.103012 ../by-authors/id/R/RJ/RJBS
+perl5.setup         Software-License 0.103013 ../by-authors/id/L/LE/LEONT
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         Software::License - packages that provide templated software
 
 long_description    ${description}
 
-checksums           rmd160 56940e0f5b106786226cc2e256d5b397902d2fea \
-                    sha256 47f9acb7f4eeed35e38c1bec37a71b61e651965233d67dadfae6390571517db1
+checksums           rmd160 03adb0c29881e5697304ce58c25c58456650adc6 \
+                    sha256 2641d937390f43b08fa31c419713cd96a2f0bf160be04cab322631daf6810ff3
 
 if {${perl5.major} != ""} {
     depends_build-append \
