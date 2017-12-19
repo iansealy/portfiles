@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Dist-Zilla-Plugin-Test-PodSpelling 2.007004
+perl5.setup         Dist-Zilla-Plugin-Test-PodSpelling 2.007005
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,8 @@ description         Dist::Zilla::Plugin::Test::PodSpelling - Author tests for PO
 
 long_description    ${description}
 
-checksums           rmd160 42e8dcb5d03cb76015f38f4830e7199b24cd05e5 \
-                    sha256 43448eefc95bb27b7af670fec408949fdba0627a1274033ba65553d5b76c19d1
+checksums           rmd160 5c277e032210112bbab3b490f84f3653c486494d \
+                    sha256 719fadf05144ffe8c08bb4b8f442bf1ca9d5651fa4d2846370ca88e67a540c11
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -27,8 +27,7 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-test-deep \
                     port:p${perl5.major}-test-fatal \
-                    port:p${perl5.major}-test-needs \
-                    port:p${perl5.major}-test-script
+                    port:p${perl5.major}-test-needs
     depends_lib-append \
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-moose \
