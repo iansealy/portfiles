@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Module-ExtractUse 0.341
+perl5.setup         Module-ExtractUse 0.342
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    Module::ExtractUse is basically a Parse::RecDescent \
                     all modules (whether pragmas, Core, or from CPAN) used \
                     by the parsed code.
 
-checksums           rmd160 9ea55a28af60bf88db640461f399224747d2b411 \
-                    sha256 9b0df07eaa28229da6667538ff114ecab37560f474f807b2a1476700e77106d8
+checksums           rmd160 1a63de7fe0dd568716e047d93c20f72ea3e0537a \
+                    sha256 5d295d4c86f716f3db268964b2f6a5f06531d07eadcd3ff8a82d07f6c98fe61b
 
 if {${perl5.major} != ""} {
     depends_build-append \
