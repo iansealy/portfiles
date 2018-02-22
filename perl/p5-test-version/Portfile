@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Test-Version 2.05
+perl5.setup         Test-Version 2.07
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,8 @@ description         Test::Version - Check to see that version's in modules are s
 long_description    This module's goal is to be a one stop shop for checking \
                     to see that your versions across your dist are sane.
 
-checksums           rmd160 b617e6fa7599f5c65fd89c1ceb59bad113681c79 \
-                    sha256 39c0ec02663da0e56962bdafaef6790cf83d12b4d90e8a4cdc971d57d869d63f
+checksums           rmd160 69af2871c2f502fbf7dd467f3ee896981fdeb48f \
+                    sha256 eae8b758395d6b23d4ce3109b055663379b9970fb8f81e5803d145dbc5ccdbac
 
 if {${perl5.major} != ""} {
     depends_build-append \
