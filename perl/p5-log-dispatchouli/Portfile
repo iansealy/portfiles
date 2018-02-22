@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.24
-perl5.setup         Log-Dispatchouli 2.014
+perl5.setup         Log-Dispatchouli 2.016
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,8 +19,8 @@ long_description    Log::Dispatchouli is a thin layer above Log::Dispatch \
                     program without having to think much about categories, \
                     facilities, levels, or things like that.
 
-checksums           rmd160 69857ffc6c39a5c8530b45a3e0686c964d32e536 \
-                    sha256 2745025483f735d67f97535b3b9953d1aef6613c7a836391f247c79cab2b0166
+checksums           rmd160 d65e4e2148cdcabded720d412fc19505b9e32786 \
+                    sha256 7f2a1a1854fd1e4ed02883bc21f5395f4244a266b661276b438d1bdd50bdacf7
 
 if {${perl5.major} != ""} {
     depends_build-append \
