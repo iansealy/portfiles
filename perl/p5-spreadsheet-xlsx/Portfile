@@ -5,19 +5,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Spreadsheet-XLSX 0.15
-#perl5.setup         Spreadsheet-XLSX 0.15 ../by-authors/id/M/MI/MIKEB
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Spreadsheet::XLSX (no description available)
+description         Spreadsheet::XLSX - Perl extension for reading MS Excel 2007 files
 
-long_description    ${description}
+long_description    This module is a (quick and dirty) emulation of \
+                    Spreadsheet::ParseExcel for Excel 2007 (.xlsx) file \
+                    format.
 
 checksums           rmd160  d8fcf42592ba29daa3c5d1f7e20c48bf25e6095a \
                     sha256  253e90ca3136abb1306ecdee37c910b01c3e6030e49569204f9a39342df5d641 \
@@ -29,5 +28,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-spreadsheet-parseexcel \
                     port:p${perl5.major}-test-nowarnings
 }
-
-
