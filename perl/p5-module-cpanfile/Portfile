@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.26
-perl5.setup         Module-CPANfile 1.1002
+perl5.setup         Module-CPANfile 1.1004
 
 platforms           darwin
 maintainers         nomaintainer
@@ -18,5 +18,11 @@ long_description    Module::CPANfile is a tool to handle cpanfile format to \
                     load application specific dependencies, not just for \
                     CPAN distributions.
 
-checksums           rmd160 4f3bf0853e4ceefd6f3016fa7780d506ff0ce8a1 \
-                    sha256 bf95c25b4c5c22ec045cff61557bc693bc062e4714615ebbbafe4070f4d53cfd
+checksums           rmd160  f984b14f225484b450be769afd67270b63b630d7 \
+                    sha256  88efbe2e9a642dceaa186430fedfcf999aaf0e06f6cced28a714b8e56b514921 \
+                    size    22989
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-file-pushd
+}
