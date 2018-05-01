@@ -4,11 +4,13 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.26
-perl5.setup         Bio-DB-HTS 2.10
+perl5.setup         Bio-DB-HTS 2.11
 
 platforms           darwin
 maintainers         nomaintainer
 license             Apache-2
+
+#supported_archs     noarch
 
 description         Bio::DB::HTS - Read files using HTSlib including BAM/CRAM, Tabix and BCF database files
 
@@ -20,8 +22,9 @@ long_description    This module provides a Perl interface to the HTSlib \
                     also provides callback functionality for calling SNPs and \
                     performing other base-by-base functions.
 
-checksums           rmd160 671ccaced822f164130abd5e3f87b86432726ae4 \
-                    sha256 f00194a2e27a261c0044c21c8011186c1850f59ea51baa25ee8b4f7310bdc7fa
+checksums           rmd160  e388532e11df909a34ebb9c3744fa2abeae8324c \
+                    sha256  1893bfb3ad5c67623609a228092980a1b21825746e33161b723bf5156067c8bc \
+                    size    5250814
 
 if {${perl5.major} != ""} {
     depends_lib-append \
