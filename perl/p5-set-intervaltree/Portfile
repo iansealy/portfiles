@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.26
-perl5.setup         Set-IntervalTree 0.11
+perl5.setup         Set-IntervalTree 0.12
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,8 +17,9 @@ description         Set::IntervalTree - Perform range-based lookups on sets of r
 long_description    Set::IntervalTree uses Interval Trees to store and \
                     efficiently look up ranges using a range-based lookup.
 
-checksums           rmd160 5053fc61d38fd47159568bb6eed7cd48e16d21e1 \
-                    sha256 4cf9cca160ad6c5e006d3bd7f09860e817d0deba44d8418d02e39ce75d9aa274
+checksums           rmd160  7e2e1a2f4fb6d4606fe7bcbf1443add9af81b71f \
+                    sha256  6fd4000e4022968e2ce5b83c07b189219ef1925ecb72977b52a6f7d76adbc349 \
+                    size    70702
 
 if {${perl5.major} != ""} {
     depends_build-append \
