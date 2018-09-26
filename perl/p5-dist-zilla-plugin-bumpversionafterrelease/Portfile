@@ -5,17 +5,14 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Dist-Zilla-Plugin-BumpVersionAfterRelease 0.018
-#perl5.setup         Dist-Zilla-Plugin-BumpVersionAfterRelease 0.018 ../by-authors/id/D/DA/DAGOLDEN
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             Apache-2
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::BumpVersionAfterRelease (no description available)
+description         Dist::Zilla::Plugin::BumpVersionAfterRelease - Bump module versions after distribution release
 
 long_description    ${description}
 
@@ -35,5 +32,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-path-tiny \
                     port:p${perl5.major}-version-next
 }
-
-
