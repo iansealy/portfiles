@@ -5,19 +5,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Dist-Zilla-Plugin-CopyFilesFromRelease 0.006
-#perl5.setup         Dist-Zilla-Plugin-CopyFilesFromRelease 0.006 ../by-authors/id/E/ET/ETHER
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::Plugin::CopyFilesFromRelease (no description available)
+description         Dist::Zilla::Plugin::CopyFilesFromRelease - Copy files from a release (for SCM inclusion, etc.)
 
-long_description    ${description}
+long_description    This plugin will automatically copy the files that you \
+                    specify in dist.ini from the build directory into the \
+                    distribution directoory.
 
 checksums           rmd160  e0f3f9c40cee90ab084f56e4134e537322129c44 \
                     sha256  3065f7ab7781da4ad06a5037cdd952967fd8449a144778c54774d06ed9ceb0ac \
@@ -33,5 +32,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-moose \
                     port:p${perl5.major}-path-tiny
 }
-
-
