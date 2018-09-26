@@ -5,22 +5,19 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Test-Lib 0.002
-#perl5.setup         Test-Lib 0.002 ../by-authors/id/H/HA/HAARG
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Test::Lib (no description available)
+description         Test::Lib - Use libraries from a t/lib directory
 
-long_description    ${description}
+long_description    Searches upward from the calling module for a directory \
+                    t with a lib directory inside it, and adds it to the \
+                    module search path.
 
 checksums           rmd160  197d5d58b228ecffc2ced4b5c65ef063192a8a40 \
                     sha256  14aead0483df0893600865c8c80c99709f8667381488fe45a516009a4eb35f11 \
                     size    3589
-
-
