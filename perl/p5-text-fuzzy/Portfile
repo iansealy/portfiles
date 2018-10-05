@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.26
-perl5.setup         Text-Fuzzy 0.27
+perl5.setup         Text-Fuzzy 0.28
 
 platforms           darwin
 maintainers         nomaintainer
@@ -20,5 +20,6 @@ long_description    This module calculates edit distances between words, and \
                     character strings (strings containing Unicode), treating \
                     each Unicode character as a single entity.
 
-checksums           rmd160 70579c3a5e9201df531ecb7c4ae17ebb7df8589f \
-                    sha256 91e7dd458850ce0a68df201228abf25b28494244b537310621a334a4cb28ca68
+checksums           rmd160  e5033b5bf577e63925982ec664c47c2e6dc3b3ed \
+                    sha256  51d122881e0a1f24212db8625c3def6cc53dc76e57d1fe8e4b465253a731c8f7 \
+                    size    85430
