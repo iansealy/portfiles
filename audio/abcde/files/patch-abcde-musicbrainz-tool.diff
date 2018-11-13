@@ -1,8 +1,0 @@
---- abcde-musicbrainz-tool.orig	2015-06-18 13:26:40.000000000 +0100
-+++ abcde-musicbrainz-tool	2016-07-10 18:07:15.000000000 +0100
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl
-+#!/usr/bin/env perl
- # Copyright (c) 2012 Steve McIntyre <93sam@debian.org>
- # This code is hereby licensed for public consumption under either the
- # GNU GPL v2 or greater, or Larry Wall's Artistic license - your choice.
