@@ -1,0 +1,34 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.26
+perl5.setup         Dist-Zilla-App-Command-cover 1.101001
+#perl5.setup         Dist-Zilla-App-Command-cover 1.101001 ../by-authors/id/D/DO/DOHERTY
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Dist::Zilla::App::Command::cover (no description available)
+
+long_description    ${description}
+
+checksums           rmd160  2cf09bc2da77b70239c1054f69b85bb9fe9f4f85 \
+                    sha256  5dab6ab0d6e7b8c2f2fb865d056e7011402917a36c0566a9cbbd69de790a6e78 \
+                    size    13467
+
+if {${perl5.major} != ""} {
+    depends_lib-append \
+                    port:p${perl5.major}-devel-cover \
+                    port:p${perl5.major}-dist-zilla \
+                    port:p${perl5.major}-file-chdir \
+                    port:p${perl5.major}-path-class
+}
+
+
