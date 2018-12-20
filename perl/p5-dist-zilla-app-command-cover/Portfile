@@ -5,19 +5,18 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Dist-Zilla-App-Command-cover 1.101001
-#perl5.setup         Dist-Zilla-App-Command-cover 1.101001 ../by-authors/id/D/DO/DOHERTY
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Dist::Zilla::App::Command::cover (no description available)
+description         Dist::Zilla::App::Command::cover - Code coverage metrics for your distribution
 
-long_description    ${description}
+long_description    This is a command plugin for Dist::Zilla. It provides \
+                    the cover command, which generates code coverage \
+                    metrics for your distribution using Devel::Cover.
 
 checksums           rmd160  2cf09bc2da77b70239c1054f69b85bb9fe9f4f85 \
                     sha256  5dab6ab0d6e7b8c2f2fb865d056e7011402917a36c0566a9cbbd69de790a6e78 \
@@ -30,5 +29,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-file-chdir \
                     port:p${perl5.major}-path-class
 }
-
-
