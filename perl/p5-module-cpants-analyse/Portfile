@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.26
-perl5.setup         Module-CPANTS-Analyse 0.96
+perl5.setup         Module-CPANTS-Analyse 0.99
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,8 +16,9 @@ description         Module::CPANTS::Analyse - Generate Kwalitee ratings for a di
 
 long_description    ${description}
 
-checksums           rmd160 1b97b80d463c01bf087a844f2918219f1cce9bea \
-                    sha256 2789cc03b9beda03920d22da95185f296346c7802586aa02413af0d4977568b0
+checksums           rmd160  8f675b8023ad0c31465fd4d29489718e30ce99fc \
+                    sha256  d494a9f2cde2b3fae0235050f118eed0776d66b303470c399cb4401c79983673 \
+                    size    45803
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -27,11 +28,9 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-array-diff \
                     port:p${perl5.major}-class-accessor \
                     port:p${perl5.major}-cpan-distnameinfo \
+                    port:p${perl5.major}-data-binary \
                     port:p${perl5.major}-file-find-object \
-                    port:p${perl5.major}-io-capture \
-                    port:p${perl5.major}-json-maybexs \
                     port:p${perl5.major}-module-extractuse \
-                    port:p${perl5.major}-set-scalar \
-                    port:p${perl5.major}-software-license \
-                    port:p${perl5.major}-software-license-ccpack
+                    port:p${perl5.major}-module-find \
+                    port:p${perl5.major}-software-license
 }
