@@ -1,0 +1,37 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.26
+perl5.setup         Perl-PrereqScanner-NotQuiteLite 0.9903
+#perl5.setup         Perl-PrereqScanner-NotQuiteLite 0.9903 ../by-authors/id/I/IS/ISHIGAKI
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Perl::PrereqScanner::NotQuiteLite (no description available)
+
+long_description    ${description}
+
+checksums           rmd160  ce02225f79fa691aa24e2073cd1cc9b54efcae4e \
+                    sha256  9c1af83202ac300143ab6f51c0d8204530089b1a41747c313a8ed4dd37fa4702 \
+                    size    119193
+
+if {${perl5.major} != ""} {
+    depends_build-append \
+                    port:p${perl5.major}-test-failwarnings \
+                    port:p${perl5.major}-test-useallmodules
+    depends_lib-append \
+                    port:p${perl5.major}-data-dump \
+                    port:p${perl5.major}-module-cpanfile \
+                    port:p${perl5.major}-module-find \
+                    port:p${perl5.major}-regexp-trie
+}
+
+
