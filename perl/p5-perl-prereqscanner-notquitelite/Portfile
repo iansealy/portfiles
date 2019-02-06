@@ -5,19 +5,17 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Perl-PrereqScanner-NotQuiteLite 0.9903
-#perl5.setup         Perl-PrereqScanner-NotQuiteLite 0.9903 ../by-authors/id/I/IS/ISHIGAKI
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Perl::PrereqScanner::NotQuiteLite (no description available)
+description         Perl::PrereqScanner::NotQuiteLite - a tool to scan your Perl code for its prerequisites
 
-long_description    ${description}
+long_description    Perl::PrereqScanner::NotQuiteLite is yet another \
+                    prerequisites scanner.
 
 checksums           rmd160  ce02225f79fa691aa24e2073cd1cc9b54efcae4e \
                     sha256  9c1af83202ac300143ab6f51c0d8204530089b1a41747c313a8ed4dd37fa4702 \
@@ -33,5 +31,3 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-module-find \
                     port:p${perl5.major}-regexp-trie
 }
-
-
