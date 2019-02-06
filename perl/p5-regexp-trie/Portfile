@@ -1,0 +1,26 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.26
+perl5.setup         Regexp-Trie 0.02
+#perl5.setup         Regexp-Trie 0.02 ../by-authors/id/D/DA/DANKOGAI
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Regexp::Trie (no description available)
+
+long_description    ${description}
+
+checksums           rmd160  328aaa147de2c1a44b45b4dfe6005e25fc9bb6c3 \
+                    sha256  fb2bf94ed8dbc1f4a95d9fc8f710cb67b3f796c6efc9c4bb4c2cfa3ebaa1c5fa \
+                    size    3365
+
+
