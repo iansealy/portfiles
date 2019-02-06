@@ -4,7 +4,7 @@ PortSystem          1.0
 PortGroup           perl5 1.0
 
 perl5.branches      5.26
-perl5.setup         Module-CPANTS-Analyse 0.99
+perl5.setup         Module-CPANTS-Analyse 1.00
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,9 +16,9 @@ description         Module::CPANTS::Analyse - Generate Kwalitee ratings for a di
 
 long_description    ${description}
 
-checksums           rmd160  8f675b8023ad0c31465fd4d29489718e30ce99fc \
-                    sha256  d494a9f2cde2b3fae0235050f118eed0776d66b303470c399cb4401c79983673 \
-                    size    45803
+checksums           rmd160  a5e8132f3734c92252055c7954e0ae56646bf5ba \
+                    sha256  429929cb56b2c5a50caa204ab736ffd09cb8272e9d24e1980ee88e06a078e764 \
+                    size    38350
 
 if {${perl5.major} != ""} {
     depends_build-append \
@@ -30,7 +30,7 @@ if {${perl5.major} != ""} {
                     port:p${perl5.major}-cpan-distnameinfo \
                     port:p${perl5.major}-data-binary \
                     port:p${perl5.major}-file-find-object \
-                    port:p${perl5.major}-module-extractuse \
                     port:p${perl5.major}-module-find \
+                    port:p${perl5.major}-perl-prereqscanner-notquitelite \
                     port:p${perl5.major}-software-license
 }
