@@ -1,0 +1,26 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+
+PortSystem          1.0
+PortGroup           perl5 1.0
+
+perl5.branches      5.26
+perl5.setup         Lingua-EN-Numbers-Ordinate 1.04
+#perl5.setup         Lingua-EN-Numbers-Ordinate 1.04 ../by-authors/id/N/NE/NEILB
+
+platforms           darwin
+maintainers         nomaintainer
+#license             {Artistic-1 GPL}
+license             unknown
+
+# Uncomment this line if you know there will be no arch-specific code:
+#supported_archs     noarch
+
+description         Lingua::EN::Numbers::Ordinate (no description available)
+
+long_description    ${description}
+
+checksums           rmd160  f37defb69fd06ea687becb8de9f1aac425c017b4 \
+                    sha256  26973c2eb43672c3f61ad7d3fef12ef1c64a034da494a0ee0d910c3e0808019f \
+                    size    12019
+
+
