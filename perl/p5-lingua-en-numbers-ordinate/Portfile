@@ -5,22 +5,20 @@ PortGroup           perl5 1.0
 
 perl5.branches      5.26
 perl5.setup         Lingua-EN-Numbers-Ordinate 1.04
-#perl5.setup         Lingua-EN-Numbers-Ordinate 1.04 ../by-authors/id/N/NE/NEILB
 
 platforms           darwin
 maintainers         nomaintainer
-#license             {Artistic-1 GPL}
-license             unknown
+license             {Artistic-1 GPL}
 
-# Uncomment this line if you know there will be no arch-specific code:
 #supported_archs     noarch
 
-description         Lingua::EN::Numbers::Ordinate (no description available)
+description         Lingua::EN::Numbers::Ordinate - go from cardinal number (3) to ordinal ("3rd")
 
-long_description    ${description}
+long_description    There are two kinds of numbers in English -- cardinals \
+                    (1, 2, 3...), and ordinals (1st, 2nd, 3rd...). This \
+                    library provides functions for giving the ordinal form \
+                    of a number, given its cardinal value.
 
 checksums           rmd160  f37defb69fd06ea687becb8de9f1aac425c017b4 \
                     sha256  26973c2eb43672c3f61ad7d3fef12ef1c64a034da494a0ee0d910c3e0808019f \
                     size    12019
-
-
