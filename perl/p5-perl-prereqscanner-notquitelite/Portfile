@@ -3,8 +3,8 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.26
-perl5.setup         Perl-PrereqScanner-NotQuiteLite 0.9904
+perl5.branches      5.26 5.28
+perl5.setup         Perl-PrereqScanner-NotQuiteLite 0.9905
 
 platforms           darwin
 maintainers         nomaintainer
@@ -17,9 +17,9 @@ description         Perl::PrereqScanner::NotQuiteLite - a tool to scan your Perl
 long_description    Perl::PrereqScanner::NotQuiteLite is yet another \
                     prerequisites scanner.
 
-checksums           rmd160  876a43c3d26bb8ca8c0dadcb13523855c2bead93 \
-                    sha256  56436398e08bf5b5db285a00cd0b11ddb6cb2d3ff5b2b80efc8a6ba913e9c6e1 \
-                    size    120806
+checksums           rmd160  d7fec6c80e5368aa1b6cfb40cccd5736cbf6e4c6 \
+                    sha256  63eb900b29d5cfa887893d53df9c5ed541abdfa4b2f19abf1fec801c7385d01c \
+                    size    126327
 
 if {${perl5.major} != ""} {
     depends_build-append \
