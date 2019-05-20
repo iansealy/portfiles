@@ -3,8 +3,8 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.26
-perl5.setup         Dist-Zilla-Plugin-Test-MinimumVersion 2.000008
+perl5.branches      5.26 5.28
+perl5.setup         Dist-Zilla-Plugin-Test-MinimumVersion 2.000009
 
 platforms           darwin
 maintainers         nomaintainer
@@ -16,16 +16,19 @@ description         Dist::Zilla::Plugin::Test::MinimumVersion - Release tests fo
 
 long_description    ${description}
 
-checksums           rmd160  58b572691cacec14dc3d765a82bb3b6c4f656877 \
-                    sha256  d924ce79aaaa1885510ca6ecfcb4d8bc250fb6995bc96627f1536cb589e3b660 \
-                    size    15750
+checksums           rmd160  6f6e7b234f95afde8cd1e959e80afe011b0bf83a \
+                    sha256  949218709921e1ef882eacf40fa534b8aedcfb2442c09c07a576876e7f956391 \
+                    size    32920
 
 if {${perl5.major} != ""} {
     depends_build-append \
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-test-output
     depends_lib-append \
+                    port:p${perl5.major}-data-section \
                     port:p${perl5.major}-dist-zilla \
                     port:p${perl5.major}-moose \
+                    port:p${perl5.major}-namespace-autoclean \
+                    port:p${perl5.major}-sub-exporter-formethods \
                     port:p${perl5.major}-test-minimumversion
 }
