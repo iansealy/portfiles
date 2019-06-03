@@ -3,8 +3,8 @@
 PortSystem          1.0
 PortGroup           perl5 1.0
 
-perl5.branches      5.26
-perl5.setup         Test-Synopsis 0.15
+perl5.branches      5.26 5.28
+perl5.setup         Test-Synopsis 0.16
 
 platforms           darwin
 maintainers         nomaintainer
@@ -19,5 +19,6 @@ long_description    Test::Synopsis is an (author) test module to find .pm \
                     sure the example snippet code in your SYNOPSIS section \
                     passes the perl compile check.
 
-checksums           rmd160 33b6e80b210a0712ad6fde3adbedb97c77d39a30 \
-                    sha256 d1d5636692756c0647d4ac94c3d5898d0b4df7b46a08d202b14822c7618bbdb3
+checksums           rmd160  a7fef8da6a4aa041c67cef2477ca60ac0a28dc6a \
+                    sha256  1b13ec73bcf72462c060f8819491444d7473f3ea8aeb4c0ed828263eed0e0925 \
+                    size    26117
