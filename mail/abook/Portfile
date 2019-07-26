@@ -28,6 +28,5 @@ configure.args	--with-libintl-prefix=${prefix} \
 		--with-readline=${prefix} \
 		--mandir=${prefix}/share/man
 post-configure  {
-	reinplace "s|DESTDIR =|#DESTDIR =|g" ${worksrcpath}/Makefile
 	reinplace "s|inline int field_id|int field_id|" ${worksrcpath}/database.h
 }
